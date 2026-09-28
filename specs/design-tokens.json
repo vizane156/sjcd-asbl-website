@@ -1,298 +1,69 @@
 {
-  "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Jetons de design — source unique de vérité du site SJCD ASBL. Aucune valeur de style ne doit être écrite en dur dans un composant : tout passe par ces jetons, générés en variables CSS puis exposés au thème Tailwind. Voir docs/03_UX_UI_Design_System.md et docs/05_Technical_Architecture.md §5.",
   "meta": {
-    "name": "SJCD ASBL — Design Tokens",
-    "version": "1.0.0",
-    "status": "proposal",
+    "name": "SJCD — Lumière",
+    "version": "2.0.0",
+    "status": "Proposition visuelle implémentée",
     "updatedAt": "2026-09-28",
-    "note": "PROPOSITION de direction artistique. Les couleurs, la typographie et le logo dépendent de la décision D7 (identité visuelle de SJCD existante ?). Ces jetons sont volontairement isolés de tout composant afin qu'un arbitrage de marque n'entraîne AUCUNE refonte.",
-    "aestheticBrief": {
-      "keyword": "2050",
-      "meaning": "Futuriste par la précision des interactions, jamais par le décor. Sobre, humain, crédible, accessible.",
-      "guardrail": "Aucun effet décoratif. Toute animation doit avoir une justification fonctionnelle."
-    }
+    "format": "Variables CSS sérialisées (format projet, pas DTCG)",
+    "font": "Nunito variable, latin, auto-hébergée",
+    "source": "Nouveau brief utilisateur : Nunito, RDC, institutionnel immersif",
+    "note": "La marque flamme et la palette sont provisoires. Les faits institutionnels restent dans lib/content.ts."
   },
-
-  "color": {
-    "$description": "Trois familles hiérarchisées : encres froides (structure), papiers chauds (fonds), un accent unique (action). Jamais de noir pur, jamais deux accents concurrents sur un même écran.",
-    "ink": {
-      "1000": { "value": "#070B10", "type": "color", "description": "Titres sur fond clair, fonds les plus profonds." },
-      "900":  { "value": "#0C1219", "type": "color", "description": "Fond des sections sombres de rupture (≤ 25 % d'une page)." },
-      "700":  { "value": "#1E2A36", "type": "color", "description": "Texte courant sur fond clair. Contraste > 12:1." },
-      "500":  { "value": "#4A5A6A", "type": "color", "description": "Texte secondaire. Contraste ≈ 7:1 sur blanc." },
-      "300":  { "value": "#8A99A8", "type": "color", "description": "Bordures, séparateurs, texte désactivé. ≥ 3:1 pour l'UI." },
-      "100":  { "value": "#D6DCE3", "type": "color", "description": "Bordures douces, fonds de substitution." }
-    },
-    "paper": {
-      "0":   { "value": "#FFFFFF", "type": "color", "description": "Fond principal." },
-      "50":  { "value": "#F7F8F9", "type": "color", "description": "Sections alternées." },
-      "100": { "value": "#EEF1F3", "type": "color", "description": "Cartes et encarts." }
-    },
-    "accent": {
-      "$description": "Accent UNIQUE du site. Aucune autre couleur d'action ne doit exister.",
-      "700": { "value": "#0B4F4B", "type": "color", "description": "Accent survolé / pressé." },
-      "600": { "value": "#0E5E5A", "type": "color", "description": "Accent principal : boutons, liens, anneau de focus." },
-      "400": { "value": "#3E8F89", "type": "color", "description": "Accent sur fond sombre." },
-      "100": { "value": "#DCEBE9", "type": "color", "description": "Fond d'accent léger : badges, surlignage." }
-    },
-    "highlight": {
-      "$description": "Couleur chaude de soutien, réservée aux données et à de rares mises en valeur humaines. JAMAIS un bouton.",
-      "500": { "value": "#B4802A", "type": "color", "description": "Marqueurs de données, accents éditoriaux rares." }
-    },
-    "semantic": {
-      "success": { "value": "#1B7F4E", "type": "color", "description": "Confirmation. Toujours accompagnée d'un texte." },
-      "warning": { "value": "#B4761A", "type": "color", "description": "Avertissement. Toujours accompagné d'une icône et d'un texte." },
-      "danger":  { "value": "#B3261E", "type": "color", "description": "Erreur de formulaire, alerte. Jamais décoratif, jamais marketing." },
-      "info":    { "value": "#1E4C7A", "type": "color", "description": "Information neutre." }
-    },
-    "surface": {
-      "page":            { "value": "{color.paper.0}", "type": "color" },
-      "pageAlternate":   { "value": "{color.paper.50}", "type": "color" },
-      "card":            { "value": "{color.paper.0}", "type": "color" },
-      "cardMuted":       { "value": "{color.paper.100}", "type": "color" },
-      "inverse":         { "value": "{color.ink.900}", "type": "color" },
-      "accentSoft":      { "value": "{color.accent.100}", "type": "color" }
-    },
-    "text": {
-      "primary":     { "value": "{color.ink.700}", "type": "color" },
-      "heading":     { "value": "{color.ink.1000}", "type": "color" },
-      "secondary":   { "value": "{color.ink.500}", "type": "color" },
-      "muted":       { "value": "{color.ink.300}", "type": "color" },
-      "inverse":     { "value": "{color.paper.0}", "type": "color" },
-      "inverseSoft": { "value": "#C4CDD6", "type": "color", "description": "Texte secondaire sur fond sombre. Contraste vérifié ≥ 4,5:1." },
-      "link":        { "value": "{color.accent.600}", "type": "color" },
-      "linkHover":   { "value": "{color.accent.700}", "type": "color" }
-    },
-    "border": {
-      "subtle":  { "value": "{color.ink.100}", "type": "color" },
-      "default": { "value": "{color.ink.300}", "type": "color" },
-      "strong":  { "value": "{color.ink.500}", "type": "color" },
-      "focus":   { "value": "{color.accent.600}", "type": "color", "description": "Anneau de focus. Ne jamais supprimer le contour visible." }
-    },
-    "contrastRequirements": {
-      "bodyText": ">= 4.5:1",
-      "largeText": ">= 3:1",
-      "uiComponents": ">= 3:1",
-      "focusIndicator": ">= 3:1",
-      "note": "Vérification automatisée en intégration continue. Aucune exception sans justification écrite."
-    }
+  "tokens": {
+    "night-950": "#070a12",
+    "night-900": "#0b1020",
+    "night-800": "#121a30",
+    "night-700": "#1c2744",
+    "mist-300": "#aeb8cc",
+    "mist-100": "#e8ecf4",
+    "paper": "#f7f5f0",
+    "ink": "#111726",
+    "ink-soft": "#4a5468",
+    "flame-500": "#f4a53a",
+    "flame-600": "#d9831a",
+    "flame-700": "#9a5a0c",
+    "ember": "#ff6b3d",
+    "sky": "#6fb7ff",
+    "line-dark": "rgba(255, 255, 255, 0.1)",
+    "line-light": "rgba(17, 23, 38, 0.12)",
+    "font": "var(--nunito), 'Nunito', system-ui, sans-serif",
+    "fs-display": "clamp(3rem, 9vw, 8.5rem)",
+    "fs-h1": "clamp(2.4rem, 5.5vw, 4.5rem)",
+    "fs-h2": "clamp(2rem, 4vw, 3.25rem)",
+    "fs-h3": "clamp(1.25rem, 2vw, 1.6rem)",
+    "fs-body": "clamp(1rem, 1.1vw, 1.125rem)",
+    "fs-lead": "clamp(1.15rem, 1.6vw, 1.4rem)",
+    "fs-small": "0.875rem",
+    "fs-label": "0.75rem",
+    "sp-xs": "0.5rem",
+    "sp-sm": "1rem",
+    "sp-md": "1.5rem",
+    "sp-lg": "2.5rem",
+    "sp-xl": "4rem",
+    "sp-2xl": "6rem",
+    "sp-section": "clamp(5rem, 12vw, 10rem)",
+    "r-sm": "8px",
+    "r-md": "16px",
+    "r-lg": "28px",
+    "r-pill": "999px",
+    "sh-subtle": "0 1px 2px rgba(0,0,0,.2)",
+    "sh-medium": "0 12px 32px -12px rgba(0,0,0,.45)",
+    "sh-elevated": "0 30px 80px -20px rgba(0,0,0,.6)",
+    "glow": "0 0 60px -10px rgba(244,165,58,.55)",
+    "t-fast": "160ms",
+    "t-normal": "320ms",
+    "t-slow": "700ms",
+    "ease-out": "cubic-bezier(.16, 1, .3, 1)",
+    "ease-inout": "cubic-bezier(.65, 0, .35, 1)",
+    "container": "1320px"
   },
-
-  "typography": {
-    "$description": "Titres en serif (gravité institutionnelle et chaleur), interface en sans-serif (précision), données en monospace (vérifiabilité). Auto-hébergement obligatoire, aucun CDN tiers.",
-    "family": {
-      "display": {
-        "value": "Newsreader, 'Iowan Old Style', Georgia, 'Times New Roman', serif",
-        "type": "fontFamily",
-        "description": "Titres. Ratio de repli assuré par une pile serif classique."
-      },
-      "sans": {
-        "value": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-        "type": "fontFamily",
-        "description": "Texte et interface."
-      },
-      "mono": {
-        "value": "'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-        "type": "fontFamily",
-        "description": "Chiffres d'impact, références, numéros de registre. Usage parcimonieux."
-      }
-    },
-    "weight": {
-      "regular":  { "value": 400, "type": "fontWeight" },
-      "medium":   { "value": 500, "type": "fontWeight", "description": "Titres uniquement." },
-      "semibold": { "value": 600, "type": "fontWeight" },
-      "bold":     { "value": 700, "type": "fontWeight", "description": "Usage exceptionnel." }
-    },
-    "size": {
-      "$description": "Échelle fluide par clamp(). Mobile / desktop. Racine 16 px.",
-      "display-xl": { "value": "clamp(2.25rem, 6vw, 4rem)",      "type": "fontSize", "mobile": "36px", "desktop": "64px", "usage": "Titre du héros. UN SEUL par page." },
-      "display-l":  { "value": "clamp(1.875rem, 4.5vw, 2.75rem)", "type": "fontSize", "mobile": "30px", "desktop": "44px", "usage": "Titre de section majeure." },
-      "display-m":  { "value": "clamp(1.5rem, 3vw, 2rem)",        "type": "fontSize", "mobile": "24px", "desktop": "32px", "usage": "Titre de page, titre de carte principal." },
-      "heading-s":  { "value": "clamp(1.25rem, 2vw, 1.5rem)",     "type": "fontSize", "mobile": "20px", "desktop": "24px", "usage": "Sous-titre, titre de carte." },
-      "body-l":     { "value": "clamp(1.125rem, 1.5vw, 1.25rem)", "type": "fontSize", "mobile": "18px", "desktop": "20px", "usage": "Chapeau, introduction." },
-      "body-m":     { "value": "clamp(1rem, 1.2vw, 1.0625rem)",   "type": "fontSize", "mobile": "16px", "desktop": "17px", "usage": "Texte courant." },
-      "body-s":     { "value": "clamp(0.875rem, 1vw, 0.9375rem)", "type": "fontSize", "mobile": "14px", "desktop": "15px", "usage": "Légendes, métadonnées." },
-      "mono-l":     { "value": "clamp(1.75rem, 3.5vw, 2.5rem)",   "type": "fontSize", "mobile": "28px", "desktop": "40px", "usage": "Chiffres d'impact." },
-      "mono-s":     { "value": "0.8125rem",                       "type": "fontSize", "mobile": "13px", "desktop": "13px", "usage": "Références, numéros de registre." },
-      "label":      { "value": "0.9375rem",                       "type": "fontSize", "usage": "Étiquettes de formulaire." }
-    },
-    "lineHeight": {
-      "body":    { "value": 1.6,  "type": "lineHeight", "description": "Texte courant." },
-      "heading": { "value": 1.15, "type": "lineHeight", "description": "Titres." },
-      "table":   { "value": 1.45, "type": "lineHeight", "description": "Tableaux de données." },
-      "tight":   { "value": 1.3,  "type": "lineHeight", "description": "Libellés de chiffres d'impact." }
-    },
-    "letterSpacing": {
-      "tight":   { "value": "-0.02em", "type": "letterSpacing", "description": "Titres display." },
-      "normal":  { "value": "0em",     "type": "letterSpacing" },
-      "overline":{ "value": "0.08em",  "type": "letterSpacing", "description": "Surtitres en capitales courtes." }
-    },
-    "measure": {
-      "reading": { "value": "34rem", "type": "dimension", "description": "≈ 60–75 caractères. Jamais de texte pleine largeur." },
-      "wide":    { "value": "48rem", "type": "dimension" }
-    },
-    "features": {
-      "tabularNumbers": { "value": "font-variant-numeric: tabular-nums", "description": "OBLIGATOIRE sur les tableaux et les chiffres d'impact : évite que les nombres « sautent »." },
-      "rule": "Jamais de paragraphe en capitales. Les capitales se limitent aux sigles et surtitres courts."
-    },
-    "selfHosted": {
-      "required": true,
-      "formats": ["woff2"],
-      "subsets": ["latin", "latin-ext"],
-      "fontDisplay": "swap",
-      "preloadWeights": ["400", "600"],
-      "maxTotalWeight": "70KB",
-      "thirdPartyCdn": false,
-      "rationale": "Un CDN de polices tiers est un transfert de données (RGPD) et un coût réseau évitable — critique pour une audience en connexion limitée."
-    },
-    "fallbackIfBrandCharter": {
-      "note": "Si D7 impose une charte existante, ses polices priment — à condition de respecter le budget de performance et une lisibilité équivalente."
-    }
-  },
-
-  "space": {
-    "$description": "Unité de base 4 px. Généreux volontairement : les blancs sont le principal levier de l'impression premium.",
-    "0":  { "value": "0px",   "type": "dimension" },
-    "1":  { "value": "4px",   "type": "dimension", "usage": "Écart icône ↔ libellé." },
-    "2":  { "value": "8px",   "type": "dimension", "usage": "Écart entre éléments liés." },
-    "3":  { "value": "12px",  "type": "dimension", "usage": "Remplissage de petits composants." },
-    "4":  { "value": "16px",  "type": "dimension", "usage": "Remplissage de boutons, écart de paragraphe." },
-    "6":  { "value": "24px",  "type": "dimension", "usage": "Écart entre blocs d'une même section." },
-    "8":  { "value": "32px",  "type": "dimension", "usage": "Écart interne de carte." },
-    "12": { "value": "48px",  "type": "dimension", "usage": "Écart entre sections (mobile)." },
-    "16": { "value": "64px",  "type": "dimension", "usage": "Écart entre sections (desktop)." },
-    "24": { "value": "96px",  "type": "dimension", "usage": "Respiration autour d'un chiffre clé." },
-    "32": { "value": "128px", "type": "dimension", "usage": "Séparation de sections majeures (desktop large)." }
-  },
-
-  "layout": {
-    "container": {
-      "maxWidth": { "value": "1200px", "type": "dimension" },
-      "readingWidth": { "value": "720px", "type": "dimension" },
-      "paddingMobile": { "value": "20px", "type": "dimension" },
-      "paddingDesktop": { "value": "32px", "type": "dimension" }
-    },
-    "grid": {
-      "columns": 12,
-      "gutterMobile": { "value": "16px", "type": "dimension" },
-      "gutterDesktop": { "value": "24px", "type": "dimension" }
-    },
-    "breakpoint": {
-      "sm": { "value": "480px", "type": "dimension" },
-      "md": { "value": "768px", "type": "dimension" },
-      "lg": { "value": "1024px", "type": "dimension" },
-      "xl": { "value": "1280px", "type": "dimension" },
-      "2xl": { "value": "1536px", "type": "dimension" }
-    },
-    "approach": "mobile-first — les points de rupture sont des seuils d'amélioration, jamais des exigences."
-  },
-
-  "radius": {
-    "none":   { "value": "0px",   "type": "dimension" },
-    "sharp":  { "value": "2px",   "type": "dimension", "description": "Encarts de données, tableaux. Angularité = précision." },
-    "button": { "value": "6px",   "type": "dimension" },
-    "card":   { "value": "12px",  "type": "dimension" },
-    "cardLg": { "value": "20px",  "type": "dimension" },
-    "pill":   { "value": "999px", "type": "dimension", "description": "Badges uniquement." }
-  },
-
-  "border": {
-    "width": {
-      "hairline": { "value": "1px", "type": "dimension" },
-      "thick":    { "value": "2px", "type": "dimension" },
-      "focus":    { "value": "2px", "type": "dimension", "description": "Anneau de focus, avec 2 px de décalage (offset)." }
-    },
-    "rule": "Bordures avant ombres : la hiérarchie se construit par la bordure, l'espace et le contraste — pas par l'ombre portée."
-  },
-
-  "shadow": {
-    "$description": "Ombre réservée aux éléments flottants (menus, modales, infobulles). Toujours très diffuse et faiblement opaque.",
-    "none":  { "value": "none", "type": "shadow" },
-    "sm":    { "value": "0 1px 2px rgba(7, 11, 16, 0.06)", "type": "shadow" },
-    "md":    { "value": "0 4px 12px rgba(7, 11, 16, 0.08)", "type": "shadow" },
-    "lg":    { "value": "0 12px 32px rgba(7, 11, 16, 0.12)", "type": "shadow" },
-    "focus": { "value": "0 0 0 2px #FFFFFF, 0 0 0 4px #0E5E5A", "type": "shadow", "description": "Anneau de focus à double contour, lisible sur fond clair comme sur fond sombre." }
-  },
-
-  "motion": {
-    "$description": "Discret, rapide, justifié. Aucun mouvement ne doit retarder la lecture.",
-    "duration": {
-      "instant":   { "value": "120ms", "type": "duration", "usage": "Changement d'état, survol, focus." },
-      "quick":     { "value": "180ms", "type": "duration", "usage": "Apparition d'un élément court." },
-      "standard":  { "value": "240ms", "type": "duration", "usage": "Entrée de carte, ouverture de menu." },
-      "emphasis":  { "value": "320ms", "type": "duration", "usage": "Transition de section, ouverture de modale." },
-      "slow":      { "value": "480ms", "type": "duration", "usage": "Révélation de chiffre d'impact — usage rare et déconseillé." }
-    },
-    "easing": {
-      "standard": { "value": "cubic-bezier(0.2, 0, 0, 1)",   "type": "cubicBezier", "description": "Départ franc, arrivée douce." },
-      "entrance": { "value": "cubic-bezier(0.16, 1, 0.3, 1)", "type": "cubicBezier" },
-      "exit":     { "value": "cubic-bezier(0.4, 0, 1, 1)",   "type": "cubicBezier" },
-      "linear":   { "value": "linear", "type": "cubicBezier" }
-    },
-    "distance": {
-      "min": { "value": "8px",  "type": "dimension", "description": "Translation verticale minimale." },
-      "max": { "value": "16px", "type": "dimension", "description": "Translation verticale maximale autorisée." },
-      "scaleMin": { "value": 0.98, "type": "number", "description": "Mise à l'échelle d'entrée." },
-      "scaleMax": { "value": 1.0,  "type": "number", "description": "Plafond absolu : jamais au-delà de 1,05." }
-    },
-    "allowed": ["opacité 0 → 1", "translation verticale 8–16 px", "mise à l'échelle 0,98 → 1", "changement de couleur de bordure"],
-    "forbidden": ["rotations", "rebonds", "secousses", "mise à l'échelle > 1,05", "déplacements horizontaux importants", "flous animés", "effets 3D", "carrousels automatiques", "parallaxe lourde", "défilement détourné (scroll-jacking)"],
-    "reducedMotion": {
-      "required": true,
-      "behavior": "Toutes les animations sont neutralisées ou remplacées par un changement d'état instantané.",
-      "cssMedia": "prefers-reduced-motion: reduce",
-      "note": "Exigence WCAG 2.2 AA. Non négociable, sans exception."
-    },
-    "impactCounter": {
-      "recommended": false,
-      "rationale": "Un chiffre qui s'anime suggère un chiffre en construction — donc un discours. Un chiffre affiché net, daté et sourcé suggère une donnée — donc une preuve. C'est ce second effet que le projet recherche.",
-      "ifUsed": ["durée < 600 ms", "valeur finale affichée immédiatement si mouvement réduit", "jamais utilisé pour masquer un chiffre approximatif", "chiffres tabulaires pour éviter le tremblement"]
-    }
-  },
-
-  "zIndex": {
-    "base":     { "value": 0,    "type": "number" },
-    "sticky":   { "value": 100,  "type": "number" },
-    "overlay":  { "value": 300,  "type": "number" },
-    "modal":    { "value": 400,  "type": "number" },
-    "toast":    { "value": 500,  "type": "number" },
-    "skipLink": { "value": 600,  "type": "number", "description": "Toujours au-dessus de tout, y compris des modales." }
-  },
-
-  "icon": {
-    "size": {
-      "sm": { "value": "16px", "type": "dimension" },
-      "md": { "value": "24px", "type": "dimension", "description": "Taille de référence." },
-      "lg": { "value": "32px", "type": "dimension" }
-    },
-    "strokeWidth": { "value": "1.5px", "type": "dimension" },
-    "rule": "Un seul jeu d'icônes. Décoratives : aria-hidden. Seules dans un bouton : aria-label obligatoire."
-  },
-
-  "media": {
-    "aspectRatio": {
-      "documentary": { "value": "3 / 2", "description": "Photographie de terrain." },
-      "portrait":    { "value": "1 / 1", "description": "Portrait de personne." },
-      "banner":      { "value": "16 / 9", "description": "Bannière, héros." }
-    },
-    "formats": ["avif", "webp", "jpeg"],
-    "sizes": [320, 480, 768, 1024, 1440, 1920],
-    "rules": [
-      "width et height explicites pour éviter tout décalage de mise en page (CLS)",
-      "loading='lazy' sauf pour l'image du héros, préchargée avec priorité haute",
-      "srcset et sizes renseignés systématiquement",
-      "métadonnées EXIF (dont la géolocalisation) retirées avant publication",
-      "texte alternatif descriptif, jamais « image » ni « photo de »"
-    ]
-  },
-
-  "accessibility": {
-    "target": "WCAG 2.2 niveau AA",
-    "touchTarget": { "minimum": "24px", "recommended": "44px" },
-    "focusVisible": { "required": true, "neverRemoved": true, "offset": "2px" },
-    "zoomSupport": "200 % sans perte de contenu ni défilement horizontal",
-    "colorAlone": false,
-    "testing": "axe-core en intégration continue + vérification manuelle (clavier, lecteur d'écran, zoom, contraste élevé)"
+  "motionPolicy": {
+    "desktop": "Lenis lerp 0.14 + GSAP/ScrollTrigger différés ; tilt sur une seule carte",
+    "mobile": "Scroll natif ; pas de GSAP, de Lenis ou de tilt",
+    "reducedMotion": "Annulation dynamique des timelines et du défilement inertiel",
+    "slowConnection": "Pas de motion avancée si Save-Data ou 2G est détecté",
+    "threeD": "Pas de WebGL : SVG statique, lisible avec tous les effets désactivés",
+    "snap": "Galerie horizontale native uniquement ; aucun snap vertical concurrent de Lenis",
+    "transitions": "View Transitions API cross-document, 180 ms ; navigation native en repli"
   }
 }

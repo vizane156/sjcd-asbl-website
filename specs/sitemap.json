@@ -5,18 +5,37 @@
     "version": "1.0.0",
     "updatedAt": "2026-09-28",
     "defaultLocale": "fr",
-    "enabledLocales": ["fr"],
+    "enabledLocales": [
+      "fr"
+    ],
     "localesPendingDecision": "D5 — l'architecture i18n est prête mais NON activée. Si le multilinguisme est confirmé : / pour le français, /nl/… et /en/… pour les autres, avec hreflang réciproque et x-default.",
     "conceptualFramework": {
       "name": "système de confiance",
       "stages": [
-        { "id": "1", "name": "preuve institutionnelle", "question": "Cette organisation existe-t-elle vraiment, et est-elle bien gouvernée ?" },
-        { "id": "2", "name": "preuve d'impact", "question": "Que fait-elle concrètement, avec quels résultats ?" },
-        { "id": "3", "name": "opportunité de partenariat", "question": "Que puis-je y gagner, comment m'y associer ?" },
-        { "id": "4", "name": "action", "question": "Que dois-je faire, maintenant ?" }
+        {
+          "id": "1",
+          "name": "preuve institutionnelle",
+          "question": "Cette organisation existe-t-elle vraiment, et est-elle bien gouvernée ?"
+        },
+        {
+          "id": "2",
+          "name": "preuve d'impact",
+          "question": "Que fait-elle concrètement, avec quels résultats ?"
+        },
+        {
+          "id": "3",
+          "name": "opportunité de partenariat",
+          "question": "Que puis-je y gagner, comment m'y associer ?"
+        },
+        {
+          "id": "4",
+          "name": "action",
+          "question": "Que dois-je faire, maintenant ?"
+        }
       ],
       "editorialRule": "Toute page doit pouvoir être rattachée à un étage. Un contenu qui n'alimente aucun étage est supprimé ou fusionné."
-    }
+    },
+    "runtimeStatus": "Navigation interne à la homepage + pages de cadrage statiques ; aucun projet ou article détaillé non fourni."
   },
 
   "navigation": {
@@ -261,5 +280,7 @@
     "stage2": { "pages": ["/impact", "/programmes", "/"], "tests": ["chaque indicateur possède une période et une source", "rapports téléchargeables et datés", "méthodologie publiée"] },
     "stage3": { "pages": ["/devenir-partenaire"], "tests": ["formulaire qualifiant fonctionnel", "dossier de partenariat téléchargeable", "contenu adapté par profil"] },
     "stage4": { "pages": ["/contact", "/devenir-partenaire"], "tests": ["soumission réelle reçue", "accusé de réception envoyé", "conformité du consentement"] }
-  }
+  },
+  "implementedRoutes": ["/", "/qui-sommes-nous", "/programmes", "/projets", "/impact", "/devenir-partenaire", "/actualites", "/contact", "/mentions-legales", "/confidentialite", "/accessibilite", "/plan-du-site"],
+  "notImplemented": ["CMS", "/programmes/[slug]", "pages de dons", "sitemap.xml (pas de domaine validé, site noindex)"]
 }

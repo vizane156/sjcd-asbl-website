@@ -1,5 +1,16 @@
 # Prompt maître — génération des maquettes du site SJCD ASBL
 
+> **Mise à jour — 28/09/2026.** Ce document conserve le cadrage initial, antérieur au
+> nouveau brief. Pour l’état livré et les arbitrages actuels, lire
+> [la direction Lumière](../docs/08_Direction_Lumiere.md) et le README. Identité confirmée par l’utilisateur :
+> **Sanctuaire de Jeunes Chandelier pour le Développement (SJCD ASBL), RDC**.
+> D1 reste partiellement ouvert (registre, siège), D2 est renseigné ; D7 est une proposition.
+> Nunito remplace Newsreader/Inter. Le motion adaptatif remplace les interdictions générales
+> du premier cadrage. Le CMS, l’envoi d’e-mails et les dons ne sont pas implémentés.
+> Les considérations juridiques anciennes sont des pistes, pas un avis applicable à SJCD :
+> vérifier le droit congolais, le registre compétent et l’applicabilité du RGPD.
+
+
 **Usage :** à coller dans v0.app (ou tout outil de génération d'interface) pour produire
 les maquettes du site institutionnel de SJCD ASBL.
 **Version :** 1.0 — 28/09/2026

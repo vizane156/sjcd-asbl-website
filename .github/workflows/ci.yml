@@ -106,31 +106,39 @@ jobs:
 
       - name: Vérifier la synchronisation des jetons de design
         if: steps.detect.outputs.present == 'true'
-        run: npm run tokens:check --if-present
+        run: npm run tokens:check
 
       - name: Lint
         if: steps.detect.outputs.present == 'true'
-        run: npm run lint --if-present
-
-      - name: Vérification des types
-        if: steps.detect.outputs.present == 'true'
-        run: npm run typecheck --if-present
+        run: npm run lint
 
       - name: Tests unitaires
         if: steps.detect.outputs.present == 'true'
-        run: npm run test --if-present
+        run: npm run test
 
       - name: Build de production
         if: steps.detect.outputs.present == 'true'
-        run: npm run build --if-present
+        run: npm run build
         env:
           # Valeurs factices : le build ne doit jamais dépendre de vrais secrets.
           NEXT_PUBLIC_SITE_URL: https://example.org
           NEXT_PUBLIC_ALLOW_INDEXING: 'false'
 
+      - name: Vérification des types
+        if: steps.detect.outputs.present == 'true'
+        run: npm run typecheck
+
+      - name: Installer Chromium pour les tests navigateur
+        if: steps.detect.outputs.present == 'true'
+        run: npx playwright install --with-deps chromium
+
+      - name: Parcours navigateur et accessibilité
+        if: steps.detect.outputs.present == 'true'
+        run: npm run test:e2e
+
       - name: Audit des dépendances
         if: steps.detect.outputs.present == 'true'
-        run: npm audit --audit-level=high || echo "::warning::Vulnérabilités détectées — à traiter sous 30 jours."
+        run: npm audit --audit-level=high
 
   # ---------------------------------------------------------------------------
   # 3. Garde-fou : aucun secret ni donnée personnelle dans le dépôt

@@ -1,5 +1,16 @@
 # Contribuer au site de SJCD ASBL
 
+> **Mise à jour — 28/09/2026.** Ce document conserve le cadrage initial, antérieur au
+> nouveau brief. Pour l’état livré et les arbitrages actuels, lire
+> [la direction Lumière](docs/08_Direction_Lumiere.md) et le README. Identité confirmée par l’utilisateur :
+> **Sanctuaire de Jeunes Chandelier pour le Développement (SJCD ASBL), RDC**.
+> D1 reste partiellement ouvert (registre, siège), D2 est renseigné ; D7 est une proposition.
+> Nunito remplace Newsreader/Inter. Le motion adaptatif remplace les interdictions générales
+> du premier cadrage. Le CMS, l’envoi d’e-mails et les dons ne sont pas implémentés.
+> Les considérations juridiques anciennes sont des pistes, pas un avis applicable à SJCD :
+> vérifier le droit congolais, le registre compétent et l’applicabilité du RGPD.
+
+
 Merci de contribuer. Ce dépôt porte le **site institutionnel officiel** de SJCD ASBL :
 la qualité perçue engage directement la crédibilité de l'association auprès des
 partenaires, bailleurs et donateurs. Chaque contribution doit donc servir trois

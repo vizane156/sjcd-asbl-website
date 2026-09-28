@@ -1,64 +1,11 @@
-# Licence et propriété intellectuelle — SJCD ASBL
+Décision de licence en attente — SJCD ASBL
 
-> **STATUT : PROPOSITION — À VALIDER PAR SJCD.**
-> Ce fichier n'est pas une licence définitive. Il documente la décision à prendre
-> et propose un texte par défaut. Voir la décision **D11** dans `docs/01_PRD.md`.
+Aucune licence de réutilisation ni cession de droits n’est accordée par ce fichier.
+Les ayants droit et le régime du code et des contenus doivent être confirmés par SJCD
+(décision D11). La publication du dépôt ne suffit pas à établir la propriété du code.
 
-## Pourquoi ce fichier existe
+Les dépendances et les polices restent soumises à leurs licences propres, disponibles
+dans les paquets installés. Nunito est distribuée sous SIL Open Font License 1.1.
 
-Le dépôt ne contenait aucune licence, ce qui laissait le régime juridique du code
-indéterminé. Or la situation est particulière :
-
-- ce n'est **pas** un projet open source : c'est le site institutionnel officiel
-  d'une organisation, qui engage son image, sa responsabilité et ses données ;
-- **mais** il pourra être repris par des prestataires, des bénévoles ou des
-  développeurs successifs, qui ont besoin de savoir à quelles conditions.
-
-## Décision à prendre (D11)
-
-| Option | Description | Recommandation |
-|---|---|---|
-| **A. Propriétaire (tous droits réservés)** | Le code appartient à SJCD ASBL. Toute réutilisation ou modification par un tiers requiert une autorisation écrite. | ✅ **Recommandée par défaut** : cohérent avec un site institutionnel dont la marque et les contenus sont sensibles. |
-| **B. Copyleft (AGPL-3.0)** | Le code est réutilisable par d'autres ASBL, à condition de partager les modifications. | ⚠️ À éviter ici : l'AGPL impose des obligations si le site est exploité en réseau, ce qui peut décourager des prestataires. |
-| **C. Permissive (MIT)** | Réutilisation libre, y compris commerciale, sans garantie. | ⚠️ Peu adapté : aucune protection de l'identité visuelle ni du contenu. |
-| **D. Ouverture partielle** | Code propriétaire, mais composants génériques (design system) publiés séparément. | 💡 Meilleur compromis si SJCD souhaite rayonner sans céder son site. |
-
-## Recommandation : option A, avec distinction code / contenu
-
-Il est essentiel de séparer deux objets de propriété, souvent confondus :
-
-| Objet | Détenteur | Régime proposé |
-|---|---|---|
-| **Code source** (composants, configuration, scripts) | SJCD ASBL (ou son prestataire, par cession écrite) | Propriétaire — option A |
-| **Contenus** (textes, photos, témoignages, rapports, logo) | SJCD ASBL et/ou ayants droit identifiés | Propriétaire, **avec droits à l'image et autorisations de tiers obligatoires** |
-| **Police de caractères** | Fondeurs (Google Fonts, autres) | Licence tierce — à respecter, non revendiquée par SJCD |
-| **Dépendances logicielles** | Communauté open source | Licences tierces respectées |
-
-⚠️ **Point de vigilance juridique** : la propriété du code rédigé par un prestataire
-ne se présume pas. Si un freelance ou une agence développe le site, **une clause de
-cession de droits écrite est nécessaire** pour que SJCD en soit propriétaire.
-
-## Proposition de mention de licence (option A)
-
-```
-Copyright (c) 2026 SJCD ASBL — Tous droits réservés.
-
-Ce logiciel et son code source constituent un élément du patrimoine de l'association
-SJCD ASBL. Toute reproduction, modification, distribution ou utilisation, totale ou
-partielle, par quelque procédé que ce soit, est interdite sans autorisation écrite
-préalable de SJCD ASBL.
-
-Les contenus éditoriaux, photographies, éléments graphiques et marques présents dans
-ce dépôt demeurent la propriété de leurs détenteurs respectifs.
-
-Les bibliothèques et dépendances tierces intégrées restent soumises à leurs propres
-licences, consultables dans le fichier de dépendances du projet.
-```
-
-## Avant publication, il faudra
-
-- [ ] Obtenir la validation écrite du conseil d'administration de SJCD sur l'option retenue. `TODO(SJCD)`
-- [ ] Insérer la dénomination légale exacte et l'adresse du siège. `TODO(SJCD)` — voir D1/D2
-- [ ] Vérifier que chaque contributeur (prestataire, bénévole) a cédé ses droits par écrit.
-- [ ] Recenser les licences des dépendances et vérifier leur compatibilité.
-- [ ] Idem pour les polices auto-hébergées : conserver la trace des licences.
+Le choix d’une licence logicielle ne remplace pas les autorisations de droit à l’image,
+les droits sur les marques, ni les accords nécessaires pour les contenus de tiers.

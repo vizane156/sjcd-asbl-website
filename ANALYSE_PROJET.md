@@ -1,5 +1,16 @@
 # Analyse approfondie — `sjcd-asbl-website`
 
+> **Mise à jour — 28/09/2026.** Ce document conserve le cadrage initial, antérieur au
+> nouveau brief. Pour l’état livré et les arbitrages actuels, lire
+> [la direction Lumière](docs/08_Direction_Lumiere.md) et le README. Identité confirmée par l’utilisateur :
+> **Sanctuaire de Jeunes Chandelier pour le Développement (SJCD ASBL), RDC**.
+> D1 reste partiellement ouvert (registre, siège), D2 est renseigné ; D7 est une proposition.
+> Nunito remplace Newsreader/Inter. Le motion adaptatif remplace les interdictions générales
+> du premier cadrage. Le CMS, l’envoi d’e-mails et les dons ne sont pas implémentés.
+> Les considérations juridiques anciennes sont des pistes, pas un avis applicable à SJCD :
+> vérifier le droit congolais, le registre compétent et l’applicabilité du RGPD.
+
+
 > Audit réalisé le **28 septembre 2026** sur le dépôt `vizane156/sjcd-asbl-website`,
 > branche `arena/01a0e887-sjcd-asbl-website` (basée sur `main` @ `ed0c100`).
 

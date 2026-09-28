@@ -1,12 +1,20 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$description": "Modèle de contenu du site SJCD ASBL — contrat entre l'éditorial et le code. Traduction technique de docs/04_Content_CMS.md. Les règles de validation V1 à V10 y sont exprimées comme contraintes : elles doivent être IMPLÉMENTÉES dans le CMS, pas seulement documentées. Un modèle non contraint ne produit aucun gain.",
   "meta": {
     "name": "SJCD ASBL — Content Model",
     "version": "1.0.0",
     "updatedAt": "2026-09-28",
     "platform": "TODO(SJCD) — décision D6 : CMS headless hébergé (recommandé), Payload, ou repli Git-based",
-    "principle": "Le CMS doit rendre le bon contenu facile et le mauvais contenu difficile. Si publier un chiffre non sourcé est plus simple que publier un chiffre sourcé, c'est le modèle qui est fautif."
+    "principle": "Le CMS doit rendre le bon contenu facile et le mauvais contenu difficile. Si publier un chiffre non sourcé est plus simple que publier un chiffre sourcé, c'est le modèle qui est fautif.",
+    "status": "Modèle CMS descriptif historique — non implémenté, pas un JSON Schema exécutable",
+    "confirmedIdentity": {
+      "name": "Sanctuaire de Jeunes Chandelier pour le Développement",
+      "country": "République démocratique du Congo",
+      "legalForm": "ASBL",
+      "source": "Brief utilisateur du 28/09/2026"
+    },
+    "runtimeSource": "lib/content.ts + lib/pages.ts",
+    "note": "Les types, locales, règles et obligations historiques sont à réviser avant intégration CMS. Aucun export de données privées dans le dépôt public."
   },
 
   "sharedTypes": {
