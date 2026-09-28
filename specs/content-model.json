@@ -1,0 +1,394 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$description": "Modèle de contenu du site SJCD ASBL — contrat entre l'éditorial et le code. Traduction technique de docs/04_Content_CMS.md. Les règles de validation V1 à V10 y sont exprimées comme contraintes : elles doivent être IMPLÉMENTÉES dans le CMS, pas seulement documentées. Un modèle non contraint ne produit aucun gain.",
+  "meta": {
+    "name": "SJCD ASBL — Content Model",
+    "version": "1.0.0",
+    "updatedAt": "2026-09-28",
+    "platform": "TODO(SJCD) — décision D6 : CMS headless hébergé (recommandé), Payload, ou repli Git-based",
+    "principle": "Le CMS doit rendre le bon contenu facile et le mauvais contenu difficile. Si publier un chiffre non sourcé est plus simple que publier un chiffre sourcé, c'est le modèle qui est fautif."
+  },
+
+  "sharedTypes": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "maxLength": 80,
+      "description": "Minuscules, chiffres et tirets uniquement. Immuable après publication (V6) sauf redirection créée."
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 40,
+      "maxLength": 180,
+      "description": "Résumé réutilisé en liste, en carte et en métadonnée SEO (V1)."
+    },
+    "localizedText": {
+      "type": "object",
+      "description": "Texte multilingue prêt, non activé tant que D5 n'est pas tranché. Clé 'fr' obligatoire.",
+      "properties": {
+        "fr": { "type": "string" }
+      },
+      "required": ["fr"]
+    },
+    "richText": {
+      "type": "array",
+      "description": "Portable Text ou équivalent. Aucun HTML brut autorisé pour réduire le risque d'injection.",
+      "items": { "type": "object" }
+    },
+    "image": {
+      "type": "object",
+      "properties": {
+        "asset": { "type": "string" },
+        "alt": { "type": "string", "minLength": 5, "description": "Alternatif descriptif et utile. Jamais « image », jamais « photo de », jamais le nom du fichier." },
+        "caption": { "type": "string" },
+        "credit": { "type": "string" },
+        "width": { "type": "integer" },
+        "height": { "type": "integer" },
+        "consentRef": { "type": "string", "description": "OBLIGATOIRE si une personne est identifiable (V5)." }
+      },
+      "required": ["asset", "alt", "width", "height"]
+    },
+    "file": {
+      "type": "object",
+      "properties": {
+        "asset": { "type": "string" },
+        "format": { "type": "string", "enum": ["pdf", "docx", "xlsx", "csv"] },
+        "sizeBytes": { "type": "integer" },
+        "language": { "type": "string" },
+        "accessibleVersionUrl": { "type": "string", "description": "Alternative HTML pour un PDF non balisé." },
+        "publishedAt": { "type": "string", "format": "date" }
+      },
+      "required": ["asset", "format", "sizeBytes", "publishedAt"]
+    },
+    "seo": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 60 },
+        "description": { "type": "string", "maxLength": 160 },
+        "shareImage": { "type": "string" },
+        "noindex": { "type": "boolean", "default": false }
+      },
+      "description": "Si absent, les valeurs sont dérivées du titre et du résumé."
+    },
+    "sourceRef": {
+      "type": "object",
+      "description": "Référence vérifiable d'une donnée factuelle. Obligatoire pour tout chiffre publié.",
+      "properties": {
+        "label": { "type": "string" },
+        "kind": { "type": "string", "enum": ["report", "registry", "internal-database", "external-publication", "field-survey", "accounting"] },
+        "url": { "type": "string" },
+        "documentRef": { "type": "string" },
+        "consultedAt": { "type": "string", "format": "date" }
+      },
+      "required": ["label", "kind"]
+    }
+  },
+
+  "transversalFields": {
+    "$description": "Champs portés par TOUT document éditorial. Colonne vertébrale de la traçabilité du site.",
+    "_id": { "type": "string", "required": true },
+    "title": { "type": "string", "required": true, "maxLength": 120 },
+    "slug": { "type": "slug", "required": true, "appliesTo": "collections" },
+    "locale": { "type": "string", "required": true, "enum": ["fr", "nl", "en"], "default": "fr" },
+    "status": { "type": "string", "required": true, "enum": ["draft", "review", "published", "archived"], "default": "draft" },
+    "summary": { "type": "summary", "required": true },
+    "seo": { "type": "seo", "required": false },
+    "lastReviewedAt": { "type": "string", "format": "date", "required": true, "description": "Date de dernière VÉRIFICATION de l'exactitude, distincte de la date de modification (V9)." },
+    "sourceRefs": { "type": "array", "items": "sourceRef", "required": "if-any-claim", "description": "Obligatoire dès qu'un fait chiffré est publié." },
+    "consentRef": { "type": "string", "required": "if-identifiable-person", "description": "Référence archivée de l'autorisation écrite." },
+    "internalNotes": { "type": "richText", "required": false, "description": "Jamais publié." }
+  },
+
+  "singletons": {
+    "siteSettings": {
+      "description": "Identité légale, coordonnées et textes globaux. Source des mentions du pied de page.",
+      "fields": {
+        "legalName": { "type": "string", "required": true, "status": "TODO(SJCD) — D1/D2" },
+        "acronymMeaning": { "type": "string", "status": "TODO(SJCD) — D2 : que signifie « SJCD » ?" },
+        "legalForm": { "type": "string", "status": "TODO(SJCD) — D1 : ASBL de quel pays (Belgique / Luxembourg / RDC) ?" },
+        "registrationNumber": { "type": "string", "status": "TODO(SJCD) — D1 : numéro BCE/KBO ou RCCM" },
+        "registrationDate": { "type": "string", "format": "date", "status": "TODO(SJCD)" },
+        "registeredOffice": {
+          "type": "object",
+          "properties": {
+            "street": { "type": "string" },
+            "postalCode": { "type": "string" },
+            "city": { "type": "string" },
+            "country": { "type": "string" }
+          },
+          "status": "TODO(SJCD) — D1"
+        },
+        "contactEmail": { "type": "string", "format": "email", "status": "TODO(SJCD)" },
+        "contactPhone": { "type": "string", "status": "TODO(SJCD) — format international" },
+        "contactHours": { "type": "string", "status": "TODO(SJCD)" },
+        "publishingResponsible": { "type": "string", "status": "TODO(SJCD) — D9 : nom et qualité du responsable éditorial" },
+        "securityContact": { "type": "string", "status": "TODO(SJCD)" },
+        "privacyContact": { "type": "string", "status": "TODO(SJCD)" },
+        "officialProfiles": { "type": "array", "items": "string", "description": "Profils officiels (sameAs) pour les données structurées et la maîtrise de marque." },
+        "logo": { "type": "image", "status": "TODO(SJCD) — D7" },
+        "logoMark": { "type": "image", "status": "TODO(SJCD) — D7 : version monochrome" },
+        "primaryAction": { "type": "string", "enum": ["partenariat", "don", "benevolat"], "status": "TODO(SJCD) — D8 : objectif prioritaire" },
+        "primaryActionLabel": { "type": "string", "status": "TODO(SJCD) — D8" },
+        "footerLegalLine": { "type": "string", "description": "Générée depuis les champs ci-dessus. Aucune saisie libre." }
+      }
+    },
+    "navigation": {
+      "description": "Structure des menus. 5 entrées maximum en en-tête : la lisibilité prime sur l'exhaustivité.",
+      "fields": {
+        "headerItems": { "type": "array", "maxItems": 5, "items": { "label": "string", "href": "string", "order": "integer" } },
+        "footerGroups": { "type": "array" },
+        "legalItems": { "type": "array", "description": "Mentions légales, confidentialité, accessibilité, plan du site." }
+      }
+    },
+    "homePage": {
+      "description": "Contenu de l'accueil, structuré par sections conformément à docs/02 §4.1.",
+      "fields": {
+        "announcementBar": { "type": "object", "required": false, "properties": { "text": "string", "href": "string", "dismissible": { "type": "boolean", "default": true } } },
+        "hero": {
+          "type": "object",
+          "required": true,
+          "properties": {
+            "headline": { "type": "string", "maxLength": 70, "description": "≤ 10 mots. Un seul titre display-xl par page." },
+            "subheadline": { "type": "string", "maxLength": 200 },
+            "image": { "type": "image" },
+            "primaryCta": { "type": "object" },
+            "secondaryCta": { "type": "object" }
+          },
+          "status": "TODO(SJCD) — D3 : affirmation en une phrase"
+        },
+        "featuredMetrics": { "type": "array", "minItems": 3, "maxItems": 4, "items": "ref:impactMetric", "status": "TODO(SJCD) — D4 — BLOQUANT", "description": "RÉFÉRENCES, jamais de valeurs saisies en texte libre. Modifier un chiffre se fait à un seul endroit." },
+        "aboutIntro": { "type": "richText", "maxWords": 150, "status": "TODO(SJCD) — D3" },
+        "featuredPrograms": { "type": "array", "minItems": 3, "maxItems": 3, "items": "ref:program", "status": "TODO(SJCD) — D3" },
+        "institutionalProof": { "type": "object", "description": "Bandeau discret issu de siteSettings, non saisi ici." },
+        "testimonials": { "type": "array", "maxItems": 3, "items": "ref:testimonial", "status": "TODO(SJCD) — consentements requis" },
+        "partners": { "type": "array", "items": "ref:partner", "rule": "Section SUPPRIMÉE si aucun partenaire autorisé. Jamais de faux logo (V4)." },
+        "finalCta": { "type": "array", "minItems": 2, "maxItems": 3, "items": { "label": "string", "href": "string", "variant": "string" } }
+      }
+    },
+    "aboutPage": {
+      "fields": {
+        "missionOfficial": { "type": "richText", "status": "TODO(SJCD) — D3 : objet social tel qu'il figure aux statuts" },
+        "missionPlain": { "type": "richText", "status": "TODO(SJCD) — reformulation claire pour un non-spécialiste" },
+        "history": { "type": "array", "items": "ref:milestone", "status": "TODO(SJCD)" },
+        "values": { "type": "array", "minItems": 3, "maxItems": 5, "items": { "name": "string", "definition": "string" }, "rule": "Chaque valeur porte une définition OPÉRATIONNELLE concrète. Une liste de mots abstraits est refusée.", "status": "TODO(SJCD)" },
+        "geographicScope": { "type": "array", "items": "string", "status": "TODO(SJCD) — zones d'intervention nommées" },
+        "governance": { "type": "richText", "status": "TODO(SJCD) — D9 : organes, mandats, principe de non-lucrativité" },
+        "team": { "type": "array", "items": "ref:person", "status": "TODO(SJCD)" },
+        "transparency": {
+          "type": "object",
+          "properties": {
+            "statutes": { "type": "file" },
+            "latestAnnualReport": { "type": "ref:report" },
+            "accountsPublished": { "type": "boolean", "status": "TODO(SJCD) — les comptes sont-ils publiables ?" },
+            "accountsStatement": { "type": "string", "description": "Si les comptes ne sont pas publiables, formuler honnêtement : « disponibles sur demande ». NE JAMAIS laisser croire à une publication inexistante — le site promet la transparence." }
+          }
+        }
+      }
+    },
+    "impactPage": {
+      "fields": {
+        "metrics": { "type": "array", "items": "ref:impactMetric", "status": "TODO(SJCD) — D4 — BLOQUANT" },
+        "methodology": { "type": "richText", "required": true, "status": "TODO(SJCD)", "description": "Comment les chiffres sont obtenus, et ce qu'ils ne disent pas. Section rare et très crédibilisante : à ne pas omettre." },
+        "byProgram": { "type": "array", "description": "Dérivé automatiquement des impactMetric rattachés aux programmes." },
+        "byLocation": { "type": "array" },
+        "trends": { "type": "array", "description": "Comparaison N/N-1/N-2 avec explication des variations." },
+        "reports": { "type": "array", "items": "ref:report" },
+        "impactStories": { "type": "array", "maxItems": 3, "items": "richText", "status": "TODO(SJCD) — récits documentés, dignes, avec consentement" }
+      }
+    },
+    "partnershipPage": {
+      "fields": {
+        "valueProposition": { "type": "richText", "status": "TODO(SJCD)" },
+        "profiles": { "type": "array", "items": { "profile": "string", "pitch": "richText", "benefits": "array" }, "description": "Institutionnel/bailleur, entreprise/mécénat, ONG/opérateur, collectivité.", "status": "TODO(SJCD)" },
+        "collaborationFormats": { "type": "array", "items": "string", "status": "TODO(SJCD)" },
+        "whatWeBring": { "type": "richText", "status": "TODO(SJCD)" },
+        "whatWeExpect": { "type": "richText", "status": "TODO(SJCD)" },
+        "process": { "type": "array", "items": { "step": "integer", "title": "string", "description": "string" }, "status": "TODO(SJCD)" },
+        "partnershipDeck": { "type": "file", "status": "TODO(SJCD) — dossier de partenariat PDF" }
+      }
+    },
+    "contactPage": {
+      "fields": {
+        "coordinateBlock": { "type": "ref:siteSettings", "description": "Dérivé, non saisi." },
+        "formEnabled": { "type": "boolean", "default": true },
+        "locatorText": { "type": "richText", "status": "TODO(SJCD)" },
+        "receptionHours": { "type": "string", "status": "TODO(SJCD)" },
+        "mapEmbed": { "type": "object", "rule": "AUCUNE carte interactive chargée avant consentement (RGPD). Référence : docs/06 §5.3." }
+      }
+    }
+  },
+
+  "collections": {
+    "program": {
+      "description": "Un document par programme. Structure FIXE en 7 blocs (docs/02 §4.3) pour permettre la comparaison entre programmes.",
+      "url": "/programmes/[slug]",
+      "fields": {
+        "name": { "type": "string", "required": true, "status": "TODO(SJCD) — D3" },
+        "resume": { "type": "string", "required": true, "maxLength": 200, "description": "Une phrase : le problème traité et le résultat obtenu." },
+        "domain": { "type": "string", "required": true },
+        "location": { "type": "array", "items": "string", "required": true },
+        "beneficiaries": { "type": "string", "required": true },
+        "status": { "type": "string", "enum": ["en-cours", "cloture", "a-venir"], "required": true },
+        "theProblem": { "type": "richText", "required": true, "description": "Contexte documenté, chiffré si possible, sourcé." },
+        "ourResponse": { "type": "richText", "required": true },
+        "audience": { "type": "richText", "required": true, "description": "Qui est accompagné, combien, où, avec quels critères d'accès." },
+        "results": { "type": "array", "items": "ref:impactMetric", "required": true, "description": "Indicateurs datés et sourcés. Mentionner les résultats partiels ou négatifs — c'est un signal de sérieux." },
+        "period": { "type": "object", "properties": { "start": "date", "end": "date" }, "required": true },
+        "fundingSources": { "type": "array", "items": "string", "status": "TODO(SJCD) — si publiable" },
+        "outlook": { "type": "richText", "required": true, "description": "Ce qui suit, ce qui manque, ce qui pourrait être amplifié." },
+        "heroImage": { "type": "image", "required": false }
+      }
+    },
+
+    "impactMetric": {
+      "description": "LA collection la plus sensible du site. Règle de vérité : un indicateur sans période ni méthode de comptage n'est pas publiable. C'est cette contrainte qui justifie le passage à un CMS structuré.",
+      "fields": {
+        "label": { "type": "string", "required": true, "maxLength": 80, "description": "Formulation publique. Une phrase." },
+        "value": { "type": "string", "required": true, "description": "Nombre ou texte court. JAMAIS de valeur approximative présentée comme exacte." },
+        "unit": { "type": "string", "required": true, "enum-suggestion": ["personnes", "menages", "structures", "pourcentage", "heures", "euros", "fcfa", "tonnes", "sessions", "participants"] },
+        "period": { "type": "string", "required": true, "description": "JAMAIS implicite. Ex. « année 2025 », « janvier–décembre 2025 »." },
+        "periodEnd": { "type": "string", "format": "date", "required": true, "description": "Date de fin de la période de référence, affichée publiquement." },
+        "scope": { "type": "string", "required": true, "enum": ["organisation", "programme", "zone"] },
+        "programRef": { "type": "ref:program", "required": false },
+        "methodology": { "type": "richText", "required": true, "description": "OBLIGATOIRE. Comment ce chiffre a été obtenu : source, outil, périmètre, échantillon." },
+        "sourceRefs": { "type": "array", "items": "sourceRef", "required": true, "minItems": 1 },
+        "limitations": { "type": "richText", "required": false, "description": "Ce que le chiffre ne dit pas. Documenter les limites renforce la crédibilité." },
+        "verifiedBy": { "type": "string", "required": true, "description": "Qui a validé ce chiffre." },
+        "verifiedAt": { "type": "string", "format": "date", "required": true },
+        "showOnHome": { "type": "boolean", "default": false, "description": "Maximum 4 indicateurs sur l'accueil." },
+        "order": { "type": "integer" }
+      },
+      "validationRule_V2": "PUBLICATION IMPOSSIBLE si valeur, période, méthode ou source manquante."
+    },
+
+    "report": {
+      "description": "Rapports et documents téléchargeables — bibliothèque de preuves (N3).",
+      "fields": {
+        "title": { "type": "string", "required": true },
+        "kind": { "type": "string", "required": true, "enum": ["rapport-annuel", "rapport-activite", "comptes", "statuts", "etude", "autre"] },
+        "year": { "type": "integer", "required": true },
+        "file": { "type": "file", "required": true },
+        "summary": { "type": "summary", "required": true },
+        "publishedAt": { "type": "string", "format": "date", "required": true }
+      },
+      "validationRule": "Les PDF doivent être balisés, avec titre et langue renseignés — sinon fournir une alternative HTML (accessibilité)."
+    },
+
+    "testimonial": {
+      "fields": {
+        "quote": { "type": "string", "required": true, "maxLength": 400 },
+        "authorName": { "type": "string", "required": true },
+        "authorRole": { "type": "string", "required": true },
+        "authorLocation": { "type": "string", "required": false },
+        "portrait": { "type": "image", "required": false },
+        "consentRef": { "type": "string", "required": true, "description": "OBLIGATOIRE pour publier (V3). Pour un mineur : accord du représentant légal ET assentiment de l'enfant." },
+        "consentObtainedAt": { "type": "string", "format": "date", "required": true },
+        "relatedProgram": { "type": "ref:program", "required": false }
+      },
+      "validationRule_V3": "PUBLICATION IMPOSSIBLE sans consentRef renseigné."
+    },
+
+    "partner": {
+      "fields": {
+        "name": { "type": "string", "required": true },
+        "category": { "type": "string", "required": true, "enum": ["institutionnel", "entreprise", "ong", "collectivite", "academique"] },
+        "logo": { "type": "image", "required": false },
+        "url": { "type": "string", "required": false },
+        "relationshipType": { "type": "string", "required": true },
+        "logoAuthorizationRef": { "type": "string", "required": "if-logo-shown", "description": "OBLIGATOIRE pour afficher un logo (V4) — droit des marques." },
+        "authorizationDate": { "type": "string", "format": "date" },
+        "featured": { "type": "boolean", "default": false }
+      },
+      "validationRule_V4": "AFFICHAGE DU LOGO IMPOSSIBLE sans logoAuthorizationRef."
+    },
+
+    "person": {
+      "description": "Gouvernance et équipe. La crédibilité de la gouvernance est un critère de décision pour un bailleur.",
+      "fields": {
+        "fullName": { "type": "string", "required": true },
+        "role": { "type": "string", "required": true },
+        "organization": { "type": "string", "required": true },
+        "mandateStart": { "type": "string", "format": "date", "required": true },
+        "mandateEnd": { "type": "string", "format": "date", "required": false },
+        "body": { "type": "string", "enum": ["assemblee-generale", "conseil-administration", "equipe-permanente", "benevole"], "required": true },
+        "portrait": { "type": "image", "required": false },
+        "biography": { "type": "richText", "required": false },
+        "order": { "type": "integer" }
+      },
+      "validationRule_V7": "PUBLICATION IMPOSSIBLE sans role, organization et mandateStart."
+    },
+
+    "milestone": {
+      "fields": {
+        "year": { "type": "integer", "required": true },
+        "date": { "type": "string", "format": "date", "required": false },
+        "title": { "type": "string", "required": true, "maxLength": 100 },
+        "description": { "type": "richText", "required": true },
+        "image": { "type": "image", "required": false },
+        "order": { "type": "integer", "required": true }
+      },
+      "validationRule": "Aucune date approximative présentée comme exacte."
+    },
+
+    "newsPost": {
+      "version": "1.1",
+      "fields": {
+        "title": { "type": "string", "required": true },
+        "publishedAt": { "type": "string", "format": "date", "required": true },
+        "updatedAt": { "type": "string", "format": "date", "required": false },
+        "author": { "type": "string", "required": true },
+        "coverImage": { "type": "image", "required": false },
+        "body": { "type": "richText", "required": true },
+        "tags": { "type": "array", "items": "string" },
+        "relatedProgram": { "type": "ref:program", "required": false }
+      }
+    },
+
+    "legalPage": {
+      "fields": {
+        "kind": { "type": "string", "required": true, "enum": ["mentions-legales", "confidentialite", "accessibilite", "cookies"] },
+        "body": { "type": "richText", "required": true },
+        "effectiveDate": { "type": "string", "format": "date", "required": true },
+        "requiresLegalReview": { "type": "boolean", "default": true, "description": "Ces contenus ne sont pas publiés sans validation de SJCD (et d'un conseil juridique pour la vie privée et les dons)." }
+      },
+      "validationRule": "PUBLICATION IMPOSSIBLE si requiresLegalReview est vrai et que la validation n'est pas tracée."
+    },
+
+    "faqItem": {
+      "optional": true,
+      "fields": {
+        "question": { "type": "string", "required": true },
+        "answer": { "type": "richText", "required": true },
+        "category": { "type": "string" },
+        "order": { "type": "integer" }
+      }
+    }
+  },
+
+  "validationRules": {
+    "V1": "summary : 40 à 180 caractères.",
+    "V2": "impactMetric : value, period, methodology et sourceRefs obligatoires. Un chiffre sans période ni source n'est pas publiable.",
+    "V3": "testimonial : consentRef obligatoire pour publier. Protection des personnes.",
+    "V4": "partner : logoAuthorizationRef obligatoire pour afficher un logo. Droit des marques.",
+    "V5": "Toute image de personne identifiable exige consentRef.",
+    "V6": "slug immuable après publication, sauf redirection créée.",
+    "V7": "person : role, organization et mandateStart obligatoires.",
+    "V8": "Toute date publiée est une date réelle du CMS, jamais du texte libre.",
+    "V9": "status=published exige lastReviewedAt de moins de 12 mois. Un contenu périmé repasse en revue.",
+    "V10": "Aucun champ ne peut contenir de données personnelles de bénéficiaire."
+  },
+
+  "complianceNotes": {
+    "rgpd": "Chaque formulaire déclare sa finalité, sa base légale, sa durée de conservation et son responsable. Voir docs/02 §6 et docs/06 §5.2.",
+    "tierceParties": "Tout CMS hébergé est un sous-traitant au sens du RGPD : un accord de traitement des données (DPA) doit être signé et archivé.",
+    "reversibility": "Aucun contenu ne doit exister UNIQUEMENT dans le CMS sans moyen d'export. Export JSON régulier versionné dans /content.",
+    "mediaSafety": "Retirer les métadonnées EXIF (dont la géolocalisation) des photographies avant publication."
+  },
+
+  "referenceDepth": {
+    "$description": "Les trois niveaux de lecture de docs/02 §1. Chaque contenu factuel important doit exister aux trois niveaux.",
+    "N1": "Affirmation — une phrase, un chiffre, un titre. Lecture en 5 secondes.",
+    "N2": "Explication — 2 à 4 paragraphes, une illustration. Lecture en 60 à 90 secondes.",
+    "N3": "Preuve — PDF, rapport, source citée, lien externe. Vérification en 3 à 20 minutes."
+  }
+}
