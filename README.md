@@ -1,11 +1,11 @@
 # SJCD ASBL — une présence institutionnelle, humaine et immersive
 
-**Salon de Jeunes Chandelier pour le Développement** · République démocratique du Congo.
+**Sanctuaire de Jeunes Chandelier pour le Développement** · République démocratique du Congo.
 
 ## Dernière itération — 29/09/2026
 
 Fondations institutionnelles et homepage améliorées **dans l’architecture existante** :
-identité Salon, ancrage Uvira / Sud-Kivu, Nunito Sans, CTA impact/soutien, impact en début
+identité Sanctuaire, ancrage Uvira / Sud-Kivu, Nunito Sans, CTA impact/soutien, impact en début
  de parcours, nouvelles sections territoire, transparence et financement.
 
 [État exact, vérifications et suite des phases](docs/09_Fondations_Institutionnelles.md).
@@ -25,7 +25,8 @@ Le nouveau brief utilisateur remplace les hypothèses du cadrage initial.
 - Mobile, mouvement réduit, appareils modestes et connexions 2G/Save-Data : contenu
   lisible avec défilement natif. Aucune scène WebGL ni vidéo lourde.
 - Menu mobile avec focus contenu, Échap et retour de focus ; galerie horizontale native.
-- Pages institutionnelles, projets, impact, partenariats, actualités, contact et conformité.
+- Pages institutionnelles réelles : qui sommes-nous, programmes, projets, transparence,
+  partenariats, plus impact, actualités, contact et conformité.
 - Contact : **brouillon local**, copie et téléchargement. **Aucun e-mail n’est envoyé.**
 - Pas de CMS, de paiement, d’analytics ni de traceur applicatif.
 - Préproduction non indexable (`noindex` + `robots.txt`). Ce n’est pas un contrôle d’accès.
@@ -66,7 +67,9 @@ Ce chemin n’intervient jamais dans l’application livrée.
 app/                 Homepage, pages statiques, contact, 404, robots
 components/          Navbar, Footer, PageShell, ContactDraft, FlameMark, motion
 lib/content.ts       Identité et emplacements de contenu
-lib/pages.ts         Textes des pages intérieures, explicitement provisoires
+lib/statuts.ts       Vérités institutionnelles extraites des statuts et du RI, sourcées par article
+lib/data/            Gouvernance, programmes, documents, projets, indicateurs, partenariats
+lib/pages.ts         Textes des pages intérieures simples, explicitement provisoires
 specs/design-tokens.json  Source actuelle des variables CSS (v2)
 app/tokens.css       Généré par npm run tokens:build
 scripts/            Génération / contrôle de synchronisation des tokens
@@ -79,17 +82,29 @@ CSS moderne sans Tailwind, composants serveur par défaut. Le mouvement, le menu
 brouillon local sont isolés dans de petits composants clients. Aucun besoin d’installer
 plusieurs moteurs de transitions ou une bibliothèque 3D pour cette première version.
 
-## Documents administratifs
+## Documents administratifs — source de vérité
 
 Les documents institutionnels de SJCD sont regroupés dans `documents/administratifs/` :
 
 - [Statuts — version professionnelle 2026](documents/administratifs/STATUTS_SJCD_ASBL_Version_Professionnelle_2026.pdf)
 - [Règlement intérieur — version professionnelle 2026](documents/administratifs/REGLEMENT_INTERIEUR_SJCD_ASBL_Version_Professionnelle_2026.pdf)
 
-Il s’agit de **propositions de rédaction à faire valider** par SJCD et par un conseil
-juridique, pas de textes déposés ni opposables. Ils ne sont pas servis par l’application :
-ce dossier est du docs-as-code, distinct de `app/` et de tout contenu publié. La publication
-de ces fichiers sur le site reste une décision de la phase « Avant publication ».
+Ces deux textes sont la **source principale de vérité** du contenu institutionnel. Leur
+analyse article par article est consignée dans
+[docs/11 — Analyse des statuts et du règlement intérieur](docs/11_Analyse_Statuts_RI.md) :
+ce qui est documenté, ce qui peut être synthétisé, ce qui manque, ce qui ne doit pas être
+inventé, et les contradictions à trancher avant publication.
+
+Chaque affirmation institutionnelle du site cite son article (`S art. 6`, `RI art. 36`…). Ce
+qui n’est pas documenté est affiché comme manquant, jamais complété : aucun projet, chiffre
+d’impact, partenaire, financement, certification ni statut juridique n’est inventé. Des tests
+automatisés verrouillent ces règles (`npm test`).
+
+Ces documents sont des **propositions de rédaction à faire valider** par SJCD et par un
+conseil juridique, pas des textes déposés ni opposables : leur adoption formelle, leur
+notarisation et leur dépôt ne sont pas attestés. Ils ne sont pas servis par l’application —
+ce dossier est du docs-as-code, distinct de `app/` et de tout contenu publié — et aucun
+téléchargement n’est exposé sur `/transparence`.
 
 ## Design et documentation
 
@@ -97,6 +112,7 @@ de ces fichiers sur le site reste une décision de la phase « Avant publication
 - [Design system actuel](docs/03_UX_UI_Design_System.md)
 - [Architecture actuelle](docs/05_Technical_Architecture.md)
 - [Recette et suites](docs/07_Roadmap_QA.md)
+- [Analyse des statuts et du règlement intérieur](docs/11_Analyse_Statuts_RI.md)
 - [Tokens](specs/design-tokens.json)
 
 Les autres documents conservent les propositions de la phase documentaire, signalées

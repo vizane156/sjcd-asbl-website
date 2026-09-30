@@ -29,10 +29,10 @@ test('menu mobile : focus enfermé, Échap, ancre et redimensionnement', async (
   await expect(dialog).not.toBeVisible();
   await expect(open).toBeFocused();
   await open.click();
-  await dialog.getByRole('link', { name: 'Programmes & Projets', exact: true }).click();
+  await dialog.getByRole('link', { name: 'Programmes', exact: true }).click();
   await expect(dialog).not.toBeVisible();
-  await expect(page).toHaveURL(/#domaines$/);
-  await expect(page.locator('#domaines')).toBeFocused();
+  await expect(page).toHaveURL(/\/programmes$/);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Six domaines');
   await open.click();
   await page.setViewportSize({ width: 1440, height: 900 });
   await expect(dialog).not.toBeVisible();
@@ -63,7 +63,7 @@ test('brouillon local : validation, aucun POST, copie et téléchargement', asyn
 
 test('accessibilité des pages intérieures, liens, noindex et vraie 404', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  const routes = ['/qui-sommes-nous','/programmes','/projets','/impact','/devenir-partenaire','/actualites','/mentions-legales','/confidentialite','/accessibilite','/plan-du-site','/contact'];
+  const routes = ['/qui-sommes-nous','/programmes','/projets','/transparence','/partenariats','/impact','/actualites','/mentions-legales','/confidentialite','/accessibilite','/plan-du-site','/contact'];
   for (const route of routes) {
     expect((await page.goto(route))?.status()).toBe(200);
     await expect(page.locator('h1')).toHaveCount(1);
@@ -80,8 +80,8 @@ test('lecture sans JavaScript et navigation native', async ({ browser }) => {
   await expect(page.locator('h1')).toBeVisible();
   expect(await page.locator('.intro__statement .w').first().evaluate(el => getComputedStyle(el).opacity)).toBe('1');
   await expect(page.getByRole('navigation', { name: 'Navigation sans JavaScript' })).toBeVisible();
-  await page.getByRole('navigation', { name: 'Navigation sans JavaScript' }).getByRole('link', { name: 'Impact' }).click();
-  await expect(page).toHaveURL(/#impact$/);
+  await page.getByRole('navigation', { name: 'Navigation sans JavaScript' }).getByRole('link', { name: 'Transparence' }).click();
+  await expect(page).toHaveURL(/\/transparence$/);
   await context.close();
 });
 
@@ -103,7 +103,7 @@ test('GSAP et Lenis desktop, annulation dynamique du mouvement', async ({ page }
 
 test('nouveau brief : identité, ordre narratif, accès soutien et preuves manquantes', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('h1')).toContainText('Salon de Jeunes');
+  await expect(page.locator('h1')).toContainText('Sanctuaire de Jeunes');
   await expect(page.getByRole('heading', { name: 'À Uvira, au plus près des communautés.' })).toBeVisible();
   const sections = await page.locator('main > section').evaluateAll(nodes => nodes.map(node => node.id));
   expect(sections.indexOf('impact')).toBeLessThan(sections.indexOf('introduction'));

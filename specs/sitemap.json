@@ -37,23 +37,61 @@
     },
     "runtimeStatus": "Navigation interne à la homepage + pages de cadrage statiques ; aucun projet ou article détaillé non fourni."
   },
-
   "navigation": {
     "header": {
-      "maxItems": 5,
-      "rationale": "La lisibilité prime sur l'exhaustivité.",
+      "maxItems": 8,
+      "rationale": "Navigation institutionnelle demandée par SJCD : accueil, qui sommes-nous, programmes, projets, transparence, partenariats, actualités, contact. Remplace la limite de cinq entrées du cadrage initial.",
       "items": [
-        { "label": "Qui sommes-nous", "href": "/qui-sommes-nous", "order": 1 },
-        { "label": "Programmes", "href": "/programmes", "order": 2 },
-        { "label": "Impact", "href": "/impact", "order": 3 },
-        { "label": "Devenir partenaire", "href": "/devenir-partenaire", "order": 4 }
+        {
+          "label": "Accueil",
+          "href": "/",
+          "order": 0
+        },
+        {
+          "label": "Qui sommes-nous",
+          "href": "/qui-sommes-nous",
+          "order": 1
+        },
+        {
+          "label": "Programmes",
+          "href": "/programmes",
+          "order": 2
+        },
+        {
+          "label": "Projets",
+          "href": "/projets",
+          "order": 3
+        },
+        {
+          "label": "Transparence",
+          "href": "/transparence",
+          "order": 4
+        },
+        {
+          "label": "Partenariats",
+          "href": "/partenariats",
+          "order": 5
+        },
+        {
+          "label": "Actualités",
+          "href": "/actualites",
+          "order": 6
+        },
+        {
+          "label": "Contact",
+          "href": "/contact",
+          "order": 7
+        }
       ],
       "primaryCta": {
         "label": "Contact",
         "href": "/contact",
         "note": "Le libellé et la cible dépendent de la décision D8 (objectif prioritaire). Variantes : « Faire un don » (objectif B), « Nous rejoindre » (objectif D)."
       },
-      "languageSwitcher": { "enabled": false, "condition": "D5" }
+      "languageSwitcher": {
+        "enabled": false,
+        "condition": "D5"
+      }
     },
     "footer": {
       "groups": [
@@ -61,16 +99,33 @@
           "title": "Identité légale",
           "type": "generated",
           "source": "siteSettings",
-          "fields": ["legalName", "legalForm", "registrationNumber", "registeredOffice"],
+          "fields": [
+            "legalName",
+            "legalForm",
+            "registrationNumber",
+            "registeredOffice"
+          ],
           "status": "TODO(SJCD) — D1. OBLIGATION LÉGALE : ces mentions doivent être accessibles depuis toutes les pages."
         },
         {
-          "title": "Navigation",
-          "items": ["/qui-sommes-nous", "/programmes", "/impact", "/devenir-partenaire", "/contact"]
+          "title": "Navigation institutionnelle",
+          "items": [
+            "/qui-sommes-nous",
+            "/programmes",
+            "/projets",
+            "/transparence",
+            "/partenariats",
+            "/actualites"
+          ]
         },
         {
           "title": "Conformité",
-          "items": ["/mentions-legales", "/confidentialite", "/accessibilite", "/plan-du-site"]
+          "items": [
+            "/mentions-legales",
+            "/confidentialite",
+            "/accessibilite",
+            "/plan-du-site"
+          ]
         },
         {
           "title": "Contact",
@@ -80,207 +135,715 @@
       ]
     }
   },
-
   "pages": [
     {
       "id": "home",
       "path": "/",
       "title": "Accueil",
-      "stage": ["1", "2", "3", "4"],
+      "stage": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
       "purpose": "Prouver en 30 secondes que SJCD est sérieux et utile, puis orienter chaque public vers son étage.",
       "sections": [
-        { "id": "announcement", "required": false },
-        { "id": "hero", "required": true, "dependsOn": ["D3", "D7"] },
-        { "id": "impact-stats", "required": true, "dependsOn": ["D4"], "blocking": true, "note": "3 à 4 chiffres, chacun daté et sourcé. Cœur du concept." },
-        { "id": "about-intro", "required": true, "dependsOn": ["D3"] },
-        { "id": "featured-programs", "required": true, "dependsOn": ["D3"] },
-        { "id": "institutional-proof", "required": true, "dependsOn": ["D1"] },
-        { "id": "testimonials", "required": false },
-        { "id": "partners", "required": false, "rule": "Section supprimée si aucun partenaire autorisé. Jamais de faux logo." },
-        { "id": "final-cta", "required": true, "dependsOn": ["D8"] }
+        {
+          "id": "announcement",
+          "required": false
+        },
+        {
+          "id": "hero",
+          "required": true,
+          "dependsOn": [
+            "D3",
+            "D7"
+          ]
+        },
+        {
+          "id": "impact-stats",
+          "required": true,
+          "dependsOn": [
+            "D4"
+          ],
+          "blocking": true,
+          "note": "3 à 4 chiffres, chacun daté et sourcé. Cœur du concept."
+        },
+        {
+          "id": "about-intro",
+          "required": true,
+          "dependsOn": [
+            "D3"
+          ]
+        },
+        {
+          "id": "featured-programs",
+          "required": true,
+          "dependsOn": [
+            "D3"
+          ]
+        },
+        {
+          "id": "institutional-proof",
+          "required": true,
+          "dependsOn": [
+            "D1"
+          ]
+        },
+        {
+          "id": "testimonials",
+          "required": false
+        },
+        {
+          "id": "partners",
+          "required": false,
+          "rule": "Section supprimée si aucun partenaire autorisé. Jamais de faux logo."
+        },
+        {
+          "id": "final-cta",
+          "required": true,
+          "dependsOn": [
+            "D8"
+          ]
+        }
       ],
-      "seo": { "priority": 1.0, "changeFrequency": "monthly" },
-      "schema": ["NGO", "WebSite"]
+      "seo": {
+        "priority": 1.0,
+        "changeFrequency": "monthly"
+      },
+      "schema": [
+        "NGO",
+        "WebSite"
+      ]
     },
     {
       "id": "about",
       "path": "/qui-sommes-nous",
       "title": "Qui sommes-nous",
-      "stage": ["1"],
+      "stage": [
+        "1"
+      ],
       "purpose": "Répondre à « qui êtes-vous, et est-ce sérieux ? ».",
       "sections": [
-        { "id": "mission", "required": true, "dependsOn": ["D3"] },
-        { "id": "history", "required": true },
-        { "id": "values", "required": true, "rule": "Chaque valeur porte une définition opérationnelle concrète." },
-        { "id": "geography", "required": true },
-        { "id": "governance", "required": true, "dependsOn": ["D9"] },
-        { "id": "team", "required": false },
-        { "id": "transparency", "required": true, "dependsOn": ["D1"], "critical": true, "note": "Section la plus discriminante pour un bailleur. Si les comptes ne sont pas publiables, le dire honnêtement : « disponibles sur demande »." },
-        { "id": "support-cta", "required": true, "dependsOn": ["D8"] }
+        {
+          "id": "mission",
+          "required": true,
+          "dependsOn": [
+            "D3"
+          ]
+        },
+        {
+          "id": "history",
+          "required": true
+        },
+        {
+          "id": "values",
+          "required": true,
+          "rule": "Chaque valeur porte une définition opérationnelle concrète."
+        },
+        {
+          "id": "geography",
+          "required": true
+        },
+        {
+          "id": "governance",
+          "required": true,
+          "dependsOn": [
+            "D9"
+          ]
+        },
+        {
+          "id": "team",
+          "required": false
+        },
+        {
+          "id": "transparency",
+          "required": true,
+          "dependsOn": [
+            "D1"
+          ],
+          "critical": true,
+          "note": "Section la plus discriminante pour un bailleur. Si les comptes ne sont pas publiables, le dire honnêtement : « disponibles sur demande »."
+        },
+        {
+          "id": "support-cta",
+          "required": true,
+          "dependsOn": [
+            "D8"
+          ]
+        }
       ],
-      "seo": { "priority": 0.9, "changeFrequency": "yearly" },
-      "schema": ["AboutPage", "BreadcrumbList"]
+      "seo": {
+        "priority": 0.9,
+        "changeFrequency": "yearly"
+      },
+      "schema": [
+        "AboutPage",
+        "BreadcrumbList"
+      ]
     },
     {
       "id": "programs-list",
       "path": "/programmes",
       "title": "Programmes",
-      "stage": ["2"],
+      "stage": [
+        "2"
+      ],
       "purpose": "Montrer le travail réel, de façon vérifiable.",
       "sections": [
-        { "id": "intro", "required": false },
-        { "id": "program-grid", "required": true, "dependsOn": ["D3"] },
-        { "id": "empty-state", "required": true, "note": "État vide correctement traité : expliquer et proposer une action." }
+        {
+          "id": "intro",
+          "required": false
+        },
+        {
+          "id": "program-grid",
+          "required": true,
+          "dependsOn": [
+            "D3"
+          ]
+        },
+        {
+          "id": "empty-state",
+          "required": true,
+          "note": "État vide correctement traité : expliquer et proposer une action."
+        }
       ],
-      "seo": { "priority": 0.8, "changeFrequency": "monthly" },
-      "schema": ["CollectionPage", "BreadcrumbList"]
+      "seo": {
+        "priority": 0.8,
+        "changeFrequency": "monthly"
+      },
+      "schema": [
+        "CollectionPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "id": "projects-list",
+      "path": "/projets",
+      "title": "Projets",
+      "stage": [
+        "2"
+      ],
+      "purpose": "Catalogue institutionnel de projets, avec modèle de fiche complet et quatre statuts.",
+      "sections": [
+        {
+          "id": "catalog",
+          "required": true,
+          "critical": true,
+          "note": "Aucun projet inventé : état institutionnel tant qu'aucun projet n'est documenté."
+        },
+        {
+          "id": "project-model",
+          "required": true,
+          "note": "Titre, résumé, contexte, besoin, objectifs, publics, zone, calendrier, actions prévues et réalisées, résultats, indicateurs, partenaires, financement public, galerie, documents, statut, date de publication."
+        },
+        {
+          "id": "project-lifecycle",
+          "required": true,
+          "note": "Cycle de gestion en huit étapes (RI art. 40) et check-list d'ouverture (RI annexe 2)."
+        }
+      ]
     },
     {
       "id": "program-detail",
       "path": "/programmes/[slug]",
       "title": "Détail d'un programme",
-      "stage": ["2"],
+      "stage": [
+        "2"
+      ],
       "dynamic": true,
       "purpose": "Prouver l'action sur le terrain programme par programme.",
       "fixedStructure": [
-        { "block": 1, "id": "title-resume", "required": true },
-        { "block": 2, "id": "problem", "required": true, "note": "Contexte documenté, chiffré si possible, sourcé." },
-        { "block": 3, "id": "response", "required": true },
-        { "block": 4, "id": "audience", "required": true },
-        { "block": 5, "id": "results", "required": true, "dependsOn": ["D4"], "note": "Mentionner les résultats partiels ou négatifs : signal de sérieux." },
-        { "block": 6, "id": "period-funding", "required": true },
-        { "block": 7, "id": "outlook", "required": true }
+        {
+          "block": 1,
+          "id": "title-resume",
+          "required": true
+        },
+        {
+          "block": 2,
+          "id": "problem",
+          "required": true,
+          "note": "Contexte documenté, chiffré si possible, sourcé."
+        },
+        {
+          "block": 3,
+          "id": "response",
+          "required": true
+        },
+        {
+          "block": 4,
+          "id": "audience",
+          "required": true
+        },
+        {
+          "block": 5,
+          "id": "results",
+          "required": true,
+          "dependsOn": [
+            "D4"
+          ],
+          "note": "Mentionner les résultats partiels ou négatifs : signal de sérieux."
+        },
+        {
+          "block": 6,
+          "id": "period-funding",
+          "required": true
+        },
+        {
+          "block": 7,
+          "id": "outlook",
+          "required": true
+        }
       ],
       "rule": "Structure fixe obligatoire pour tous les programmes, afin de permettre la comparaison.",
-      "seo": { "priority": 0.7, "changeFrequency": "monthly" },
-      "schema": ["BreadcrumbList", "WebPage"]
+      "seo": {
+        "priority": 0.7,
+        "changeFrequency": "monthly"
+      },
+      "schema": [
+        "BreadcrumbList",
+        "WebPage"
+      ]
     },
     {
       "id": "impact",
       "path": "/impact",
       "title": "Impact",
-      "stage": ["2"],
+      "stage": [
+        "2"
+      ],
       "purpose": "La page qu'un bailleur lira en détail : preuves chiffrées, méthodes et redevabilité.",
       "sections": [
-        { "id": "key-metrics", "required": true, "dependsOn": ["D4"], "blocking": true, "note": "Tableau : indicateur, valeur, période, méthode, source." },
-        { "id": "methodology", "required": true, "critical": true, "note": "Comment nous comptons, et les limites assumées. Section rare et très crédibilisante." },
-        { "id": "by-program", "required": true, "dependsOn": ["D3", "D4"] },
-        { "id": "by-location", "required": false },
-        { "id": "trends", "required": false },
-        { "id": "reports", "required": true, "note": "Bibliothèque documentaire (N3)." },
-        { "id": "impact-stories", "required": false }
+        {
+          "id": "key-metrics",
+          "required": true,
+          "dependsOn": [
+            "D4"
+          ],
+          "blocking": true,
+          "note": "Tableau : indicateur, valeur, période, méthode, source."
+        },
+        {
+          "id": "methodology",
+          "required": true,
+          "critical": true,
+          "note": "Comment nous comptons, et les limites assumées. Section rare et très crédibilisante."
+        },
+        {
+          "id": "by-program",
+          "required": true,
+          "dependsOn": [
+            "D3",
+            "D4"
+          ]
+        },
+        {
+          "id": "by-location",
+          "required": false
+        },
+        {
+          "id": "trends",
+          "required": false
+        },
+        {
+          "id": "reports",
+          "required": true,
+          "note": "Bibliothèque documentaire (N3)."
+        },
+        {
+          "id": "impact-stories",
+          "required": false
+        }
       ],
-      "seo": { "priority": 0.9, "changeFrequency": "yearly" },
-      "schema": ["BreadcrumbList", "WebPage", "DigitalDocument"]
+      "seo": {
+        "priority": 0.9,
+        "changeFrequency": "yearly"
+      },
+      "schema": [
+        "BreadcrumbList",
+        "WebPage",
+        "DigitalDocument"
+      ]
     },
     {
       "id": "partnership",
-      "path": "/devenir-partenaire",
-      "title": "Devenir partenaire",
-      "stage": ["3"],
+      "path": "/partenariats",
+      "title": "Partenariats",
+      "stage": [
+        "3"
+      ],
       "purpose": "Cœur de la conversion si l'objectif prioritaire retenu est A (partenariats institutionnels) — D8.",
       "sections": [
-        { "id": "value-proposition", "required": true },
-        { "id": "partner-profiles", "required": true, "note": "Contenu adapté par profil : institutionnel, entreprise, ONG, collectivité." },
-        { "id": "collaboration-formats", "required": true },
-        { "id": "what-we-bring", "required": true },
-        { "id": "what-we-expect", "required": false },
-        { "id": "process", "required": true },
-        { "id": "partnership-deck", "required": false, "note": "PDF téléchargeable (N3). Contenu : présentation, gouvernance, comptes, références." },
-        { "id": "partnership-form", "required": true }
+        {
+          "id": "value-proposition",
+          "required": true
+        },
+        {
+          "id": "partner-profiles",
+          "required": true,
+          "note": "Contenu adapté par profil : institutionnel, entreprise, ONG, collectivité."
+        },
+        {
+          "id": "collaboration-formats",
+          "required": true
+        },
+        {
+          "id": "what-we-bring",
+          "required": true
+        },
+        {
+          "id": "what-we-expect",
+          "required": false
+        },
+        {
+          "id": "process",
+          "required": true
+        },
+        {
+          "id": "partnership-deck",
+          "required": false,
+          "note": "PDF téléchargeable (N3). Contenu : présentation, gouvernance, comptes, références."
+        },
+        {
+          "id": "partnership-form",
+          "required": true
+        }
       ],
-      "seo": { "priority": 0.9, "changeFrequency": "yearly" },
-      "schema": ["BreadcrumbList", "WebPage"]
+      "seo": {
+        "priority": 0.9,
+        "changeFrequency": "yearly"
+      },
+      "schema": [
+        "BreadcrumbList",
+        "WebPage"
+      ]
     },
     {
       "id": "contact",
       "path": "/contact",
       "title": "Contact",
-      "stage": ["4"],
+      "stage": [
+        "4"
+      ],
       "purpose": "Rendre la prise de contact immédiate et conforme.",
       "sections": [
-        { "id": "coordinates", "required": true, "dependsOn": ["D1"] },
-        { "id": "contact-form", "required": true },
-        { "id": "locator", "required": false, "rule": "Aucune carte interactive chargée avant consentement (RGPD)." },
-        { "id": "publishing-responsible", "required": true, "dependsOn": ["D9"] },
-        { "id": "emergency-notice", "required": false }
+        {
+          "id": "coordinates",
+          "required": true,
+          "dependsOn": [
+            "D1"
+          ]
+        },
+        {
+          "id": "contact-form",
+          "required": true
+        },
+        {
+          "id": "locator",
+          "required": false,
+          "rule": "Aucune carte interactive chargée avant consentement (RGPD)."
+        },
+        {
+          "id": "publishing-responsible",
+          "required": true,
+          "dependsOn": [
+            "D9"
+          ]
+        },
+        {
+          "id": "emergency-notice",
+          "required": false
+        }
       ],
-      "seo": { "priority": 0.8, "changeFrequency": "yearly" },
-      "schema": ["ContactPage", "BreadcrumbList"]
+      "seo": {
+        "priority": 0.8,
+        "changeFrequency": "yearly"
+      },
+      "schema": [
+        "ContactPage",
+        "BreadcrumbList"
+      ]
     },
     {
       "id": "legal-notice",
       "path": "/mentions-legales",
       "title": "Mentions légales",
-      "stage": ["1"],
+      "stage": [
+        "1"
+      ],
       "compliance": true,
-      "blockingDependencies": ["D1"],
+      "blockingDependencies": [
+        "D1"
+      ],
       "purpose": "Obligation légale (ASBL) et signal de sérieux.",
-      "seo": { "priority": 0.3, "changeFrequency": "yearly", "indexable": true }
+      "seo": {
+        "priority": 0.3,
+        "changeFrequency": "yearly",
+        "indexable": true
+      }
     },
     {
       "id": "privacy",
       "path": "/confidentialite",
       "title": "Politique de confidentialité",
-      "stage": ["1"],
+      "stage": [
+        "1"
+      ],
       "compliance": true,
       "purpose": "RGPD : information des personnes, droits, sous-traitants, durées de conservation.",
-      "seo": { "priority": 0.3, "changeFrequency": "yearly", "indexable": true }
+      "seo": {
+        "priority": 0.3,
+        "changeFrequency": "yearly",
+        "indexable": true
+      }
     },
     {
       "id": "accessibility",
       "path": "/accessibilite",
       "title": "Déclaration d'accessibilité",
-      "stage": ["1"],
+      "stage": [
+        "1"
+      ],
       "compliance": true,
       "purpose": "Publier le niveau visé (WCAG 2.2 AA), l'état de conformité, les limites connues, la date du dernier audit et un moyen de signaler un problème.",
       "note": "Peu d'organisations en publient une : c'est en soi un signal de sérieux.",
-      "seo": { "priority": 0.3, "changeFrequency": "yearly", "indexable": true }
+      "seo": {
+        "priority": 0.3,
+        "changeFrequency": "yearly",
+        "indexable": true
+      }
     },
     {
       "id": "sitemap-html",
       "path": "/plan-du-site",
       "title": "Plan du site",
       "purpose": "Usabilité et rattrapage de navigation.",
-      "seo": { "priority": 0.2, "changeFrequency": "monthly" }
+      "seo": {
+        "priority": 0.2,
+        "changeFrequency": "monthly"
+      }
+    },
+    {
+      "id": "transparence",
+      "path": "/transparence",
+      "title": "Transparence",
+      "stage": [
+        "1",
+        "2"
+      ],
+      "purpose": "Espace documentaire institutionnel : informations légales, gouvernance, documents, indicateurs et historique de publication.",
+      "sections": [
+        {
+          "id": "legal",
+          "required": true,
+          "note": "Dénomination, sigle, siège, statut juridique selon les documents validés."
+        },
+        {
+          "id": "governance",
+          "required": true,
+          "note": "Organes, structure, mandats, documents institutionnels publics."
+        },
+        {
+          "id": "documents",
+          "required": true,
+          "note": "Huit catégories : statuts, règlement intérieur, procès-verbaux, rapports d'activités, rapports financiers, politiques, documents de projet, autres documents publics."
+        },
+        {
+          "id": "indicators",
+          "required": true,
+          "critical": true,
+          "note": "Méthodologie : période, indicateur, valeur, unité, source, date de mise à jour. Aucun chiffre sans source interne officielle."
+        },
+        {
+          "id": "publication-history",
+          "required": true,
+          "note": "Document, version, date de publication, date de mise à jour."
+        }
+      ]
     }
   ],
-
   "systemPages": [
-    { "id": "not-found", "path": "/404", "title": "Page introuvable", "requirements": ["code HTTP 404 réel (jamais 200)", "expliquer et orienter vers les pages principales", "proposer le contact humain"] },
-    { "id": "error", "path": "error.tsx", "title": "Erreur", "requirements": ["message non technique", "action de reprise", "moyen de contact"] },
-    { "id": "sitemap-xml", "path": "/sitemap.xml", "generated": true, "requirements": ["sans URL noindex", "sans brouillon", "à jour automatiquement"] },
-    { "id": "robots", "path": "/robots.txt", "generated": true, "requirements": ["indexation autorisée en production", "bloquée en prévisualisation et en local"] }
+    {
+      "id": "not-found",
+      "path": "/404",
+      "title": "Page introuvable",
+      "requirements": [
+        "code HTTP 404 réel (jamais 200)",
+        "expliquer et orienter vers les pages principales",
+        "proposer le contact humain"
+      ]
+    },
+    {
+      "id": "error",
+      "path": "error.tsx",
+      "title": "Erreur",
+      "requirements": [
+        "message non technique",
+        "action de reprise",
+        "moyen de contact"
+      ]
+    },
+    {
+      "id": "sitemap-xml",
+      "path": "/sitemap.xml",
+      "generated": true,
+      "requirements": [
+        "sans URL noindex",
+        "sans brouillon",
+        "à jour automatiquement"
+      ]
+    },
+    {
+      "id": "robots",
+      "path": "/robots.txt",
+      "generated": true,
+      "requirements": [
+        "indexation autorisée en production",
+        "bloquée en prévisualisation et en local"
+      ]
+    }
   ],
-
   "plannedVersions": {
     "v1.1": [
-      { "id": "news", "path": "/actualites", "title": "Actualités", "note": "Preuve de vitalité : fraîcheur = signal de crédibilité." },
-      { "id": "reports", "path": "/rapports", "title": "Rapports et publications" },
-      { "id": "support", "path": "/nous-soutenir", "title": "Nous soutenir", "blockedBy": ["D10"] },
-      { "id": "volunteer", "path": "/benevolat", "title": "Devenir bénévole" },
-      { "id": "partners", "path": "/partenaires", "title": "Nos partenaires", "dependsOn": ["D15"] }
+      {
+        "id": "news",
+        "path": "/actualites",
+        "title": "Actualités",
+        "note": "Preuve de vitalité : fraîcheur = signal de crédibilité."
+      },
+      {
+        "id": "reports",
+        "path": "/rapports",
+        "title": "Rapports et publications"
+      },
+      {
+        "id": "support",
+        "path": "/nous-soutenir",
+        "title": "Nous soutenir",
+        "blockedBy": [
+          "D10"
+        ]
+      },
+      {
+        "id": "volunteer",
+        "path": "/benevolat",
+        "title": "Devenir bénévole"
+      },
+      {
+        "id": "partners",
+        "path": "/partenaires",
+        "title": "Nos partenaires",
+        "dependsOn": [
+          "D15"
+        ]
+      }
     ],
     "v1.2": [
-      { "id": "press", "path": "/presse", "title": "Kit presse" },
-      { "id": "gallery", "path": "/galerie", "title": "Galerie" },
-      { "id": "nl-version", "path": "/nl/…", "title": "Version néerlandaise", "blockedBy": ["D5"] },
-      { "id": "en-version", "path": "/en/…", "title": "Version anglaise", "blockedBy": ["D5"] }
+      {
+        "id": "press",
+        "path": "/presse",
+        "title": "Kit presse"
+      },
+      {
+        "id": "gallery",
+        "path": "/galerie",
+        "title": "Galerie"
+      },
+      {
+        "id": "nl-version",
+        "path": "/nl/…",
+        "title": "Version néerlandaise",
+        "blockedBy": [
+          "D5"
+        ]
+      },
+      {
+        "id": "en-version",
+        "path": "/en/…",
+        "title": "Version anglaise",
+        "blockedBy": [
+          "D5"
+        ]
+      }
     ]
   },
-
   "redirects": {
     "policy": "Toute URL publiée reste valide à vie. Toute modification de slug crée une redirection 301 permanente. Une 404 sur une URL publiée est un défaut, pas un détail.",
-    "planned": []
+    "planned": [
+      {
+        "from": "/devenir-partenaire",
+        "to": "/partenariats",
+        "status": 301,
+        "reason": "Slug aligné sur la navigation institutionnelle demandée par SJCD."
+      }
+    ]
   },
-
   "traçabilite": {
     "$description": "Matrice de traçabilité : des 4 étages du système de confiance jusqu'aux tests de recette (docs/07 §9).",
-    "stage1": { "pages": ["/qui-sommes-nous", "/mentions-legales"], "tests": ["présence et exactitude des mentions légales", "validité du JSON-LD NGO", "statuts accessibles en téléchargement"] },
-    "stage2": { "pages": ["/impact", "/programmes", "/"], "tests": ["chaque indicateur possède une période et une source", "rapports téléchargeables et datés", "méthodologie publiée"] },
-    "stage3": { "pages": ["/devenir-partenaire"], "tests": ["formulaire qualifiant fonctionnel", "dossier de partenariat téléchargeable", "contenu adapté par profil"] },
-    "stage4": { "pages": ["/contact", "/devenir-partenaire"], "tests": ["soumission réelle reçue", "accusé de réception envoyé", "conformité du consentement"] }
+    "stage1": {
+      "pages": [
+        "/qui-sommes-nous",
+        "/mentions-legales"
+      ],
+      "tests": [
+        "présence et exactitude des mentions légales",
+        "validité du JSON-LD NGO",
+        "statuts accessibles en téléchargement"
+      ]
+    },
+    "stage2": {
+      "pages": [
+        "/impact",
+        "/programmes",
+        "/"
+      ],
+      "tests": [
+        "chaque indicateur possède une période et une source",
+        "rapports téléchargeables et datés",
+        "méthodologie publiée"
+      ]
+    },
+    "stage3": {
+      "pages": [
+        "/partenariats"
+      ],
+      "tests": [
+        "formulaire qualifiant fonctionnel",
+        "dossier de partenariat téléchargeable",
+        "contenu adapté par profil"
+      ]
+    },
+    "stage4": {
+      "pages": [
+        "/contact",
+        "/partenariats"
+      ],
+      "tests": [
+        "soumission réelle reçue",
+        "accusé de réception envoyé",
+        "conformité du consentement"
+      ]
+    }
   },
-  "implementedRoutes": ["/", "/qui-sommes-nous", "/programmes", "/projets", "/impact", "/devenir-partenaire", "/actualites", "/contact", "/mentions-legales", "/confidentialite", "/accessibilite", "/plan-du-site"],
-  "notImplemented": ["CMS", "/programmes/[slug]", "pages de dons", "sitemap.xml (pas de domaine validé, site noindex)"]
+  "implementedRoutes": [
+    "/",
+    "/qui-sommes-nous",
+    "/programmes",
+    "/projets",
+    "/transparence",
+    "/partenariats",
+    "/impact",
+    "/actualites",
+    "/contact",
+    "/mentions-legales",
+    "/confidentialite",
+    "/accessibilite",
+    "/plan-du-site"
+  ],
+  "notImplemented": [
+    "CMS",
+    "/programmes/[slug]",
+    "pages de dons",
+    "sitemap.xml (pas de domaine validé, site noindex)"
+  ]
 }

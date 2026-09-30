@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { PageShell } from '@/components/PageShell';
 import { pages } from '@/lib/pages';
+import { nav } from '@/lib/content';
 
 export function generateStaticParams() { return [...Object.keys(pages), 'plan-du-site'].map(page => ({ page })); }
 export async function generateMetadata({ params }: { params: Promise<{ page: string }> }) {
@@ -9,9 +10,14 @@ export async function generateMetadata({ params }: { params: Promise<{ page: str
 }
 export default async function Interior({ params }: { params: Promise<{ page: string }> }) {
   const { page } = await params;
-  if (page === 'plan-du-site') return <PageShell eyebrow="SJCD · Navigation" title="Plan du site." intro="Retrouvez toutes les pages de cette préversion.">
-    <ul className="site-map"><li><a href="/">Accueil</a></li>{Object.entries(pages).map(([slug, data]) => <li key={slug}><a href={`/${slug}`}>{data.title}</a></li>)}<li><a href="/contact">Contact</a></li></ul>
-  </PageShell>;
+  if (page === 'plan-du-site') {
+    const routes = [...nav, ...Object.keys(pages)
+      .filter(slug => !nav.some(link => link.href === `/${slug}`))
+      .map(slug => ({ label: pages[slug].title, href: `/${slug}` }))];
+    return <PageShell eyebrow="SJCD · Navigation" title="Plan du site." intro="Retrouvez toutes les pages de cette préversion.">
+      <ul className="site-map">{routes.map(route => <li key={route.href}><a href={route.href}>{route.label}</a></li>)}</ul>
+    </PageShell>;
+  }
   if (!Object.hasOwn(pages, page)) notFound();
   const data = pages[page];
   return <PageShell {...data}>

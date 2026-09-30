@@ -28,6 +28,103 @@ test('préproduction non indexable et sans envoi de formulaire', () => {
   assert.match(read('app/robots.ts'), /disallow: '\/'/);
   assert.doesNotMatch(read('components/ContactDraft.tsx'), /fetch\(|localStorage|sessionStorage|action=/);
 });
+/* ---------------------------------------------------------------------------
+ * Contrats institutionnels — les statuts et le règlement intérieur sont la source
+ * de vérité. Voir docs/11_Analyse_Statuts_RI.md.
+ * ------------------------------------------------------------------------- */
+
+const dataFiles = ['lib/statuts.ts', 'lib/data/programs.ts', 'lib/data/governance.ts',
+  'lib/data/documents.ts', 'lib/data/indicators.ts', 'lib/data/partnership.ts',
+  'lib/data/news.ts', 'lib/data/values.ts'];
+
+/**
+ * Source privée de ses commentaires : les vérifications portent sur le code livré,
+ * pas sur la prose qui explique pourquoi une donnée est absente.
+ */
+const code = path => read(path).replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+
+test('identité : dénomination officielle conforme aux statuts (S art. 1)', () => {
+  assert.match(read('lib/content.ts'), /name: 'Sanctuaire de Jeunes Chandelier pour le Développement'/);
+  // « Salon » n'apparaît dans aucun des deux documents administratifs.
+  for (const file of ['lib/content.ts', 'lib/pages.ts', 'app/layout.tsx', 'app/page.tsx', 'components/Navbar.tsx', 'components/Footer.tsx']) {
+    assert.doesNotMatch(read(file), /Salon de Jeunes/, `dénomination erronée dans ${file}`);
+  }
+  assert.match(read('lib/content.ts'), /registeredOffice: 'Ville d’Uvira, Province du Sud-Kivu/);
+});
+
+test('aucun catalogue inventé : projets, indicateurs, partenaires et actualités vides', () => {
+  assert.match(read('lib/data/projects.ts'), /export const projects: ProjectSheet\[\] = \[\];/);
+  assert.match(read('lib/data/indicators.ts'), /export const indicators: PublishedIndicator\[\] = \[\];/);
+  assert.match(read('lib/data/partnership.ts'), /export const partners: [^=]+ = \[\];/);
+  assert.match(read('lib/data/news.ts'), /export const news: NewsItem\[\] = \[\];/);
+  assert.match(read('lib/data/documents.ts'), /export const publicationHistory: PublicationRecord\[\] = \[\];/);
+  assert.match(read('lib/repository.ts'), /programs: \[\], projects: \[\], articles: \[\]/);
+});
+
+test('traçabilité : chaque donnée institutionnelle cite au moins un article', () => {
+  for (const file of dataFiles) {
+    const source = read(file);
+    assert.doesNotMatch(source, /sources: \[\]/, `sources vides dans ${file}`);
+  }
+  // Les six programmes et les dix fonctions doivent être sourcés article par article.
+  const programs = read('lib/data/programs.ts').split('export const transversalDomains')[0];
+  assert.equal(programs.match(/^    sources: \['S art\./gm)?.length, 6, 'six programmes sourcés');
+  assert.equal(programs.match(/operationalStatus: 'statutory-domain'/g)?.length, 6, 'six domaines statutaires');
+  const governance = read('lib/data/governance.ts');
+  assert.equal(governance.match(/sources: \['S art\. 27'/g)?.length, 10, 'dix fonctions du CA sourcées');
+});
+
+test('statut juridique : aucune personnalité juridique ni adoption affirmées', () => {
+  const statuts = read('lib/statuts.ts');
+  assert.match(statuts, /personalityConfirmed: false/);
+  assert.match(statuts, /adoptionConfirmed: false/);
+  assert.match(statuts, /notarized: false/);
+  assert.match(statuts, /filed: false/);
+  assert.match(statuts, /registrationNumber: null/);
+  assert.match(statuts, /creationDateOfficial: null/);
+  for (const file of ['app/qui-sommes-nous/page.tsx', 'app/transparence/page.tsx', 'app/partenariats/page.tsx']) {
+    assert.doesNotMatch(read(file), /légalement établie|enregistrée auprès|reconnue d’utilité publique/, file);
+  }
+});
+
+test('rencontres de jeunes : aucun jour, horaire ni lieu inventé', () => {
+  const programs = read('lib/data/programs.ts');
+  assert.match(programs, /day: null as string \| null/);
+  assert.match(programs, /time: null as string \| null/);
+  assert.match(programs, /place: null as string \| null/);
+  // « samedi » n'apparaît dans aucun des deux documents administratifs.
+  for (const file of ['lib/data/programs.ts', 'app/programmes/page.tsx', 'app/page.tsx', 'lib/content.ts', 'lib/i18n/foundation.ts']) {
+    assert.doesNotMatch(code(file), /samedi/i, `jour non documenté dans ${file}`);
+  }
+});
+
+test('aucun financement, montant ni partenaire publiés', () => {
+  for (const file of dataFiles) {
+    const source = read(file);
+    assert.doesNotMatch(source, /\b(?:USD|\$|€|EUR)\s?\d/, `montant dans ${file}`);
+    assert.doesNotMatch(source, /amount: \d/, `montant dans ${file}`);
+  }
+  assert.match(read('lib/data/partnership.ts'), /email: null as string \| null/);
+  // Les documents statutaires ne sont pas exposés en téléchargement.
+  assert.match(read('lib/data/documents.ts'), /downloadUrl: null/g);
+  assert.doesNotMatch(read('app/transparence/page.tsx'), /<a[^>]+download/);
+});
+
+test('noms de dirigeants : interrupteur unique et réserve affichée', () => {
+  const governance = read('lib/data/governance.ts');
+  assert.match(governance, /export const publishOfficeHolders = /);
+  assert.match(governance, /export const officeHolderCaveat =/);
+  // Sept des dix fonctions restent sans titulaire documenté (dans le tableau des fonctions).
+  const offices = governance.split('export function publishedOffices')[0];
+  assert.equal(offices.match(/holder: null, holderSource: null/g)?.length, 7);
+  assert.equal(offices.match(/holderSource: 'S, déclaration finale'/g)?.length, 3);
+});
+
+test('formulaire de partenariat : brouillon local, aucune transmission', () => {
+  assert.doesNotMatch(code('components/PartnershipDraft.tsx'), /fetch\(|localStorage|sessionStorage|action=/);
+  assert.match(read('components/PartnershipDraft.tsx'), /Aucun message n’est envoyé/);
+});
+
 test('pas de chargement réseau des polices ni de WebGL', () => {
   assert.match(read('app/layout.tsx'), /next\/font\/local/);
   assert.doesNotMatch(read('app/layout.tsx'), /next\/font\/google/);

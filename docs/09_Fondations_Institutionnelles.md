@@ -14,7 +14,7 @@ fonctionnelle. Une migration décorative ajouterait du risque sans améliorer l�
 
 ## Informations du dernier brief (source : utilisateur)
 
-- Le nom à afficher devient **Salon de Jeunes Chandelier pour le Développement**.
+- Le nom à afficher devient **Sanctuaire de Jeunes Chandelier pour le Développement**.
 - Organisation congolaise de la société civile : jeunesse, développement communautaire,
   impact social, forte présence à **Uvira / Sud-Kivu**.
 - Uvira n’est **pas** présentée comme une adresse légale de siège.
