@@ -134,7 +134,15 @@ jobs:
 
       - name: Parcours navigateur et accessibilité
         if: steps.detect.outputs.present == 'true'
-        run: npm run test:e2e
+        run: |
+          set +e
+          PLAYWRIGHT_JSON_OUTPUT_NAME=playwright-report.json \
+            npx playwright test --reporter=list,json
+          status=$?
+          # Remonte chaque échec en annotation : les journaux bruts ne sont pas
+          # toujours consultables, les annotations restent accessibles via l'API.
+          node scripts/report-e2e.mjs playwright-report.json || true
+          exit $status
 
       - name: Audit des dépendances
         if: steps.detect.outputs.present == 'true'
