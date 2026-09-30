@@ -148,7 +148,9 @@ jobs:
       # Nommé uniquement en cas d'échec : désigne l'élément qui déborde et le
       # nœud exact signalé par axe-core, que le message de test ne donne pas.
       - name: Diagnostic des échecs navigateur
-        if: steps.detect.outputs.present == 'true' && steps.e2e.outcome == 'failure'
+        # always() est indispensable : sans lui, la condition est implicitement
+        # combinée à success() et l'étape est sautée dès que les tests échouent.
+        if: always() && steps.detect.outputs.present == 'true' && steps.e2e.outcome == 'failure'
         run: |
           npm run start &
           serveur=$!
