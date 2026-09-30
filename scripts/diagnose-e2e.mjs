@@ -25,28 +25,51 @@ for (const width of [320, 390]) {
   await page.goto(baseURL + '/', { waitUntil: 'load' });
   const overflow = await page.evaluate(() => {
     const limit = document.documentElement.clientWidth;
-    const out = [];
-    for (const el of document.querySelectorAll('*')) {
-      const r = el.getBoundingClientRect();
-      if (r.right > limit + 0.5 || r.left < -0.5) {
-        const cs = getComputedStyle(el);
-        if (cs.display === 'none' || cs.visibility === 'hidden') continue;
-        out.push({
-          tag: el.tagName.toLowerCase(),
-          id: el.id ? '#' + el.id : '',
-          cls: (el.className && typeof el.className === 'string' ? '.' + el.className.trim().split(/\s+/).join('.') : ''),
-          left: Math.round(r.left), right: Math.round(r.right), width: Math.round(r.width),
-          pos: cs.position,
-        });
+    const over = () => document.documentElement.scrollWidth > limit;
+
+    // La liste brute des boîtes hors cadre est trompeuse : elle inclut les
+    // éléments déjà rognés par un ancêtre en overflow:hidden. On descend donc
+    // dans l'arbre en masquant un enfant à la fois, jusqu'à l'unique
+    // responsable. Les pseudo-éléments (::before/::after) ne sont pas dans le
+    // DOM : la descente s'arrête sur leur parent, dont on relève les styles.
+    const label = el => el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') +
+      (typeof el.className === 'string' && el.className.trim()
+        ? '.' + el.className.trim().split(/\s+/).join('.') : '');
+    const path = [];
+    let node = document.body;
+    if (over()) {
+      descente: while (node) {
+        for (const child of node.children) {
+          const before = child.style.display;
+          child.style.display = 'none';
+          const responsable = !over();
+          child.style.display = before;
+          if (responsable) { path.push(label(child)); node = child; continue descente; }
+        }
+        break;
       }
     }
-    return { limit, scrollWidth: document.documentElement.scrollWidth, out };
+    const cible = path.length ? node : null;
+    const pseudo = cible ? ['::before', '::after'].map(p => {
+      const cs = getComputedStyle(cible, p);
+      return cs.content === 'none' ? null : `${p} ${cs.width}×${cs.height} pos=${cs.position}`;
+    }).filter(Boolean) : [];
+
+    return {
+      limit,
+      scrollWidth: document.documentElement.scrollWidth,
+      chemin: path,
+      pseudo,
+      rognage: cible ? getComputedStyle(cible).overflow : null,
+      boite: cible ? (r => ({ left: Math.round(r.left), right: Math.round(r.right), width: Math.round(r.width) }))(cible.getBoundingClientRect()) : null,
+    };
   });
   const label = `Débordement horizontal ${width}px`;
   if (overflow.scrollWidth > overflow.limit) {
-    fail(label, `scrollWidth ${overflow.scrollWidth} > clientWidth ${overflow.limit} ; ` +
-      `${overflow.out.length} élément(s) hors cadre : ` +
-      overflow.out.slice(0, 12).map(e => `${e.tag}${e.id}${e.cls} [${e.left}→${e.right}] (${e.width}px, ${e.pos})`).join(' | '));
+    fail(label, `scrollWidth ${overflow.scrollWidth} > clientWidth ${overflow.limit} · ` +
+      `responsable : ${overflow.chemin.join(' > ') || 'aucun enfant unique (pseudo-élément ?)'} · ` +
+      `boîte ${JSON.stringify(overflow.boite)} · overflow ${overflow.rogne} · ` +
+      `pseudo ${overflow.pseudo.join(', ') || 'aucun'}`);
   } else {
     note(label, `scrollWidth ${overflow.scrollWidth} ≤ clientWidth ${overflow.limit} — aucun débordement.`);
   }
