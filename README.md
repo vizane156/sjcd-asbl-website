@@ -72,11 +72,24 @@ app/tokens.css       Généré par npm run tokens:build
 scripts/            Génération / contrôle de synchronisation des tokens
 tests/              Contrats et parcours Playwright + axe-core
 docs/08_Direction_Lumiere.md  Direction artistique et état fonctionnel
+documents/administratifs/     Statuts et règlement intérieur (PDF)
 ```
 
 CSS moderne sans Tailwind, composants serveur par défaut. Le mouvement, le menu et le
 brouillon local sont isolés dans de petits composants clients. Aucun besoin d’installer
 plusieurs moteurs de transitions ou une bibliothèque 3D pour cette première version.
+
+## Documents administratifs
+
+Les documents institutionnels de SJCD sont regroupés dans `documents/administratifs/` :
+
+- [Statuts — version professionnelle 2026](documents/administratifs/STATUTS_SJCD_ASBL_Version_Professionnelle_2026.pdf)
+- [Règlement intérieur — version professionnelle 2026](documents/administratifs/REGLEMENT_INTERIEUR_SJCD_ASBL_Version_Professionnelle_2026.pdf)
+
+Il s’agit de **propositions de rédaction à faire valider** par SJCD et par un conseil
+juridique, pas de textes déposés ni opposables. Ils ne sont pas servis par l’application :
+ce dossier est du docs-as-code, distinct de `app/` et de tout contenu publié. La publication
+de ces fichiers sur le site reste une décision de la phase « Avant publication ».
 
 ## Design et documentation
 
@@ -88,8 +101,9 @@ plusieurs moteurs de transitions ou une bibliothèque 3D pour cette première ve
 
 Les autres documents conservent les propositions de la phase documentaire, signalées
 comme antérieures au nouveau brief. Le modèle CMS est descriptif, **pas un schéma de
-validation déjà implémenté**. Les documents juridiques sont à faire valider ; le statut
-ASBL seul ne permet pas de déduire toutes les obligations applicables.
+validation déjà implémenté**. Les documents juridiques de `documents/administratifs/` sont
+à faire valider ; le statut ASBL seul ne permet pas de déduire toutes les obligations
+applicables.
 
 ## Avant publication
 
