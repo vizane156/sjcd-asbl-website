@@ -14,7 +14,7 @@ for (const width of [320, 390, 768, 1440]) {
   });
 }
 
-test('menu mobile : focus enfermé, Échap, ancre et redimensionnement', async ({ page }) => {
+test('menu mobile : focus enfermé, Échap, navigation et redimensionnement', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
   const open = page.getByRole('button', { name: 'Ouvrir le menu' });
@@ -33,6 +33,9 @@ test('menu mobile : focus enfermé, Échap, ancre et redimensionnement', async (
   await expect(dialog).not.toBeVisible();
   await expect(page).toHaveURL(/\/programmes$/);
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Six domaines');
+  // Le lien mène à une page distincte : on revient à l'accueil pour vérifier
+  // que le menu se referme aussi au passage en largeur desktop.
+  await page.goto('/');
   await open.click();
   await page.setViewportSize({ width: 1440, height: 900 });
   await expect(dialog).not.toBeVisible();
