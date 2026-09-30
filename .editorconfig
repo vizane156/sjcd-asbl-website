@@ -1,0 +1,29 @@
+# ÉditeurConfig — conventions d'édition partagées SJCD ASBL
+# Objectif : garantir un diff propre et lisible, indépendant de l'éditeur de chacun.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+max_line_length = 100
+
+[*.md]
+# En Markdown, deux espaces en fin de ligne = saut de ligne forcé : on les conserve.
+trim_trailing_whitespace = false
+max_line_length = off
+
+[*.{yml,yaml,json,jsonc}]
+indent_size = 2
+
+[*.{ts,tsx,js,jsx,mjs,cjs,css,scss}]
+indent_size = 2
+
+[Makefile]
+indent_style = tab
+
+[*.py]
+indent_size = 4
