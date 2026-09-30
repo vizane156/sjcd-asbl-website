@@ -1,0 +1,62 @@
+name: Problème d'accessibilité
+description: Signaler un obstacle à l'utilisation du site par une personne en situation de handicap
+title: "[A11y] "
+labels: ["accessibilité"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de signaler ce problème. Le site vise le niveau **WCAG 2.2 AA** et cet engagement
+        est pris au sérieux : chaque signalement est traité.
+
+        Pour un problème de **sécurité**, n'utilisez pas ce gabarit : voir `CONTRIBUTING.md` §8.
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type de problème
+      options:
+        - "Navigation au clavier impossible ou difficile"
+        - "Focus invisible ou piégé"
+        - "Lecture par lecteur d'écran (structure, étiquettes, annonces)"
+        - "Contraste insuffisant"
+        - "Texte alternatif manquant ou inutile"
+        - "Zoom / texte agrandi (200 %)"
+        - "Mouvement ou animation gênante"
+        - "Cible tactile trop petite"
+        - "Formulaire difficile à utiliser"
+        - "Autre"
+    validations:
+      required: true
+
+  - type: input
+    id: page
+    attributes:
+      label: Page ou parcours concerné
+      placeholder: "ex. /devenir-partenaire — formulaire de partenariat"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description du problème
+      description: Que se passe-t-il, et qu'attendiez-vous ?
+    validations:
+      required: true
+
+  - type: textarea
+    id: environnement
+    attributes:
+      label: Environnement
+      placeholder: "ex. NVDA 2026.1 + Firefox 130, Windows 11 / VoiceOver, iOS 19, Safari"
+    validations:
+      required: false
+
+  - type: textarea
+    id: workaround
+    attributes:
+      label: Contournement éventuel
+      description: Si vous avez trouvé un moyen de faire autrement, le partager aide à corriger.
+    validations:
+      required: false

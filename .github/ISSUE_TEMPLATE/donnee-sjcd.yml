@@ -1,0 +1,80 @@
+name: Donnée institutionnelle manquante
+description: Signaler une information de SJCD absente, erronée ou à valider avant publication
+title: "[Donnée] "
+labels: ["donnée-sjcd", "bloquant-potentiel"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ce gabarit sert à tracer les **données réelles de SJCD** manquantes.
+        Voir `docs/07_Roadmap_QA.md` §7 (chemin critique) et `docs/01_PRD.md` §8 (décisions D1 à D15).
+
+        ⚠️ Rappel : on ne remplace **jamais** une donnée manquante par une valeur plausible inventée.
+        Un chiffre crédible mais faux est le pire défaut possible pour un site dont la promesse
+        est la transparence.
+
+  - type: dropdown
+    id: priorite
+    attributes:
+      label: Priorité
+      options:
+        - "P0 — bloque tout le projet"
+        - "P1 — bloque la qualité"
+        - "P2 — bloque la version 1.1"
+    validations:
+      required: true
+
+  - type: input
+    id: element
+    attributes:
+      label: Donnée concernée
+      placeholder: "ex. Chiffres d'impact — nombre de personnes accompagnées, période 2025"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: decision
+    attributes:
+      label: Décision liée
+      options:
+        - "D1 — nom légal, pays, forme juridique"
+        - "D2 — dénomination officielle affichée"
+        - "D3 — objet social et programmes"
+        - "D4 — chiffres d'impact vérifiables"
+        - "D5 — langues du site"
+        - "D6 — plateforme CMS"
+        - "D7 — identité visuelle"
+        - "D8 — objectif principal à 6 mois"
+        - "D9 — responsable éditorial"
+        - "D10 — dons et statut fiscal"
+        - "D11 — propriété intellectuelle"
+        - "D12 — domaine, budget, échéance"
+        - "D13 — infrastructure et administration"
+        - "D15 — autorisations de logos et droits à l'image"
+        - "Aucune / autre"
+    validations:
+      required: true
+
+  - type: textarea
+    id: blocage
+    attributes:
+      label: Ce que cette donnée bloque
+      placeholder: "ex. La page Impact ne peut pas être finalisée ; la page d'accueil affiche un emplacement vide."
+    validations:
+      required: true
+
+  - type: input
+    id: responsable
+    attributes:
+      label: Responsable identifié chez SJCD
+      placeholder: "nom et fonction"
+    validations:
+      required: false
+
+  - type: input
+    id: echeance
+    attributes:
+      label: Échéance souhaitée
+      placeholder: "ex. avant fin octobre 2026"
+    validations:
+      required: false

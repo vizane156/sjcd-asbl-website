@@ -1,0 +1,176 @@
+name: Intégration continue
+
+# Vérifie la qualité à chaque proposition de modification.
+# Adapté au démarrage : les étapes qui exigent Node ne s'exécutent que si un
+# package.json existe, afin que la CI soit verte dès la phase documentaire.
+
+on:
+  push:
+    branches: [main, 'arena/**']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # 1. Vérifications documentaires — actives dès maintenant
+  # ---------------------------------------------------------------------------
+  docs:
+    name: Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Valider la syntaxe des fichiers JSON
+        run: |
+          set -euo pipefail
+          echo "Validation des fichiers de spécification…"
+          for f in specs/*.json; do
+            python3 -c "import json,sys; json.load(open('$f', encoding='utf-8'))" \
+              && echo "  ✓ $f" || { echo "  ✗ $f : JSON invalide"; exit 1; }
+          done
+
+      - name: Vérifier la cohérence des livrables annoncés dans le README
+        run: |
+          set -euo pipefail
+          missing=0
+          for f in \
+            docs/01_PRD.md \
+            docs/02_Sitemap_And_Content.md \
+            docs/03_UX_UI_Design_System.md \
+            docs/04_Content_CMS.md \
+            docs/05_Technical_Architecture.md \
+            docs/06_SEO_A11y_Security_Analytics.md \
+            docs/07_Roadmap_QA.md \
+            prompts/01_v0_Master_Prompt.md \
+            specs/content-model.json \
+            specs/design-tokens.json \
+            specs/sitemap.json
+          do
+            if [ -f "$f" ]; then
+              echo "  ✓ $f"
+            else
+              echo "  ✗ MANQUANT : $f"
+              missing=1
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then
+            echo "::error::Un livrable annoncé dans le README est absent du dépôt."
+            exit 1
+          fi
+
+      - name: Signaler les marqueurs TODO(SJCD) restants
+        run: |
+          count=$(grep -rIl "TODO(SJCD)" --include="*.md" --include="*.json" . 2>/dev/null | wc -l || true)
+          echo "Fichiers contenant des données à fournir par SJCD : $count"
+          echo "Ces marqueurs sont attendus à ce stade du projet (voir docs/07 §7)."
+          echo "Rappel : aucun contenu publié ne doit en contenir — la vérification"
+          echo "bloquante sera activée en phase 2, une fois les pages construites."
+
+  # ---------------------------------------------------------------------------
+  # 2. Vérifications applicatives — s'activent automatiquement dès la phase 1
+  # ---------------------------------------------------------------------------
+  app:
+    name: Application
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Détecter la présence d'un projet Node
+        id: detect
+        run: |
+          if [ -f package.json ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Aucun package.json — phase documentaire. Étapes applicatives ignorées."
+          fi
+
+      - name: Installer Node.js
+        if: steps.detect.outputs.present == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Installer les dépendances
+        if: steps.detect.outputs.present == 'true'
+        run: npm ci
+
+      - name: Vérifier la synchronisation des jetons de design
+        if: steps.detect.outputs.present == 'true'
+        run: npm run tokens:check
+
+      - name: Lint
+        if: steps.detect.outputs.present == 'true'
+        run: npm run lint
+
+      - name: Tests unitaires
+        if: steps.detect.outputs.present == 'true'
+        run: npm run test
+
+      - name: Build de production
+        if: steps.detect.outputs.present == 'true'
+        run: npm run build
+        env:
+          # Valeurs factices : le build ne doit jamais dépendre de vrais secrets.
+          NEXT_PUBLIC_SITE_URL: https://example.org
+          NEXT_PUBLIC_ALLOW_INDEXING: 'false'
+
+      - name: Vérification des types
+        if: steps.detect.outputs.present == 'true'
+        run: npm run typecheck
+
+      - name: Installer Chromium pour les tests navigateur
+        if: steps.detect.outputs.present == 'true'
+        run: npx playwright install --with-deps chromium
+
+      - name: Parcours navigateur et accessibilité
+        if: steps.detect.outputs.present == 'true'
+        run: npm run test:e2e
+
+      - name: Audit des dépendances
+        if: steps.detect.outputs.present == 'true'
+        run: npm audit --audit-level=high
+
+  # ---------------------------------------------------------------------------
+  # 3. Garde-fou : aucun secret ni donnée personnelle dans le dépôt
+  # ---------------------------------------------------------------------------
+  secrets-guard:
+    name: Garde-fou secrets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Refuser les fichiers d'environnement et les clés
+        run: |
+          set -euo pipefail
+          bad=0
+          while IFS= read -r f; do
+            case "$f" in
+              *.env.example|*.env.sample) continue ;;
+            esac
+            echo "::error file=$f::Fichier d'environnement ou clé privée détecté — ne jamais committer de secret."
+            bad=1
+          done < <(git ls-files | grep -E '\.(env|pem|key|p12|pfx)$|(^|/)\.env\.' || true)
+
+          # Détection de motifs de clés d'API courantes
+          if git grep -nE '(sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----)' -- . ':!*.md' 2>/dev/null; then
+            echo "::error::Motif de clé d'API détecté dans le dépôt."
+            bad=1
+          fi
+
+          exit "$bad"
+
+      - name: Vérifier l'absence de données de bénéficiaires
+        run: |
+          echo "Contrôle manuel obligatoire avant publication (docs/06 §5.5)."
+          echo "Aucune donnée personnelle de bénéficiaire ne doit figurer dans un"
+          echo "formulaire public, un journal, une URL ou un fichier du dépôt."
