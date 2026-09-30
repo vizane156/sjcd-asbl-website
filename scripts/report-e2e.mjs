@@ -37,7 +37,7 @@ for (const suite of report.suites ?? []) {
             .replace(/%25/g, '%')          // échappe pour la syntaxe d'annotation
             .replace(/\r?\n/g, ' ⏎ ')
             .replace(/\s+/g, ' ')
-            .slice(0, 900);
+            .slice(0, 20000);
           failures.push({ title: [...trail, spec.title].join(' › '), file: spec.file ?? suite.file ?? '', message });
         }
       }
