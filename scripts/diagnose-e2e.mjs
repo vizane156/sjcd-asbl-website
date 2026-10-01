@@ -80,20 +80,29 @@ for (const width of [320, 390]) {
   await page.close();
 }
 
-// 2. axe-core sur les pages intérieures : nœud fautif complet.
-for (const route of INTERIOR) {
+// 2. axe-core, dans les conditions exactes du test : une seule page réutilisée,
+//    navigation séquentielle, mouvement réduit. Chaque route est isolée dans un
+//    try/catch : sans cela une exception avorte le script et `|| true` la masque.
+{
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
-  await page.goto(baseURL + route, { waitUntil: 'load' });
-  const { violations } = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();
-  for (const v of violations) {
-    for (const n of v.nodes.slice(0, 4)) {
-      fail(`axe ${v.id} sur ${route}`,
-        `impact=${v.impact} · cible=${JSON.stringify(n.target)} · html=${(n.html ?? '').slice(0, 200)} · ` +
-        `données=${JSON.stringify(n.any?.[0]?.data ?? n.all?.[0]?.data ?? {})}`);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  for (const route of INTERIOR) {
+    try {
+      await page.goto(baseURL + route, { waitUntil: 'load' });
+      const { violations } = await new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();
+      if (violations.length === 0) { note(`axe sur ${route}`, 'aucune violation.'); continue; }
+      for (const v of violations) {
+        for (const n of v.nodes.slice(0, 3)) {
+          fail(`axe ${v.id} sur ${route}`,
+            `impact=${v.impact} · cible=${JSON.stringify(n.target)} · ` +
+            `html=${(n.html ?? '').slice(0, 220)} · données=${JSON.stringify(n.any?.[0]?.data ?? n.all?.[0]?.data ?? {})}`);
+        }
+      }
+    } catch (error) {
+      fail(`Diagnostic axe interrompu sur ${route}`, String(error?.message ?? error).slice(0, 500));
     }
   }
-  if (violations.length === 0) note(`axe sur ${route}`, 'aucune violation.');
   await page.close();
 }
 
