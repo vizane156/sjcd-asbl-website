@@ -10,7 +10,11 @@ import { chromium } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 const baseURL = process.argv[2] ?? 'http://localhost:3000';
-const INTERIOR = ['/qui-sommes-nous', '/programmes', '/projets', '/transparence', '/partenariats'];
+// Mêmes routes et même viewport que le test « accessibilité des pages intérieures »
+// (tests/e2e/site.spec.ts), qui ne fixe pas de viewport : 1280×720 par défaut.
+const INTERIOR = ['/qui-sommes-nous', '/programmes', '/projets', '/transparence', '/partenariats',
+  '/impact', '/actualites', '/mentions-legales', '/confidentialite', '/accessibilite',
+  '/plan-du-site', '/contact'];
 
 const browser = await chromium.launch();
 const note = (title, message) =>
@@ -78,7 +82,7 @@ for (const width of [320, 390]) {
 
 // 2. axe-core sur les pages intérieures : nœud fautif complet.
 for (const route of INTERIOR) {
-  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   await page.goto(baseURL + route, { waitUntil: 'load' });
   const { violations } = await new AxeBuilder({ page })
     .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();
