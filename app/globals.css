@@ -124,9 +124,11 @@ p { margin: 0; }
 .intro__cols p { color: var(--ink-soft); font-size: var(--fs-lead); }
 .fact-list { display: grid; gap: 0; border-top: 1px solid var(--line-light); }
 .fact-list div { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--line-light); }
-.fact-list dt { color: var(--ink-soft); font-weight: 600; }
+.fact-list dt { color: var(--mist-300); font-weight: 600; }
+.section--light .fact-list dt { color: var(--ink-soft); }
+.section--light .fact-list .placeholder-tag { color: #824600; }
 .fact-list dd { margin: 0; font-weight: 800; text-align: right; }
-.fact-list .placeholder-tag { color: #824600; }
+.fact-list .placeholder-tag { color: var(--flame-500); }
 
 /* ------------------------------ Section header ------------------------------ */
 .sh { display: grid; gap: 1.25rem; margin-bottom: var(--sp-xl); }
