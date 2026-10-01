@@ -24,7 +24,8 @@ const fail = (title, message) =>
 
 // 1. Débordement horizontal, élément par élément, aux largeurs testées.
 for (const width of [320, 390]) {
-  const page = await browser.newPage({ viewport: { width, height: 900 } });
+  const contexte = await browser.newContext({ viewport: { width, height: 900 } });
+  const page = await contexte.newPage();
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto(baseURL + '/', { waitUntil: 'load' });
   const overflow = await page.evaluate(() => {
@@ -77,14 +78,15 @@ for (const width of [320, 390]) {
   } else {
     note(label, `scrollWidth ${overflow.scrollWidth} ≤ clientWidth ${overflow.limit} — aucun débordement.`);
   }
-  await page.close();
+  await contexte.close();
 }
 
 // 2. axe-core, dans les conditions exactes du test : une seule page réutilisée,
 //    navigation séquentielle, mouvement réduit. Chaque route est isolée dans un
 //    try/catch : sans cela une exception avorte le script et `|| true` la masque.
 {
-  const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+  const contexte = await browser.newContext({ viewport: { width: 1280, height: 720 } });
+  const page = await contexte.newPage();
   await page.emulateMedia({ reducedMotion: 'reduce' });
   for (const route of INTERIOR) {
     try {
@@ -103,7 +105,7 @@ for (const width of [320, 390]) {
       fail(`Diagnostic axe interrompu sur ${route}`, String(error?.message ?? error).slice(0, 500));
     }
   }
-  await page.close();
+  await contexte.close();
 }
 
 await browser.close();
