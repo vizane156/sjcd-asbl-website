@@ -138,13 +138,33 @@ test('images : registre vérifié, aucune image publiée sans fichier, légende 
   for (const slot of spec.slots) {
     if (slot.statut === 'publiee') {
       assert.ok(slot.fichier && slot.alt && slot.credit, `${slot.id} : publiée sans fichier, légende ou crédit`);
-      assert.ok(slot.consentRef || slot.personnesIdentifiables === false, `${slot.id} : droits non documentés`);
+      if (slot.nature === 'illustration') assert.ok(slot.licence, `${slot.id} : illustration sans licence`);
+      else assert.ok(slot.consentRef || slot.personnesIdentifiables === false, `${slot.id} : droits non documentés`);
     } else {
       assert.equal(slot.statut, 'attendu', `${slot.id} : statut inattendu`);
     }
   }
   // Le site ne construit une adresse publique que pour une image publiée.
   assert.match(read('lib/data/media.ts'), /slot\.statut === 'publiee' && slot\.fichier \? `\/images\//);
+});
+
+test('illustrations : les visuels de projet sont étiquetés, jamais présentés comme des activités réelles', () => {
+  const spec = JSON.parse(read('specs/images.json'));
+  // Décision de SJCD (1er octobre 2026) : les photos fournies sont des illustrations.
+  const projet = spec.slots.filter(slot => slot.dossier === 'projets/chandelier-360');
+  assert.equal(projet.length, 7, 'sept visuels pour Chandelier 360°');
+  assert.ok(projet.every(slot => slot.nature === 'illustration'), 'les visuels de projet sont des illustrations');
+  assert.match(read('lib/data/media.ts'), /export const illustrationNote =/);
+  assert.match(read('lib/data/media.ts'), /ne représente pas une activité réalisée par SJCD/);
+  const vue = read('components/ProjectSheetView.tsx');
+  assert.match(vue, /chip--warning">Illustration/);
+  assert.match(vue, /\{illustrationNote\}/);
+  assert.match(read('app/page.tsx'), /Visuels : illustration/);
+  // La phrase est coupée sur plusieurs lignes dans le JSX : on vérifie ses fragments.
+  const projets = read('app/projets/page.tsx');
+  assert.match(projets, /étiquette « Illustration »/);
+  assert.match(projets, /ne représentent pas/);
+  assert.match(projets, /une activité réalisée par SJCD/);
 });
 
 test('noms de dirigeants : interrupteur unique et réserve affichée', () => {

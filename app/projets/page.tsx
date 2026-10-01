@@ -81,16 +81,20 @@ export default function Projets() {
       <section className="doc-section" aria-labelledby="images">
         <h2 id="images">Images et droits</h2>
         <p>
-          Les photos des projets ne sont pas décoratives : elles documentent des activités réelles.
           Une image n&apos;est affichée que si le fichier existe, si sa légende est rédigée et si
-          les droits sont réunis. Dans le cas contraire, l&apos;emplacement reste visible et
-          annoncé comme vide — jamais remplacé par une image d&apos;illustration non signalée.
+          les droits sont réunis. Dans le cas contraire, l&apos;emplacement reste visible et annoncé
+          comme vide. Les visuels actuellement attendus pour Chandelier 360° sont des
+          <strong> illustrations</strong> (banque d&apos;images ou images générées) : ils portent
+          l&apos;étiquette « Illustration » et une mention précisant qu&apos;ils ne représentent pas
+          une activité réalisée par SJCD. Seule une photographie prise lors d&apos;une activité de
+          l&apos;association est présentée comme documentaire — et jamais sans autorisation des
+          personnes identifiables.
         </p>
         <ul className="checklist">
           <li><span aria-hidden>✓</span>Fichier déposé dans <code>public/images/</code>, nommé selon le registre.</li>
           <li><span aria-hidden>✓</span>Légende et texte alternatif rédigés à partir de la photo réelle.</li>
           <li><span aria-hidden>✓</span>Autorisation écrite archivée pour toute personne identifiable.</li>
-          <li><span aria-hidden>✓</span>Nature indiquée : photographie documentaire ou illustration signalée comme telle.</li>
+          <li><span aria-hidden>✓</span>Nature indiquée : photographie documentaire, ou illustration signalée comme telle avec sa source et sa licence.</li>
         </ul>
         <SourceRefs sources={['RI art. 42', 'S art. 45']} label="Références" />
         <p className="muted">

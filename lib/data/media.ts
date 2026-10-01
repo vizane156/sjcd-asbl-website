@@ -10,6 +10,11 @@
 import spec from '@/specs/images.json';
 
 export type MediaStatus = 'attendu' | 'recue' | 'publiee';
+/**
+ * `documentaire` : la photo montre une activité réelle de SJCD.
+ * `illustration` : image de banque ou générée, étiquetée comme telle et jamais
+ * présentée comme une réalisation de l’association.
+ */
 export type MediaNature = 'documentaire' | 'illustration';
 
 export interface MediaSlot {
@@ -27,6 +32,8 @@ export interface MediaSlot {
   personnesIdentifiables: boolean | null;
   consentRef: string | null;
   credit: string | null;
+  /** Licence ou conditions d’usage de la source, obligatoire pour une illustration. */
+  licence: string | null;
   lieu: string | null;
   priseLe: string | null;
   statut: MediaStatus;
@@ -35,6 +42,10 @@ export interface MediaSlot {
 export const mediaSlots: MediaSlot[] = spec.slots as MediaSlot[];
 
 export const mediaRules = spec.rules;
+
+/** Mention obligatoire sous toute image d’illustration publiée. */
+export const illustrationNote =
+  'Illustration : image d’illustration, elle ne représente pas une activité réalisée par SJCD.';
 
 /** Adresse publique d'une image, ou `null` tant qu'elle n'est pas publiée. */
 export function mediaUrl(slot: MediaSlot): string | null {

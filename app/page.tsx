@@ -138,6 +138,7 @@ export default function Home() {
               {projectSheets.map((project, i) => {
                 const cover = projectCover(project.slug);
                 const coverSrc = cover ? mediaUrl(cover) : null;
+                const coverIsIllustration = cover?.nature === 'illustration';
                 return (
                   <article key={project.slug} className="project" data-reveal>
                     <AnimatedImage className="project__media" src={coverSrc ?? undefined}
@@ -146,6 +147,7 @@ export default function Home() {
                       <div className="project__meta">
                         <span className="chip">{STATUS_LABEL[project.status] ?? project.status}</span>
                         <span className="chip">12 mois</span>
+                        {coverIsIllustration && <span className="chip chip--warning">Visuels : illustration</span>}
                       </div>
                       <h3>{project.title}</h3>
                       <p>{project.homeSummary}</p>

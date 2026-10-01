@@ -63,8 +63,12 @@ for (const slot of spec.slots) {
     if (!slot.alt || slot.alt.trim().length < 20) failures.push(`${slot.id} : texte alternatif manquant ou trop court pour être publiée.`);
     if (slot.alt && slot.alt.trim() === slot.brief.trim()) failures.push(`${slot.id} : le texte alternatif recopie le brief de la photo, il doit décrire l’image réelle.`);
     if (!slot.credit) failures.push(`${slot.id} : crédit photo manquant (auteur ou organisation).`);
-    if (slot.personnesIdentifiables !== false && !slot.consentRef) failures.push(`${slot.id} : personnes identifiables sans référence de consentement — indiquer consentRef ou personnesIdentifiables: false.`);
-    if (slot.nature === 'illustration' && !slot.credit) failures.push(`${slot.id} : une illustration doit indiquer sa source.`);
+    if (slot.nature === 'illustration') {
+      // Une image de banque ou générée est publiée sous couvert de sa licence : elle doit la citer.
+      if (!slot.licence) failures.push(`${slot.id} : illustration publiée sans licence — indiquer la source et les conditions d’usage (banque d’images, générateur, cession de droits).`);
+    } else if (slot.personnesIdentifiables !== false && !slot.consentRef) {
+      failures.push(`${slot.id} : photographie documentaire avec personnes identifiables sans référence de consentement — indiquer consentRef, ou basculer la photo en « illustration » si elle n’a pas été prise par SJCD.`);
+    }
     if (slot.nature === 'documentaire') {
       if (!slot.priseLe) warnings.push(`${slot.id} : date de prise de vue non renseignée (recommandé pour une photo documentaire).`);
       if (!slot.lieu) warnings.push(`${slot.id} : lieu de prise de vue non renseigné (recommandé pour une photo documentaire).`);
@@ -81,7 +85,9 @@ for (const slot of spec.slots) {
 }
 const recues = spec.slots.filter(s => s.statut === 'recue').length;
 const publiees = spec.slots.filter(s => s.statut === 'publiee').length;
+const illustrations = spec.slots.filter(s => s.nature === 'illustration').length;
 console.log(`\n${spec.slots.length} emplacements · ${publiees} publiée(s) · ${recues} reçue(s) en attente de légende et de droits.`);
+console.log(`${illustrations} emplacement(s) prévus comme illustrations : ces images seront étiquetées « Illustration » sur le site et ne peuvent pas être présentées comme des activités de SJCD.`);
 console.log('Déposez vos fichiers puis prévenez l’équipe : voir public/images/README.md.');
 
 for (const warning of warnings) console.warn(`\nAttention — ${warning}`);

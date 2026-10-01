@@ -33,6 +33,16 @@ numérique : le numéro indique l'ordre d'affichage dans la galerie.
 | `05-activite-entrepreneuriale.jpg` | Petite activité lancée par un bénéficiaire |
 | `06-groupe-participants.jpg` | Photo de groupe représentant la diversité des participants |
 
+**Ces sept visuels sont traités comme des illustrations** : vous avez indiqué que les images
+proviennent d’une banque d’images ou sont générées. Elles seront donc publiées avec
+l’étiquette « Illustration » et la mention « ne représente pas une activité réalisée par
+SJCD ». Si une photo a réellement été prise lors d’une activité de SJCD, dites-le : elle
+passera en « photographie documentaire » et relèvera alors des règles de consentement du § 4.2.
+
+Choisissez de préférence des images qui correspondent au contexte local (Afrique centrale,
+jeunes, espaces de formation) : une illustration hors contexte donne une image fausse du
+projet, même étiquetée.
+
 Extensions acceptées : `.jpg`, `.jpeg`, `.png`, `.webp`, `.avif`.
 Les fichiers `.heic` (iPhone), `.tif`, `.bmp` **ne s'affichent pas** dans les
 navigateurs : exportez-les d'abord en `.jpg`.
@@ -78,21 +88,34 @@ pénible à télécharger sur un réseau mobile à Uvira.
 
 ---
 
-## 4. Droits à l'image — règle non négociable
+## 4. Droits et étiquetage — deux règles non négociables
 
-Une photo où une personne est **identifiable** ne peut pas être publiée sans
+### 4.1 Illustrations (cas de vos images actuelles)
+
+Toute image de banque d’images ou générée est publiée comme **illustration** :
+
+- étiquette « Illustration » visible sous l’image et sur la carte projet ;
+- mention « ne représente pas une activité réalisée par SJCD » ;
+- **source et licence obligatoires** dans le registre (`credit` et `licence`), par
+  exemple « Unsplash — licence Unsplash » ou « Image générée par IA, 2026 » ;
+- `npm run images:check` refuse une illustration publiée sans licence.
+
+Conservez la facture ou la page de licence : c’est la preuve du droit d’usage.
+
+### 4.2 Photographies documentaires (terrain)
+
+Si une photo a réellement été prise lors d’une activité de SJCD, elle passe en
+« documentaire ». Une personne **identifiable** ne peut alors pas être publiée sans
 **autorisation écrite** (règlement intérieur : protection et sauvegarde ; voir
 `/partenariats` § « Image et témoignages »).
 
 - Conservez les autorisations signées dans les archives de SJCD (hors dépôt public,
   jamais dans ce dépôt : ce sont des données personnelles).
-- Notez pour chaque photo un identifiant d'autorisation (`consentRef`), par exemple
+- Notez pour chaque photo un identifiant d’autorisation (`consentRef`), par exemple
   « AUT-2026-012 », sans le nom de la personne.
 - **Enfants et personnes vulnérables :** autorisation renforcée, et jamais de nom
   complet associé à la photo.
-- Photos de banque d'images, captures ou images générées par IA : acceptées
-  uniquement comme **illustrations**, clairement étiquetées « Illustration » sur le
-  site — jamais présentées comme des réalisations réelles de SJCD.
+- Ne jamais présenter une illustration comme une photo de terrain, ni l’inverse.
 
 ---
 
@@ -110,7 +133,7 @@ npm run images:check    # vérifie que tout ce qui est publié est valide (utili
 Statuts possibles :
 
 - **`attendu`** — l'emplacement est prévu, le fichier n'est pas encore là. Le site
-  affiche un cadre « Photo SJCD à venir », jamais une fausse photo.
+  affiche un cadre « Photo SJCD à venir », jamais une image de remplacement.
 - **`recue`** — le fichier est là, la légende et les droits ne sont pas encore
   renseignés. L'image n'est **pas** affichée.
 - **`publiee`** — fichier présent, texte alternatif rédigé, droits documentés.

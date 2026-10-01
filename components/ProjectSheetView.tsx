@@ -1,6 +1,6 @@
 import { AnimatedImage } from '@/components/motion/primitives';
 import { EmptyState, SourceRefs } from '@/components/Source';
-import { mediaUrl } from '@/lib/data/media';
+import { illustrationNote, mediaUrl } from '@/lib/data/media';
 import type { MediaSlot } from '@/lib/data/media';
 import { projectStatuses, type ProjectSheet } from '@/lib/data/projects';
 
@@ -14,14 +14,18 @@ function GalleryItem({ slot }: { slot: MediaSlot }) {
   const src = mediaUrl(slot);
   const caption = src && slot.alt ? slot.alt : slot.brief;
   const credit = [slot.credit, slot.lieu, slot.priseLe].filter(Boolean).join(' · ');
+  const licence = slot.licence ? `Licence : ${slot.licence}` : null;
   return (
     <figure className="sheet-gallery__item">
       <AnimatedImage className="sheet-gallery__media" src={src ?? undefined} alt={caption} />
       <figcaption className="sheet-gallery__caption">
         {slot.nature === 'illustration' && <span className="chip chip--warning">Illustration</span>}
         <span>{caption}</span>
-        {credit && <span className="sheet-gallery__credit">{credit}</span>}
-        {!src && <span className="sheet-gallery__pending">Emplacement réservé — aucune photo publiée à ce stade.</span>}
+        {slot.nature === 'illustration'
+          ? <span className="sheet-gallery__pending">{illustrationNote}</span>
+          : <span className="sheet-gallery__credit">Photographie documentaire prise sur le terrain.</span>}
+        {(credit || licence) && <span className="sheet-gallery__credit">{[credit, licence].filter(Boolean).join(' · ')}</span>}
+        {!src && <span className="sheet-gallery__pending">Emplacement réservé — aucune image publiée à ce stade.</span>}
       </figcaption>
     </figure>
   );
@@ -179,6 +183,12 @@ export function ProjectSheetView({ project }: { project: ProjectSheet }) {
       <div className="sheet-gallery">
         {project.gallery.map(slot => <GalleryItem key={slot.id} slot={slot} />)}
       </div>
+      <p className="muted">
+        Les visuels attendus pour ce projet sont des <strong>illustrations</strong> : elles seront
+        publiées avec l’étiquette « Illustration » et une mention explicite indiquant qu’elles ne
+        représentent pas une activité réalisée par SJCD. Aucune illustration ne sera présentée comme
+        un reportage de terrain.
+      </p>
 
       <h3>Documents</h3>
       {project.documents.length === 0 ? (
