@@ -37,6 +37,11 @@ export const legalStatus = {
   filed: false,
   statement:
     'Association sans but lucratif de droit congolais. Statuts et règlement intérieur en cours de finalisation juridique : adoption formelle, notarisation et dépôt non attestés par les documents disponibles.',
+  /** Réponse de SJCD, 1er octobre 2026 : la formalisation est en cours, rien n'est encore acquis. */
+  formalizationInProgress: true,
+  formalizationConfirmedOn: '2026-10-01',
+  formalizationNote:
+    'SJCD a confirmé le 1er octobre 2026 que la formalisation est en cours. Cette réponse ne modifie pas l’état des documents : l’adoption formelle, la notarisation et le dépôt ne sont toujours pas attestés, et aucune personnalité juridique n’est affirmée sur ce site.',
   sources: ['S page de garde', 'S art. 49', 'RI art. 76'] satisfies SourceRef[],
 };
 
@@ -74,6 +79,13 @@ export const identity = {
    */
   creationYear: { value: '2022', sources: ['S préambule'] } satisfies Documented<string>,
   creationDateOfficial: null as string | null,
+  /**
+   * Date retenue par SJCD (réponse du 1er octobre 2026) : le 23 février 2022 du préambule.
+   * Elle ne lève pas la divergence avec l'acte d'adoption du 15 juin 2023 et n'est pas
+   * publiée sous la forme d'une date de création officielle enregistrée.
+   */
+  creationDateRetainedBySJCD: '23 février 2022',
+  creationDateConfirmedOn: '2026-10-01',
   creationDateDiscrepancy:
     'Le préambule des statuts déclare une création au 23 février 2022, tandis que l’acte d’adoption mentionne une Assemblée générale constitutive au 15 juin 2023. Cette divergence n’est pas résolue par les documents.',
 };

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { PageShell } from '@/components/PageShell';
+import { ProjectSheetView } from '@/components/ProjectSheetView';
 import { EmptyState, SourceRefs, Undocumented } from '@/components/Source';
 import {
   openingChecklist, projectCycleSteps, projectEmptyState, projects, projectStatuses,
@@ -15,30 +16,37 @@ const SHEET_FIELDS = [
 ];
 
 export default function Projets() {
+  const published = projects.length;
   return (
     <PageShell
       eyebrow="SJCD ASBL · Catalogue de projets"
-      title="Le catalogue est prêt. Aucun projet n’y figure encore."
-      intro="Cet espace est conçu comme un véritable catalogue institutionnel : un modèle de fiche complet, quatre statuts de projet, et aucune publication sans source. Aucun projet n’est inventé pour remplir la page."
+      title={published === 0
+        ? 'Le catalogue est prêt. Aucun projet n’y figure encore.'
+        : 'Un projet publié, en préparation, avec ses preuves.'}
+      intro={published === 0
+        ? 'Cet espace est conçu comme un véritable catalogue institutionnel : un modèle de fiche complet, quatre statuts de projet, et aucune publication sans source.'
+        : 'Chaque fiche publiée porte un statut explicite, sa provenance et ses cibles. Ce qui n’est pas encore réalisé est écrit comme tel : un projet en préparation n’annonce aucun résultat.'}
     >
       <section className="doc-section" aria-labelledby="catalogue">
         <h2 id="catalogue">Catalogue</h2>
-        <EmptyState
-          title={projectEmptyState.headline}
-          detail={projectEmptyState.detail}
-          note={projectEmptyState.whyEmpty}
-        />
-        {projects.length === 0 && (
+        {published === 0 ? (
+          <EmptyState
+            title={projectEmptyState.headline}
+            detail={projectEmptyState.detail}
+            note={projectEmptyState.whyEmpty}
+          />
+        ) : (
           <p className="muted" role="status">
-            {projects.length} projet publié — le catalogue est vide et le restera tant qu&apos;aucun
-            projet documenté n&apos;aura été fourni.
+            {published} projet publié. Les fiches sont présentées dans l’ordre de publication, avec
+            leur provenance et leur statut.
           </p>
         )}
+        {projects.map(project => <ProjectSheetView key={project.slug} project={project} />)}
       </section>
 
       <section className="doc-section" aria-labelledby="statuts-projet">
         <h2 id="statuts-projet">Les quatre statuts d&apos;un projet</h2>
-        <p>Chaque fiche publiée portera l&apos;un de ces statuts, sans ambiguïté sur son avancement.</p>
+        <p>Chaque fiche publiée porte l&apos;un de ces statuts, sans ambiguïté sur son avancement.</p>
         <div className="status-grid">
           {projectStatuses.map(status => (
             <article key={status.id} className="status-card">
@@ -57,16 +65,37 @@ export default function Projets() {
       <section className="doc-section" aria-labelledby="fiche">
         <h2 id="fiche">Le modèle de fiche</h2>
         <p>
-          Chaque projet publié renseignera les champs suivants. Ce qui n&apos;est pas documenté reste
+          Chaque projet publié renseigne les champs suivants. Ce qui n&apos;est pas documenté reste
           vide et affiché comme tel, plutôt que complété par une approximation.
         </p>
         <ul className="sheet-fields">
           {SHEET_FIELDS.map(field => <li key={field}>{field}</li>)}
         </ul>
         <p className="muted">
-          Exemple de ce que donnera une fiche tant que les données manquent : titre{' '}
-          <Undocumented label="—" />, zone <Undocumented label="—" />, résultats{' '}
-          <Undocumented label="—" />, financement <Undocumented label="—" />.
+          Un champ sans donnée reste visible comme manquant : zone <Undocumented label="—" />,
+          résultats <Undocumented label="—" />. Le financement n&apos;est affiché que lorsqu&apos;il
+          est public et documenté.
+        </p>
+      </section>
+
+      <section className="doc-section" aria-labelledby="images">
+        <h2 id="images">Images et droits</h2>
+        <p>
+          Les photos des projets ne sont pas décoratives : elles documentent des activités réelles.
+          Une image n&apos;est affichée que si le fichier existe, si sa légende est rédigée et si
+          les droits sont réunis. Dans le cas contraire, l&apos;emplacement reste visible et
+          annoncé comme vide — jamais remplacé par une image d&apos;illustration non signalée.
+        </p>
+        <ul className="checklist">
+          <li><span aria-hidden>✓</span>Fichier déposé dans <code>public/images/</code>, nommé selon le registre.</li>
+          <li><span aria-hidden>✓</span>Légende et texte alternatif rédigés à partir de la photo réelle.</li>
+          <li><span aria-hidden>✓</span>Autorisation écrite archivée pour toute personne identifiable.</li>
+          <li><span aria-hidden>✓</span>Nature indiquée : photographie documentaire ou illustration signalée comme telle.</li>
+        </ul>
+        <SourceRefs sources={['RI art. 42', 'S art. 45']} label="Références" />
+        <p className="muted">
+          Le registre des emplacements est décrit dans <code>public/images/README.md</code> et
+          vérifié automatiquement par <code>npm run images:check</code>.
         </p>
       </section>
 
@@ -89,7 +118,7 @@ export default function Projets() {
         <h3>Check-list d&apos;ouverture d&apos;une activité</h3>
         <p>
           Dix vérifications sont requises avant l&apos;ouverture de toute activité. Elles expliquent
-          pourquoi un projet n&apos;est pas publié sur ce site avant d&apos;avoir été réellement engagé.
+          pourquoi un projet n&apos;est pas annoncé comme engagé avant de l&apos;être réellement.
         </p>
         <ul className="checklist">
           {openingChecklist.map(item => (

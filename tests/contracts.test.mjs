@@ -52,8 +52,10 @@ test('identité : dénomination officielle conforme aux statuts (S art. 1)', () 
   assert.match(read('lib/content.ts'), /registeredOffice: 'Ville d’Uvira, Province du Sud-Kivu/);
 });
 
-test('aucun catalogue inventé : projets, indicateurs, partenaires et actualités vides', () => {
-  assert.match(read('lib/data/projects.ts'), /export const projects: ProjectSheet\[\] = \[\];/);
+test('catalogue : une fiche documentée, les autres catalogues restent vides', () => {
+  // La seule fiche publiée est celle transmise par SJCD le 1er octobre 2026 : elle cite sa provenance.
+  assert.match(read('lib/data/projects.ts'), /export const projects: ProjectSheet\[\] = \[CHANDELIER_360\];/);
+  assert.match(read('lib/data/projects.ts'), /sources: \['Fiche projet transmise par SJCD le 1er octobre 2026'\]/);
   assert.match(read('lib/data/indicators.ts'), /export const indicators: PublishedIndicator\[\] = \[\];/);
   assert.match(read('lib/data/partnership.ts'), /export const partners: [^=]+ = \[\];/);
   assert.match(read('lib/data/news.ts'), /export const news: NewsItem\[\] = \[\];/);
@@ -98,16 +100,51 @@ test('rencontres de jeunes : aucun jour, horaire ni lieu inventé', () => {
   }
 });
 
-test('aucun financement, montant ni partenaire publiés', () => {
+test('finances : aucun financement acquis, montants publiés seulement s’ils sont publics', () => {
   for (const file of dataFiles) {
     const source = read(file);
     assert.doesNotMatch(source, /\b(?:USD|\$|€|EUR)\s?\d/, `montant dans ${file}`);
     assert.doesNotMatch(source, /amount: \d/, `montant dans ${file}`);
   }
-  assert.match(read('lib/data/partnership.ts'), /email: null as string \| null/);
+  // Coordonnées : source unique, fournies par SJCD le 1er octobre 2026.
+  assert.match(read('lib/data/partnership.ts'), /email: org\.email as string \| null/);
+  assert.match(read('lib/content.ts'), /email: 'Info\.sjcd@proton\.me'/);
+  assert.match(read('lib/data/projects.ts'), /amount: '75 000'/);
+  assert.match(read('lib/data/projects.ts'), /model: 'recherché'/);
+  assert.doesNotMatch(read('lib/data/projects.ts'), /model: 'sécurisé'/, 'aucun financement sécurisé ne peut être publié');
+  assert.match(read('lib/data/projects.ts'), /partners: \[\]/, 'aucun partenaire nommé');
   // Les documents statutaires ne sont pas exposés en téléchargement.
   assert.match(read('lib/data/documents.ts'), /downloadUrl: null/g);
   assert.doesNotMatch(read('app/transparence/page.tsx'), /<a[^>]+download/);
+});
+
+test('fiche Chandelier 360 : en préparation, aucun résultat déclaré comme acquis', () => {
+  const projects = read('lib/data/projects.ts');
+  assert.match(projects, /status: 'preparation'/);
+  assert.match(projects, /completedActions: \[\],/);
+  assert.match(projects, /publishedAt: '2026-10-01'/);
+  // Les cibles et les résultats attendus ne sont pas des résultats obtenus.
+  const sheetView = read('components/ProjectSheetView.tsx');
+  assert.match(sheetView, /Ce ne sont pas des résultats obtenus/);
+  assert.match(sheetView, /Ces cibles sont des engagements de formulation/);
+  assert.match(sheetView, /Partenaires recherchés/);
+});
+
+test('images : registre vérifié, aucune image publiée sans fichier, légende ni droits', () => {
+  execFileSync(process.execPath, ['scripts/images.mjs', '--check']);
+  const spec = JSON.parse(read('specs/images.json'));
+  assert.ok(spec.slots.length >= 7, 'emplacements photo déclarés');
+  assert.ok(spec.slots.every(slot => slot.id && slot.dossier && slot.nom && slot.brief), 'chaque emplacement est décrit');
+  for (const slot of spec.slots) {
+    if (slot.statut === 'publiee') {
+      assert.ok(slot.fichier && slot.alt && slot.credit, `${slot.id} : publiée sans fichier, légende ou crédit`);
+      assert.ok(slot.consentRef || slot.personnesIdentifiables === false, `${slot.id} : droits non documentés`);
+    } else {
+      assert.equal(slot.statut, 'attendu', `${slot.id} : statut inattendu`);
+    }
+  }
+  // Le site ne construit une adresse publique que pour une image publiée.
+  assert.match(read('lib/data/media.ts'), /slot\.statut === 'publiee' && slot\.fichier \? `\/images\//);
 });
 
 test('noms de dirigeants : interrupteur unique et réserve affichée', () => {

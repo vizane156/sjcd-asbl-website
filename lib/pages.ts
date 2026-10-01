@@ -26,9 +26,9 @@ export const pages: Record<string, {
     title: 'Mentions légales.', eyebrow: 'Préproduction · Document incomplet',
     intro: 'Cette page est un état des informations disponibles, pas une déclaration de conformité juridique. Les mentions définitives doivent être validées pour le droit applicable en RDC.',
     blocks: [
-      { title: 'Organisation', body: 'Sanctuaire de Jeunes Chandelier pour le Développement, en sigle SJCD ASBL. Association sans but lucratif de droit congolais, apolitique et non confessionnelle, à caractère social, éducatif et de développement communautaire. Siège social : ville d’Uvira, Province du Sud-Kivu, République démocratique du Congo.' },
-      { title: 'Statut juridique', body: 'Les statuts et le règlement intérieur présents dans le dépôt sont des documents de travail soumis à relecture juridique et notariale. Leur adoption formelle, leur notarisation et leur dépôt ne sont pas attestés. Aucune personnalité juridique opposable n’est affirmée sur ce site.' },
-      { title: 'Informations manquantes', body: 'Adresse précise du siège, numéro et autorité d’enregistrement, responsable de publication, coordonnées officielles et hébergeur de production restent à fournir.', pending: true },
+      { title: 'Organisation', body: 'Sanctuaire de Jeunes Chandelier pour le Développement, en sigle SJCD ASBL. Association sans but lucratif de droit congolais, apolitique et non confessionnelle, à caractère social, éducatif et de développement communautaire. Siège social : ville d’Uvira, Province du Sud-Kivu, République démocratique du Congo. Adresse : avenue Rubenga n° 43, quartier Kavimvira, Uvira. Contact : Info.sjcd@proton.me — +243 982 745 085.' },
+      { title: 'Statut juridique', body: 'Les statuts et le règlement intérieur présents dans le dépôt sont des documents de travail soumis à relecture juridique et notariale. Leur adoption formelle, leur notarisation et leur dépôt ne sont pas attestés. SJCD a confirmé le 1er octobre 2026 que la formalisation est en cours. Aucune personnalité juridique opposable n’est affirmée sur ce site.' },
+      { title: 'Informations fournies et informations manquantes', body: 'Fournis par SJCD : adresse du siège (avenue Rubenga n° 43, quartier Kavimvira, Uvira), adresse e-mail institutionnelle et numéro de téléphone. Restent à fournir : numéro et date d’enregistrement, autorité d’enregistrement, responsable de publication et hébergeur de production.', pending: true },
       { title: 'Droits et crédits', body: 'La flamme est une proposition graphique, non un logo officiel. Police Nunito : SIL Open Font License 1.1 (licence incluse dans la dépendance). Aucun visuel de terrain ni logo partenaire n’est utilisé. Le régime des droits du projet reste à valider.' },
     ],
   },
@@ -47,7 +47,7 @@ export const pages: Record<string, {
     blocks: [
       { title: 'Navigation et lecture', body: 'Liens d’évitement, structure de titres, focus visibles, zones tactiles généreuses et menu mobile utilisable au clavier. Le contenu principal reste lisible sans JavaScript.' },
       { title: 'Mouvement adaptatif', body: 'Le défilement inertiel et les effets GSAP sont réservés au desktop avec pointeur précis. Ils sont désactivés si le mouvement réduit est demandé, si la connexion signale une économie de données ou une vitesse 2G. La galerie utilise un défilement horizontal natif.' },
-      { title: 'Signaler une difficulté', body: 'L’adresse de contact dédiée n’est pas encore fournie. Un signalement technique peut être ouvert dans le dépôt public, sans donnée personnelle.', pending: true },
+      { title: 'Signaler une difficulté', body: 'Écrivez à Info.sjcd@proton.me en précisant la page concernée, ou ouvrez un signalement technique dans le dépôt public, sans donnée personnelle. Un point de contact dédié à l’accessibilité reste à désigner.', pending: true },
     ],
   },
 };

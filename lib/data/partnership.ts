@@ -5,6 +5,7 @@
  */
 import type { PartnershipForm } from '@/lib/models';
 import { partnershipRegime } from '@/lib/statuts';
+import { org, telHref } from '@/lib/content';
 
 export const partnershipForms: PartnershipForm[] = [
   {
@@ -91,16 +92,18 @@ export const partnershipRules = {
 };
 
 /**
- * Point de contact institutionnel — aucune adresse n'est documentée (docs/11 §3.1).
- * Le formulaire prépare donc un brouillon local : aucun message n'est transmis.
+ * Point de contact institutionnel — coordonnées fournies par SJCD le 1er octobre 2026
+ * (source unique : lib/content.ts). Aucun réseau social officiel n'est déclaré.
+ * Le formulaire prépare un brouillon local : aucun message n'est transmis.
  */
 export const partnershipContact = {
-  email: null as string | null,
-  phone: null as string | null,
-  address: null as string | null,
+  email: org.email as string | null,
+  phone: org.phone as string | null,
+  phoneHref: telHref,
+  address: org.address as string | null,
   socialMedia: [] as { label: string; url: string }[],
   transmission:
-    'Aucun service de réception n’est encore en place. Le formulaire prépare un message dans votre navigateur, que vous pouvez copier ou télécharger ; rien n’est envoyé ni enregistré par le site. Les coordonnées officielles de SJCD seront publiées dès qu’elles seront fournies.',
+    'Aucun service de réception n’est encore en place sur ce site de préproduction. Le formulaire prépare un message dans votre navigateur, que vous pouvez copier ou télécharger ; rien n’est envoyé ni enregistré par le site. En attendant, les coordonnées officielles ci-dessous sont utilisables directement.',
 };
 
 /** Types proposés dans le formulaire, alignés sur les formes de collaboration. */

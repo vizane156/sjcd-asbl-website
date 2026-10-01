@@ -8,6 +8,8 @@
     "start": "next start -H 0.0.0.0 -p 3000",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
+    "images:sync": "node scripts/images.mjs",
+    "images:check": "node scripts/images.mjs --check",
     "test": "node --test tests/contracts.test.mjs",
     "test:e2e": "playwright test",
     "test:a11y": "playwright test -g accessibilité",

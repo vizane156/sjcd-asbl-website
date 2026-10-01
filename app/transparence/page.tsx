@@ -44,6 +44,7 @@ export default function Transparence() {
 
         <LegalNotice title="Statut juridique : ce que les documents permettent d’affirmer">
           <p>{legalStatus.statement}</p>
+          <p>{legalStatus.formalizationNote}</p>
           <dl className="organ-facts">
             <div><dt>Personnalité juridique opposable attestée</dt><dd>Non</dd></div>
             <div><dt>Adoption formelle attestée</dt><dd>Non — divergence entre la page de garde et l&apos;acte d&apos;adoption</dd></div>

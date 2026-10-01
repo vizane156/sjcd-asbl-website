@@ -27,6 +27,7 @@ export default function QuiSommesNous() {
     >
       <LegalNotice title="Statut des documents de référence" level={2}>
         <p>{legalStatus.statement}</p>
+        <p>{legalStatus.formalizationNote}</p>
         <SourceRefs sources={legalStatus.sources} label="Références" />
       </LegalNotice>
 
@@ -115,10 +116,14 @@ export default function QuiSommesNous() {
             <SourceRefs sources={['S, note liminaire', 'RI page de garde']} />
           </li>
         </ol>
-        <LegalNotice title="Divergence de dates non résolue">
+        <LegalNotice title="Divergence de dates à trancher par écrit">
+          <p>{identity.creationDateDiscrepancy}</p>
           <p>
-            {identity.creationDateDiscrepancy} Aucune des deux dates n&apos;est présentée comme date de
-            création officielle tant que la divergence n&apos;est pas tranchée par SJCD.
+            Interrogé le 1er octobre 2026, SJCD retient la date du{' '}
+            <strong>{identity.creationDateRetainedBySJCD}</strong> déclarée au préambule des statuts.
+            Cette réponse ne lève pas la divergence : l&apos;acte d&apos;adoption porte toujours une
+            Assemblée générale constitutive au 15 juin 2023. Aucune des deux dates n&apos;est donc
+            publiée comme date de création officielle enregistrée.
           </p>
           <SourceRefs sources={['S préambule', 'S, acte d’adoption']} label="Références" />
         </LegalNotice>
