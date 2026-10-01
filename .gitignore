@@ -51,6 +51,7 @@ payload-types.ts
 coverage/
 .nyc_output/
 playwright-report/
+playwright-report.json
 test-results/
 blob-report/
 .playwright/

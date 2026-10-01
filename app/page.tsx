@@ -84,14 +84,15 @@ export default function Home() {
             <p style={{ marginTop: '1rem' }}><Tag>Formulation de la mission à valider par SJCD</Tag></p>
             <div className="intro__cols">
               <p data-reveal>
-                Le Salon de Jeunes Chandelier pour le Développement est une association sans but lucratif établie en République
-                démocratique du Congo. Sa présentation détaillée — histoire, valeurs, gouvernance — sera publiée dès validation par SJCD.
+                Le Sanctuaire de Jeunes Chandelier pour le Développement est une association sans but lucratif de droit congolais,
+                apolitique et non confessionnelle, dont le siège est établi à Uvira, au Sud-Kivu. Histoire, mission, valeurs et
+                gouvernance sont présentées à partir de ses statuts et de son règlement intérieur.
               </p>
               <dl className="fact-list" data-reveal>
-                <div><dt>Forme juridique</dt><dd>ASBL</dd></div>
-                <div><dt>Pays</dt><dd>RD Congo</dd></div>
-                <div><dt>Enregistrement</dt><dd><Tag>À fournir</Tag></dd></div>
-                <div><dt>Siège</dt><dd><Tag>À fournir</Tag></dd></div>
+                <div><dt>Forme juridique</dt><dd>ASBL de droit congolais</dd></div>
+                <div><dt>Caractère</dt><dd>Apolitique, non confessionnelle</dd></div>
+                <div><dt>Siège social</dt><dd>Uvira, Sud-Kivu</dd></div>
+                <div><dt>Enregistrement</dt><dd><Tag>Non attesté</Tag></dd></div>
               </dl>
             </div>
           </div>

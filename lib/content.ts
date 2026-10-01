@@ -6,24 +6,30 @@
 
 export const org = {
   acronym: 'SJCD',
-  name: 'Salon de Jeunes Chandelier pour le Développement',
+  name: 'Sanctuaire de Jeunes Chandelier pour le Développement',
   legalForm: 'ASBL',
+  legalFormLong: 'Association sans but lucratif de droit congolais',
   country: 'République démocratique du Congo',
-  // TODO(SJCD): numéro d'enregistrement, siège, contacts officiels.
+  // Documenté : S art. 3 — siège social dans la ville d'Uvira, Province du Sud-Kivu.
+  registeredOffice: 'Ville d’Uvira, Province du Sud-Kivu, République démocratique du Congo',
+  // TODO(SJCD): adresse précise du siège, numéro d'enregistrement, contacts officiels.
+  // Aucun de ces éléments ne figure dans les statuts ni le règlement intérieur.
   registration: null as string | null,
   address: null as string | null,
   email: null as string | null,
   phone: null as string | null,
 };
 
+/** Navigation principale : huit entrées, dont sept routes et l'accueil. */
 export const nav = [
-  { label: 'Accueil', href: '#top' },
-  { label: 'Qui sommes-nous', href: '#introduction' },
-  { label: 'Programmes & Projets', href: '#domaines' },
-  { label: 'Impact', href: '#impact' },
-  { label: 'Transparence', href: '#transparence' },
-  { label: 'Partenariats', href: '#partenaires' },
-  { label: 'Actualités', href: '#actualites' },
+  { label: 'Accueil', href: '/' },
+  { label: 'Qui sommes-nous', href: '/qui-sommes-nous' },
+  { label: 'Programmes', href: '/programmes' },
+  { label: 'Projets', href: '/projets' },
+  { label: 'Transparence', href: '/transparence' },
+  { label: 'Partenariats', href: '/partenariats' },
+  { label: 'Actualités', href: '/actualites' },
+  { label: 'Contact', href: '/contact' },
 ];
 
 // TODO(SJCD): domaines réels. Les intitulés ci-dessous sont des emplacements.

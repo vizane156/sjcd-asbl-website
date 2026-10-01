@@ -9,7 +9,7 @@ const nunito = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'SJCD ASBL — Salon de Jeunes Chandelier pour le Développement',
+  title: 'SJCD ASBL — Sanctuaire de Jeunes Chandelier pour le Développement',
   description: 'Site officiel de SJCD ASBL, organisation établie en République démocratique du Congo, engagée pour la jeunesse et le développement.',
   openGraph: { title: 'SJCD ASBL — Jeunesse et développement communautaire', description: 'Une organisation congolaise de la société civile, ancrée à Uvira / Sud-Kivu.', locale: 'fr_CD', type: 'website' },
   twitter: { card: 'summary', title: 'SJCD ASBL — Jeunesse et développement communautaire' },
