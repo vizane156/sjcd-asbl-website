@@ -9,6 +9,8 @@
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
     "images:sync": "node scripts/images.mjs",
+    "images:optimize": "node scripts/optimize-images.mjs",
+    "images:dry-run": "node scripts/optimize-images.mjs --dry-run",
     "images:check": "node scripts/images.mjs --check",
     "test": "node --test tests/contracts.test.mjs",
     "test:e2e": "playwright test",
@@ -22,7 +24,8 @@
     "lenis": "^1.3.26",
     "next": "^15.5.26",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react-dom": "^19.3.0",
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",

@@ -32,7 +32,9 @@ function GalleryItem({ slot }: { slot: MediaSlot }) {
 }
 
 export function ProjectSheetView({ project }: { project: ProjectSheet }) {
-  const publishedMedia = project.gallery.filter(slot => mediaUrl(slot)).length;
+  const publishedSlots = project.gallery.filter(slot => mediaUrl(slot));
+  const pendingSlots = project.gallery.filter(slot => !mediaUrl(slot));
+  const publishedMedia = publishedSlots.length;
   return (
     <article className="sheet" id={project.slug} aria-labelledby={`${project.slug}-title`}>
       <header className="sheet__header">
@@ -175,20 +177,29 @@ export function ProjectSheetView({ project }: { project: ProjectSheet }) {
 
       <h3>Galerie</h3>
       <p className="muted">
-        {project.gallery.length} emplacements photo prévus · {publishedMedia} publiée
-        {publishedMedia > 1 ? 's' : ''}. Aucune image n’est présentée comme réelle qu’elle ne le
-        soit : chaque emplacement reste vide tant que la photo, sa légende et ses droits ne sont
-        pas réunis (voir <code>public/images/README.md</code>).
+        {publishedMedia} visuel{publishedMedia > 1 ? 's' : ''} publié{publishedMedia > 1 ? 's' : ''} sur{' '}
+        {project.gallery.length} emplacements prévus. Tous sont des <strong>illustrations</strong> :
+        ils portent l’étiquette « Illustration » et la mention indiquant qu’ils ne représentent pas
+        une activité réalisée par SJCD. Aucune illustration n’est présentée comme un reportage de
+        terrain, et un emplacement reste vide tant que l’image, sa légende et ses droits ne sont pas
+        réunis (voir <code>public/images/README.md</code>).
       </p>
       <div className="sheet-gallery">
-        {project.gallery.map(slot => <GalleryItem key={slot.id} slot={slot} />)}
+        {publishedSlots.map(slot => <GalleryItem key={slot.id} slot={slot} />)}
       </div>
-      <p className="muted">
-        Les visuels attendus pour ce projet sont des <strong>illustrations</strong> : elles seront
-        publiées avec l’étiquette « Illustration » et une mention explicite indiquant qu’elles ne
-        représentent pas une activité réalisée par SJCD. Aucune illustration ne sera présentée comme
-        un reportage de terrain.
-      </p>
+
+      {pendingSlots.length > 0 && (
+        <>
+          <h4>Emplacements en attente — {pendingSlots.length}</h4>
+          <p className="muted">
+            Ces visuels sont prévus mais n’ont pas encore été fournis. Ils restent visibles comme
+            manquants : aucun n’est remplacé par une image choisie à la place.
+          </p>
+          <div className="sheet-gallery">
+            {pendingSlots.map(slot => <GalleryItem key={slot.id} slot={slot} />)}
+          </div>
+        </>
+      )}
 
       <h3>Documents</h3>
       {project.documents.length === 0 ? (

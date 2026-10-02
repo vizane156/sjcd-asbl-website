@@ -49,6 +49,24 @@ navigateurs : exportez-les d'abord en `.jpg`.
 
 ---
 
+## 1 bis. État actuel du dossier
+
+| Emplacement | État |
+| --- | --- |
+| `00-couverture.jpg` | **publiée** — salle de formation informatique |
+| `01-formation-numerique.jpg` | **publiée** — atelier de formation numérique |
+| `02-atelier-entrepreneuriat.jpg` | **publiée** — présentation d’une idée d’entreprise |
+| `05-activite-entrepreneuriale.jpg` | **publiée** — jeune entrepreneure à son étal |
+| `03-mentorat.jpg` | en attente |
+| `04-presentation-projets.jpg` | en attente |
+| `06-groupe-participants.jpg` | en attente |
+| `institution/logo-sjcd.*` | en attente |
+| `institution/siege-uvira.*` | en attente |
+
+Les quatre visuels publiés sont des **illustrations générées par IA** (ChatGPT), fournies par SJCD
+le 2 octobre 2026. Leurs fichiers sources PNG ont été retirés du dépôt après optimisation : ils
+restent consultables dans l’historique Git.
+
 ## 2. Comment les déposer
 
 **Depuis GitHub (le plus simple, sans logiciel) :**
@@ -61,7 +79,9 @@ navigateurs : exportez-les d'abord en `.jpg`.
 
 ```bash
 cp ~/MesPhotos/*.jpg public/images/projets/chandelier-360/
-npm run images:sync     # détecte les fichiers, met à jour le registre
+npm run images:optimize   # redimensionne à 1600 px et réexporte en JPEG (sources supprimées)
+npm run images:dry-run    # pour voir ce que l’optimisation ferait, sans rien modifier
+npm run images:sync       # détecte les fichiers, met à jour le registre
 git add public/images specs/images.json
 git commit -m "images: photos Chandelier 360"
 git push

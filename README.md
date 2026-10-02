@@ -66,6 +66,7 @@ prévisionnel ; ses intégrations ne sont pas actives.
 
 ```bash
 npm run tokens:check        # JSON ↔ CSS synchronisés
+npm run images:optimize     # redimensionne les images déposées (1600 px, JPEG)
 npm run images:sync         # images déposées dans public/images/ → registre à jour
 npm run images:check        # aucune image publiée sans fichier, légende ni droits
 npm run lint
@@ -90,6 +91,7 @@ lib/data/media.ts    Registre des images (specs/images.json) et adresses publiqu
 public/images/       Dépôt des photos et du logo — voir public/images/README.md
 specs/images.json    Emplacements photo attendus, légendes, droits, statut
 scripts/images.mjs   Détection des fichiers déposés et contrôle des droits
+scripts/optimize-images.mjs  Redimensionnement et conversion JPEG des images déposées
 lib/statuts.ts       Vérités institutionnelles extraites des statuts et du RI, sourcées par article
 lib/data/            Gouvernance, programmes, documents, projets, indicateurs, partenariats
 lib/pages.ts         Textes des pages intérieures simples, explicitement provisoires
@@ -142,10 +144,14 @@ npm run images:check    # vérifie fichiers, légendes et droits (utilisé par l
 ```
 
 Une image est affichée **uniquement** si son statut est `publiee` : fichier présent, texte
-alternatif rédigé, crédit renseigné et, pour toute personne identifiable, une référence
-d'autorisation écrite. Sinon le site affiche un cadre « Photo SJCD à venir ». Les photos de
-banque d'images ou générées sont possibles, mais uniquement étiquetées « Illustration » —
-jamais présentées comme des activités réelles de SJCD.
+alternatif rédigé, crédit renseigné et — selon la nature — licence (illustration) ou autorisation
+écrite des personnes identifiables (photographie documentaire). Sinon le site affiche un cadre
+« Photo SJCD à venir ».
+
+Quatre illustrations générées par IA sont publiées pour Chandelier 360° (couverture, formation
+numérique, atelier d'entrepreneuriat, activité entrepreneuriale). Elles portent l'étiquette
+« Illustration » et la mention « ne représente pas une activité réalisée par SJCD ». Trois
+emplacements restent en attente et sont affichés comme tels.
 
 ## Design et documentation
 
