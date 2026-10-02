@@ -10,6 +10,10 @@ visuel de banque d'images n'est utilisé à la place d'une photo de terrain.
 
 ## 1. Où déposer chaque image
 
+> **Logo en relief 3D.** Une fois le logo officiel déposé, la commande `npm run logo:3d`
+> produit un relief fidèle (aucune IA générative : la forme du logo est extrudée telle quelle).
+> Voir § 6.
+
 | Type de visuel | Dossier | Nom de fichier attendu |
 | --- | --- | --- |
 | Logo officiel de SJCD | `public/images/institution/` | `logo-sjcd.png` (ou `.svg`, `.webp`) |
@@ -160,3 +164,38 @@ Statuts possibles :
   L'image est affichée sur le site.
 
 Aucune image ne devient « publiée » toute seule : c'est une décision éditoriale.
+
+---
+
+## 6. Logo en relief 3D
+
+Le script `scripts/logo-3d.mjs` construit un relief à partir du PNG transparent : il empile la
+silhouette exacte du logo pour créer l'épaisseur, pose une ombre portée, puis repose le logo
+d'origine, intact, au premier plan. Aucun modèle génératif n'intervient — le résultat est une
+transformation géométrique de votre fichier, pas une réinterprétation.
+
+```bash
+# 1. déposer le logo officiel
+#    public/images/institution/logo-sjcd.png   (PNG, fond transparent)
+
+# 2. produire le relief
+npm run logo:3d
+
+# réglages possibles
+node scripts/logo-3d.mjs --depth 40              # relief plus épais
+node scripts/logo-3d.mjs --angle 45              # autre orientation
+node scripts/logo-3d.mjs --from "#05070f" --to "#f4a53a"
+node scripts/logo-3d.mjs --flow                  # sans le contrôle de transparence
+```
+
+Sorties, dans `public/images/institution/` :
+
+| Fichier | Usage |
+| --- | --- |
+| `logo-sjcd-3d.png` | version haute définition, fond transparent |
+| `logo-sjcd-3d.webp` | version web, plus légère |
+| `logo-sjcd-3d-512.png` | vignette pour les listes et le pied de page |
+
+**Le fond doit être réellement transparent.** Le script refuse un PNG dont aucun pixel n'est
+transparent, car le relief épouserait alors le rectangle de l'image au lieu de la forme du logo.
+Pour détourer un logo existant : Photopea (gratuit, dans le navigateur) ou remove.bg.

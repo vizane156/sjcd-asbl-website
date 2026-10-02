@@ -69,6 +69,7 @@ npm run tokens:check        # JSON ↔ CSS synchronisés
 npm run images:optimize     # redimensionne les images déposées (1600 px, JPEG)
 npm run images:sync         # images déposées dans public/images/ → registre à jour
 npm run images:check        # aucune image publiée sans fichier, légende ni droits
+npm run logo:3d             # relief 3D du logo officiel déposé (PNG transparent)
 npm run lint
 npm run typecheck           # après dev ou build pour les types générés Next
 npm test                    # contrats, contrastes, confidentialité, catalogue, images
@@ -92,6 +93,7 @@ public/images/       Dépôt des photos et du logo — voir public/images/README
 specs/images.json    Emplacements photo attendus, légendes, droits, statut
 scripts/images.mjs   Détection des fichiers déposés et contrôle des droits
 scripts/optimize-images.mjs  Redimensionnement et conversion JPEG des images déposées
+scripts/logo-3d.mjs   Relief 3D du logo officiel, par extrusion de sa forme réelle
 lib/statuts.ts       Vérités institutionnelles extraites des statuts et du RI, sourcées par article
 lib/data/            Gouvernance, programmes, documents, projets, indicateurs, partenariats
 lib/pages.ts         Textes des pages intérieures simples, explicitement provisoires
