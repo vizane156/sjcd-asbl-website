@@ -57,6 +57,7 @@ navigateurs : exportez-les d'abord en `.jpg`.
 
 | Emplacement | État |
 | --- | --- |
+| `institution/logo-sjcd-complet.png` | **publié** — logo complet avec la dénomination (reçu le 3 octobre 2026) |
 | `00-couverture.jpg` | **publiée** — salle de formation informatique |
 | `01-formation-numerique.jpg` | **publiée** — atelier de formation numérique |
 | `02-atelier-entrepreneuriat.jpg` | **publiée** — présentation d’une idée d’entreprise |

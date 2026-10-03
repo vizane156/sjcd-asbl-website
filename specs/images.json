@@ -171,6 +171,22 @@
       "priseLe": null,
       "statut": "attendu",
       "licence": null
+    },
+    {
+      "id": "logo-sjcd-complet",
+      "dossier": "institution",
+      "nom": "logo-sjcd-complet",
+      "brief": "Logo officiel complet : emblème, sigle SJCD et dénomination",
+      "fichier": "logo-sjcd-complet.png",
+      "alt": "Logo SJCD : une flamme orange au-dessus de silhouettes bleues, suivi du sigle SJCD et du nom « Sanctuaire de Jeunes Chandelier pour le Développement ».",
+      "nature": "documentaire",
+      "personnesIdentifiables": false,
+      "consentRef": null,
+      "credit": "SJCD",
+      "licence": "Marque et identité visuelle de SJCD ASBL — usage réservé à l’association",
+      "lieu": null,
+      "priseLe": null,
+      "statut": "publiee"
     }
   ]
 }

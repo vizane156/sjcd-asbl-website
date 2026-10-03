@@ -697,3 +697,8 @@ button, input, select, textarea { font: inherit; }
   .sheet-gallery { grid-template-columns: 1fr; }
   .sheet { padding: 1.25rem; }
 }
+
+/* Logo officiel */
+.logo-figure { margin: 1.5rem 0; display: grid; gap: 1rem; justify-items: start; }
+.logo-figure img { width: 100%; height: auto; max-width: 780px; border-radius: var(--r-md); }
+.logo-figure figcaption { font-size: var(--fs-small); color: var(--mist-300); max-width: 68ch; }

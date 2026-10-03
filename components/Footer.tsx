@@ -1,4 +1,4 @@
-import { FlameMark } from './FlameMark';
+import { BrandMark } from './BrandMark';
 import { org, telHref } from '@/lib/content';
 import { partnershipContact } from '@/lib/data/partnership';
 
@@ -6,12 +6,12 @@ export function Footer() {
   return <footer className="footer"><div className="container">
     <div className="footer__grid">
       <div>
-        <a href="/" className="brand"><FlameMark className="brand__mark" /> SJCD ASBL</a>
+        <a href="/" className="brand"><BrandMark /> SJCD ASBL</a>
         <p className="footer__description">{org.name}.<br />{org.legalFormLong}.</p>
         <p className="footer__description">
           <strong>Adresse :</strong><br />{org.address}<br />{org.registeredOffice}
         </p>
-        <p className="footer__provisional">Symbole graphique provisoire · à valider</p>
+        <p className="footer__provisional">Logo officiel de SJCD</p>
       </div>
 
       <div><h2>Navigation institutionnelle</h2><ul>

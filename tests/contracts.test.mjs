@@ -148,6 +148,24 @@ test('images : registre vérifié, aucune image publiée sans fichier, légende 
   assert.match(read('lib/data/media.ts'), /slot\.statut === 'publiee' && slot\.fichier \? `\/images\//);
 });
 
+test('logo officiel : installé dans la marque, le favicon et la page institutionnelle', () => {
+  // L'ancienne marque provisoire a disparu au profit du logo fourni par SJCD.
+  assert.equal(fs.existsSync(new URL('../components/FlameMark.tsx', import.meta.url)), false, 'marque provisoire supprimée');
+  assert.match(read('components/BrandMark.tsx'), /\/images\/institution\/logo-sjcd-emblem\.png/);
+  const emblem = JSON.parse(read('specs/images.json')).slots.find(slot => slot.id === 'logo-sjcd');
+  assert.equal(emblem.statut, 'publiee');
+  assert.ok(fs.existsSync(new URL('../public/images/institution/logo-sjcd.png', import.meta.url)), 'logo source conservé');
+  // Favicon servi par Next, et logo complet présenté sur la page institutionnelle.
+  assert.ok(fs.existsSync(new URL('../app/icon.png', import.meta.url)), 'favicon app/icon.png');
+  assert.equal(fs.existsSync(new URL('../app/icon.svg', import.meta.url)), false, 'ancien favicon provisoire retiré');
+  const institution = read('app/qui-sommes-nous/page.tsx');
+  assert.match(institution, /logo-sjcd-complet-3d-tons-clairs\.png/);
+  assert.match(institution, /alt="Logo officiel de SJCD/);
+  // Le logo n'est jamais présenté comme une illustration générée.
+  assert.match(read('lib/pages.ts'), /est la marque de SJCD ASBL/);
+  assert.doesNotMatch(read('lib/pages.ts'), /proposition graphique, non un logo officiel/);
+});
+
 test('illustrations : les visuels de projet sont étiquetés, jamais présentés comme des activités réelles', () => {
   const spec = JSON.parse(read('specs/images.json'));
   // Décision de SJCD (1er octobre 2026) : les photos fournies sont des illustrations.

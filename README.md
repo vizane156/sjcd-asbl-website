@@ -46,8 +46,9 @@ Le nouveau brief utilisateur remplace les hypothèses du cadrage initial.
 - Préproduction non indexable (`noindex` + `robots.txt`). Ce n’est pas un contrôle d’accès.
 
 Les pages intérieures sont des gabarits de contenu en attente d’informations, pas des
-pages institutionnelles définitives. La flamme est une **proposition graphique**, non un
-logo officiel. Une seule fiche projet est publiée, celle transmise par SJCD le 1er octobre
+pages institutionnelles définitives. Le **logo officiel** (flamme, silhouettes et
+dénomination) est fourni par SJCD et publié avec son accord ; une version en relief en est
+dérivée par extrusion de sa forme réelle. Une seule fiche projet est publiée, celle transmise par SJCD le 1er octobre
 2026 ; elle porte le statut « en préparation ». Aucun partenaire, témoignage, chiffre
 d’impact ou photo de terrain n’est inventé : les emplacements photo restent vides tant que
 les fichiers et les droits ne sont pas réunis.

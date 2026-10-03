@@ -1,22 +1,8 @@
 /**
- * Marque provisoire — un chandelier stylisé (TODO(SJCD): remplacer par le logo officiel, D7).
+ * Composition lumineuse du hero — halo et flamme stylisée, en couches (parallax).
+ * Élément décoratif : le nom de l'association est porté par le titre, le logo officiel
+ * est affiché dans l'en-tête, le pied de page et sur /qui-sommes-nous.
  */
-export function FlameMark({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-      <defs>
-        <linearGradient id="fm" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#ffd28a" /><stop offset="1" stopColor="#f4a53a" />
-        </linearGradient>
-      </defs>
-      <path d="M16 3c3 4 4.5 6.4 4.5 8.6A4.5 4.5 0 0 1 16 16a4.5 4.5 0 0 1-4.5-4.4C11.5 9.4 13 7 16 3z" fill="url(#fm)" />
-      <rect x="14.5" y="16" width="3" height="9" rx="1.2" fill="currentColor" />
-      <rect x="9" y="25" width="14" height="3" rx="1.5" fill="currentColor" />
-    </svg>
-  );
-}
-
-/** Grande flamme du hero — composition lumineuse en couches (parallax). */
 export function HeroFlame() {
   return (
     <svg viewBox="0 0 600 700" aria-hidden="true" focusable="false">

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { PageShell } from '@/components/PageShell';
 import { SourceRefs, Undocumented, LegalNotice } from '@/components/Source';
 import { operatingPrinciples, values } from '@/lib/data/values';
@@ -30,6 +31,31 @@ export default function QuiSommesNous() {
         <p>{legalStatus.formalizationNote}</p>
         <SourceRefs sources={legalStatus.sources} label="Références" />
       </LegalNotice>
+
+      {/* Logo officiel */}
+      <section className="doc-section" aria-labelledby="logo">
+        <h2 id="logo">Notre logo</h2>
+        <figure className="logo-figure">
+          <Image
+            src="/images/institution/logo-sjcd-complet-3d-tons-clairs.png"
+            alt="Logo officiel de SJCD : la flamme orange au-dessus des silhouettes bleues, suivie du sigle SJCD et du nom « Sanctuaire de Jeunes Chandelier pour le Développement »."
+            width={1200}
+            height={548}
+            sizes="(min-width: 960px) 780px, 100vw"
+            priority
+          />
+          <figcaption>
+            Logo officiel de SJCD ASBL, fourni par l&apos;association et publié avec son accord. La
+            version affichée reprend le fichier d&apos;origine : seul un léger relief a été ajouté,
+            sans modifier ni la flamme, ni les silhouettes, ni la typographie du nom.
+          </figcaption>
+        </figure>
+        <p className="muted">
+          L&apos;emblème seul — flamme et silhouettes — sert de marque dans l&apos;en-tête, le pied
+          de page et l&apos;icône du site. Toutes les versions sont conservées dans
+          <code> public/images/institution/</code>.
+        </p>
+      </section>
 
       {/* A. Présentation */}
       <section className="doc-section" aria-labelledby="presentation">

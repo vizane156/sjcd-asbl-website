@@ -4,7 +4,7 @@ import { StoryRail } from '@/components/StoryRail';
 import { GeographicSection, AccountabilitySections } from '@/components/FoundationSections';
 import { foundationCopy } from '@/lib/i18n/foundation';
 import { Navbar } from '@/components/Navbar';
-import { HeroFlame } from '@/components/FlameMark';
+import { HeroFlame } from '@/components/HeroFlame';
 import { SmoothScrollProvider, TiltCard } from '@/components/motion';
 import { Footer } from '@/components/Footer';
 import { org, domains, metrics, stories, news } from '@/lib/content';
