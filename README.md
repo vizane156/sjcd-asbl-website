@@ -151,10 +151,11 @@ alternatif rédigé, crédit renseigné et — selon la nature — licence (illu
 écrite des personnes identifiables (photographie documentaire). Sinon le site affiche un cadre
 « Photo SJCD à venir ».
 
-Quatre illustrations générées par IA sont publiées pour Chandelier 360° (couverture, formation
-numérique, atelier d'entrepreneuriat, activité entrepreneuriale). Elles portent l'étiquette
-« Illustration » et la mention « ne représente pas une activité réalisée par SJCD ». Trois
-emplacements restent en attente et sont affichés comme tels.
+Sept illustrations générées par IA sont publiées pour Chandelier 360° : couverture, formation
+numérique, atelier d'entrepreneuriat, mentorat, présentation de projets, activité entrepreneuriale
+et groupe de participants. Elles portent l'étiquette « Illustration » et la mention « ne représente
+pas une activité réalisée par SJCD », avec leur source et leur licence. Aucun emplacement ne reste
+en attente ; seul le visuel du siège (`institution/siege-uvira`) est encore attendu.
 
 ## Design et documentation
 

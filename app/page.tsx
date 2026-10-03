@@ -4,7 +4,7 @@ import { StoryRail } from '@/components/StoryRail';
 import { GeographicSection, AccountabilitySections } from '@/components/FoundationSections';
 import { foundationCopy } from '@/lib/i18n/foundation';
 import { Navbar } from '@/components/Navbar';
-import { HeroFlame } from '@/components/HeroFlame';
+import { HeroBrand } from '@/components/HeroBrand';
 import { SmoothScrollProvider, TiltCard } from '@/components/motion';
 import { Footer } from '@/components/Footer';
 import { org, domains, metrics, stories, news } from '@/lib/content';
@@ -38,7 +38,7 @@ export default function Home() {
         <section className="hero snap-start" id="top" aria-labelledby="hero-title">
           <div className="hero__bg" aria-hidden />
           <div className="hero__grid" aria-hidden />
-          <div className="hero__flame" data-hero-flame><HeroFlame /></div>
+          <div className="hero__flame" data-hero-flame><HeroBrand /></div>
           <div className="container hero__content">
             <p className="eyebrow" data-hero-fade>{copy.hero.eyebrow}</p>
             <h1 id="hero-title" style={{ marginTop: '1.25rem' }}>

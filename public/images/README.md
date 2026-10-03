@@ -62,15 +62,16 @@ navigateurs : exportez-les d'abord en `.jpg`.
 | `01-formation-numerique.jpg` | **publiée** — atelier de formation numérique |
 | `02-atelier-entrepreneuriat.jpg` | **publiée** — présentation d’une idée d’entreprise |
 | `05-activite-entrepreneuriale.jpg` | **publiée** — jeune entrepreneure à son étal |
-| `03-mentorat.jpg` | en attente |
-| `04-presentation-projets.jpg` | en attente |
-| `06-groupe-participants.jpg` | en attente |
+| `03-mentorat.jpg` | **publiée** — mentorat autour d’un ordinateur |
+| `04-presentation-projets.jpg` | **publiée** — présentation devant un panel |
+| `06-groupe-participants.jpg` | **publiée** — groupe de participants |
 | `institution/logo-sjcd.png` | **publié** — logo officiel reçu le 3 octobre 2026 (1 774 × 887, fond transparent) |
 | `institution/siege-uvira.*` | en attente |
 
-Les quatre visuels publiés sont des **illustrations générées par IA** (ChatGPT), fournies par SJCD
-le 2 octobre 2026. Leurs fichiers sources PNG ont été retirés du dépôt après optimisation : ils
-restent consultables dans l’historique Git.
+Les sept visuels publiés sont des **illustrations générées par IA** : les quatre premiers ont été
+fournis par SJCD le 2 octobre 2026, les trois derniers (mentorat, présentation de projets, groupe
+de participants) ont été produits pour SJCD le 3 octobre 2026. Leurs fichiers sources PNG ont été
+retirés du dépôt après optimisation : ils restent consultables dans l’historique Git.
 
 ## 2. Comment les déposer
 

@@ -16,6 +16,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
+import fs2 from 'node:fs';
+
+/** Seuil au-delà duquel un fichier de public/images est considéré comme trop lourd. */
+const spec_warnBytes = JSON.parse(fs2.readFileSync(new URL('../specs/images.json', import.meta.url), 'utf8')).rules.warnBytes;
 
 const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
@@ -66,6 +70,14 @@ for (const folder of folders) {
 
     const sourcePath = fileURLToPath(source);
     const metadata = await sharp(sourcePath).metadata();
+
+    // Un JPEG déjà publié (largeur utile et poids raisonnable) n'est pas recompressé :
+    // chaque passage dégraderait l'image sans bénéfice.
+    if ((ext === '.jpg' || ext === '.jpeg')
+      && (metadata.width ?? 0) <= MAX_WIDTH && before <= spec_warnBytes) {
+      console.log(`[ignoré] ${folder}/${prefix}${entry.name} — déjà optimisé (${metadata.width} px, ${ko(before)}).`);
+      continue;
+    }
     let quality = QUALITY;
     let buffer = await sharp(sourcePath)
       .rotate()

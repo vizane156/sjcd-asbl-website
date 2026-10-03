@@ -170,6 +170,10 @@ test('logo officiel : installé dans la marque, le favicon et la page institutio
   const institution = read('app/qui-sommes-nous/page.tsx');
   assert.match(institution, /logo-sjcd-complet-3d-tons-clairs\.png/);
   assert.match(institution, /alt="Logo officiel de SJCD/);
+  // Le hero affiche l'emblème officiel ; la flamme décorative a été retirée.
+  assert.equal(fs.existsSync(new URL('../components/HeroFlame.tsx', import.meta.url)), false, 'flamme décorative retirée');
+  assert.match(read('components/HeroBrand.tsx'), /logo-sjcd-emblem-3d-clair\.png/);
+  assert.match(read('app/page.tsx'), /<HeroBrand \/>/);
   // Le logo n'est jamais présenté comme une illustration générée.
   assert.match(read('lib/pages.ts'), /est la marque de SJCD ASBL/);
   assert.doesNotMatch(read('lib/pages.ts'), /proposition graphique, non un logo officiel/);
@@ -181,6 +185,8 @@ test('illustrations : les visuels de projet sont étiquetés, jamais présentés
   const projet = spec.slots.filter(slot => slot.dossier === 'projets/chandelier-360');
   assert.equal(projet.length, 7, 'sept visuels pour Chandelier 360°');
   assert.ok(projet.every(slot => slot.nature === 'illustration'), 'les visuels de projet sont des illustrations');
+  assert.ok(projet.every(slot => slot.statut === 'publiee'), 'les sept visuels sont publiés');
+  assert.ok(projet.every(slot => slot.licence && slot.alt), 'chacun porte une licence et un texte alternatif');
   assert.match(read('lib/data/media.ts'), /export const illustrationNote =/);
   assert.match(read('lib/data/media.ts'), /ne représente pas une activité réalisée par SJCD/);
   const vue = read('components/ProjectSheetView.tsx');

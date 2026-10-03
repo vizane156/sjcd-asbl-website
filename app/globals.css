@@ -293,6 +293,12 @@ button, input, select, textarea { font: inherit; }
 .hero__lead { font-size: 1.1rem; max-width: 40ch; }
 .hero__flame { top: 7%; right: 0; width: min(52vw, 790px); }
 .hero__flame svg { filter: drop-shadow(0 0 26px rgba(244,165,58,.25)); }
+/* Logo officiel du hero : halo ambre derrière l'emblème, ombre douce sous la forme. */
+.hero-brand { position: relative; display: grid; place-items: center; }
+.hero-brand__glow { position: absolute; inset: -22%; border-radius: 50%;
+  background: radial-gradient(circle at 50% 42%, rgba(244,165,58,.5), rgba(255,107,61,.16) 45%, transparent 70%); }
+.hero-brand__mark { position: relative; width: 100%; height: auto; max-width: 520px;
+  filter: drop-shadow(0 26px 50px rgba(4,7,15,.6)); }
 .hero__content { padding-top: 2rem; }
 .hero__grid { opacity: .17; }
 .stat__value--empty { color: var(--mist-300); -webkit-text-stroke: 0; }
