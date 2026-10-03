@@ -151,7 +151,16 @@ test('images : registre vérifié, aucune image publiée sans fichier, légende 
 test('logo officiel : installé dans la marque, le favicon et la page institutionnelle', () => {
   // L'ancienne marque provisoire a disparu au profit du logo fourni par SJCD.
   assert.equal(fs.existsSync(new URL('../components/FlameMark.tsx', import.meta.url)), false, 'marque provisoire supprimée');
-  assert.match(read('components/BrandMark.tsx'), /\/images\/institution\/logo-sjcd-emblem\.png/);
+  // Deux déclinaisons retenues par SJCD : B (fonds clairs) et E (fonds sombres).
+  const brand = read('components/BrandMark.tsx');
+  assert.match(brand, /logo-sjcd-emblem-3d\$\{small\}\.png/);
+  assert.match(brand, /logo-sjcd-emblem-3d-clair\$\{small\}\.png/);
+  assert.match(brand, /surface\?: 'dark' \| 'light'/);
+  assert.ok(fs.existsSync(new URL('../public/images/institution/logo-sjcd-emblem-3d.png', import.meta.url)), 'version B');
+  assert.ok(fs.existsSync(new URL('../public/images/institution/logo-sjcd-emblem-3d-clair.png', import.meta.url)), 'version E');
+  // Le favicon est la version B, posée sur fond papier.
+  assert.match(read('app/qui-sommes-nous/page.tsx'), /Version B — fonds clairs/);
+  assert.match(read('app/qui-sommes-nous/page.tsx'), /Version E — fonds sombres/);
   const emblem = JSON.parse(read('specs/images.json')).slots.find(slot => slot.id === 'logo-sjcd');
   assert.equal(emblem.statut, 'publiee');
   assert.ok(fs.existsSync(new URL('../public/images/institution/logo-sjcd.png', import.meta.url)), 'logo source conservé');

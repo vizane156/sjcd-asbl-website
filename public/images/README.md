@@ -170,11 +170,19 @@ Aucune image ne devient « publiée » toute seule : c'est une décision éditor
 
 ## 6. Logo en relief 3D
 
-> **Fait le 3 octobre 2026.** Le logo officiel a été déposé dans
-> `public/images/institution/logo-sjcd.png` (1 774 × 887, 87,8 % transparent) et cinq reliefs
-> ont été produits : `logo-sjcd-3d.png` (proposition principale), `-tons-clairs`, `-fin`,
-> `-oblique`, `-sans-lisere`. Chacun existe en `.png` (transparent), `.webp` (web) et `-512.png`.
-> La planche de comparaison est dans `demo/propositions-logo-3d.png`.
+> **Fait le 3 octobre 2026.** Deux fichiers ont été déposés par SJCD :
+> `logo-sjcd.png` (emblème seul) et `logo-sjcd-complet.png` (emblème + dénomination), tous deux
+> à fond transparent. SJCD a retenu **deux déclinaisons** :
+>
+> | Version | Fichier | Usage |
+> | --- | --- | --- |
+> | **B** — relief marqué | `logo-sjcd-emblem-3d.png` / `logo-sjcd-complet-3d.png` | fonds clairs, papier, icône du site |
+> | **E** — relief en tons clairs | `logo-sjcd-emblem-3d-clair.png` / `logo-sjcd-complet-3d-tons-clairs.png` | fonds sombres : en-tête, pied de page, en-têtes de pages |
+>
+> Chaque version existe en `.png` (transparent, haute définition), `.webp` (web), `-512.png`
+> et, pour l'emblème, `-96.png` (marque de l'en-tête). Les autres propositions explorées
+> (`-fin`, `-oblique`, `-sans-lisere`, `-marque`) restent dans le dossier. La planche de
+> comparaison est dans `demo/propositions-logo-3d.png`.
 
 
 Le script `scripts/logo-3d.mjs` construit un relief à partir du PNG transparent : il empile la

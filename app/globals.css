@@ -702,3 +702,16 @@ button, input, select, textarea { font: inherit; }
 .logo-figure { margin: 1.5rem 0; display: grid; gap: 1rem; justify-items: start; }
 .logo-figure img { width: 100%; height: auto; max-width: 780px; border-radius: var(--r-md); }
 .logo-figure figcaption { font-size: var(--fs-small); color: var(--mist-300); max-width: 68ch; }
+
+/* Déclinaisons du logo selon le fond */
+.logo-variants { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; margin-block: 1.5rem; }
+.logo-variant { margin: 0; display: grid; grid-template-rows: 1fr auto; border: 1px solid var(--line-dark);
+  border-radius: var(--r-md); overflow: hidden; }
+.logo-variant img { width: 100%; height: auto; max-height: 300px; object-fit: contain; padding: 1.5rem; }
+.logo-variant figcaption { padding: .9rem 1.15rem; font-size: var(--fs-small); color: var(--mist-300);
+  border-top: 1px solid var(--line-dark); }
+.logo-variant figcaption strong { color: var(--mist-100); display: block; margin-bottom: .2rem; }
+.logo-variant--light { background: #f7f5f0; }
+.logo-variant--light figcaption { color: var(--ink-soft); border-top-color: var(--line-light); }
+.logo-variant--light figcaption strong { color: var(--ink); }
+.logo-variant--dark { background: var(--night-950); }

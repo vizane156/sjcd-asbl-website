@@ -46,8 +46,9 @@ export default function QuiSommesNous() {
           />
           <figcaption>
             Logo officiel de SJCD ASBL, fourni par l&apos;association et publié avec son accord. La
-            version affichée reprend le fichier d&apos;origine : seul un léger relief a été ajouté,
-            sans modifier ni la flamme, ni les silhouettes, ni la typographie du nom.
+            version affichée reprend le fichier d&apos;origine, dans sa déclinaison pour fond sombre :
+            seul un léger relief a été ajouté, sans modifier ni la flamme, ni les silhouettes, ni la
+            typographie du nom.
           </figcaption>
         </figure>
         <p className="muted">
@@ -55,6 +56,41 @@ export default function QuiSommesNous() {
           de page et l&apos;icône du site. Toutes les versions sont conservées dans
           <code> public/images/institution/</code>.
         </p>
+
+        <h3>Deux versions selon le fond</h3>
+        <p>
+          Un emblème bleu nuit se confond avec un fond sombre : deux déclinaisons ont donc été
+          préparées, choisies par SJCD le 3 octobre 2026. La forme est identique — seule la teinte
+          du relief change.
+        </p>
+        <div className="logo-variants">
+          <figure className="logo-variant logo-variant--light">
+            <Image
+              src="/images/institution/logo-sjcd-emblem-3d.png"
+              alt="Emblème SJCD en relief, version foncée, présenté sur fond clair."
+              width={764}
+              height={953}
+              sizes="(min-width: 960px) 300px, 60vw"
+            />
+            <figcaption>
+              <strong>Version B — fonds clairs.</strong> Papier, documents imprimés, courriers,
+              présentations. C&apos;est aussi la version de l&apos;icône du site.
+            </figcaption>
+          </figure>
+          <figure className="logo-variant logo-variant--dark">
+            <Image
+              src="/images/institution/logo-sjcd-emblem-3d-clair.png"
+              alt="Emblème SJCD en relief, version en tons clairs, présenté sur fond sombre."
+              width={764}
+              height={953}
+              sizes="(min-width: 960px) 300px, 60vw"
+            />
+            <figcaption>
+              <strong>Version E — fonds sombres.</strong> En-tête du site, pied de page et en-têtes
+              de pages, où le fond est bleu nuit.
+            </figcaption>
+          </figure>
+        </div>
       </section>
 
       {/* A. Présentation */}
