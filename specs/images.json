@@ -32,17 +32,17 @@
       "id": "logo-sjcd",
       "dossier": "institution",
       "nom": "logo-sjcd",
-      "brief": "Logo officiel de SJCD, fond transparent si possible",
-      "fichier": null,
-      "alt": null,
+      "brief": "Logo officiel de SJCD — relief 3D produit depuis le PNG transparent",
+      "fichier": "logo-sjcd-3d-512.png",
+      "alt": "Logo SJCD en relief : une flamme orange au-dessus de silhouettes bleues représentant un groupe rassemblé en éventail.",
       "nature": "documentaire",
       "personnesIdentifiables": false,
       "consentRef": null,
-      "credit": null,
+      "credit": "SJCD",
       "lieu": null,
       "priseLe": null,
-      "statut": "attendu",
-      "licence": null
+      "statut": "publiee",
+      "licence": "Marque et identité visuelle de SJCD ASBL — usage réservé à l’association"
     },
     {
       "id": "siege-uvira",

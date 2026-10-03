@@ -69,7 +69,9 @@ for (const slot of spec.slots) {
     } else if (slot.personnesIdentifiables !== false && !slot.consentRef) {
       failures.push(`${slot.id} : photographie documentaire avec personnes identifiables sans référence de consentement — indiquer consentRef, ou basculer la photo en « illustration » si elle n’a pas été prise par SJCD.`);
     }
-    if (slot.nature === 'documentaire') {
+    // Rappel réservé aux photos de terrain : un logo ou un visuel d'interface n'a
+    // ni date ni lieu de prise de vue.
+    if (slot.nature === 'documentaire' && slot.dossier.startsWith('projets/')) {
       if (!slot.priseLe) warnings.push(`${slot.id} : date de prise de vue non renseignée (recommandé pour une photo documentaire).`);
       if (!slot.lieu) warnings.push(`${slot.id} : lieu de prise de vue non renseigné (recommandé pour une photo documentaire).`);
     }

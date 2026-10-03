@@ -36,6 +36,7 @@ const ANGLE = Number(flag('angle', 32));       // orientation de l'extrusion, en
 const FROM = flag('from', '#05070f');          // teinte au fond du relief
 const TO = flag('to', '#22304f');              // teinte au premier plan du relief
 const SHADOW_OPACITY = Number(flag('shadow', 0.26));
+const RIM = flag('rim', 'auto');   // 'auto' = liseré éclairé, 'none' = relief nu
 const PADDING = Number(flag('padding', 24));   // marge autour du rendu final
 
 if (!fs.existsSync(INPUT)) {
@@ -133,10 +134,12 @@ if (!has('flat') && DEPTH > 0) {
 
 // 5. Contour éclairé, côté lumière (haut-gauche). Dessiné AVANT le logo : seul son
 //    décalage dépasse, ce qui détache la forme du fond sombre du relief.
-const rimShade = mix(TO, '#ffffff', 0.42);
-const rimWidth = Math.max(1, Math.round(DEPTH / 12));
-const rim = await silhouette({ r: rimShade[0], g: rimShade[1], b: rimShade[2] });
-layers.push({ input: rim, left: originX - rimWidth, top: originY - rimWidth });
+if (RIM !== 'none') {
+  const rimShade = mix(TO, '#ffffff', 0.42);
+  const rimWidth = Math.max(1, Math.round(DEPTH / 12));
+  const rim = await silhouette({ r: rimShade[0], g: rimShade[1], b: rimShade[2] });
+  layers.push({ input: rim, left: originX - rimWidth, top: originY - rimWidth });
+}
 
 // 6. Le logo d'origine, intact, au premier plan : ses pixels ne sont jamais modifiés.
 layers.push({ input: trimmed, left: originX, top: originY });

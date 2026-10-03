@@ -64,7 +64,7 @@ navigateurs : exportez-les d'abord en `.jpg`.
 | `03-mentorat.jpg` | en attente |
 | `04-presentation-projets.jpg` | en attente |
 | `06-groupe-participants.jpg` | en attente |
-| `institution/logo-sjcd.*` | en attente |
+| `institution/logo-sjcd.png` | **publié** — logo officiel reçu le 3 octobre 2026 (1 774 × 887, fond transparent) |
 | `institution/siege-uvira.*` | en attente |
 
 Les quatre visuels publiés sont des **illustrations générées par IA** (ChatGPT), fournies par SJCD
@@ -168,6 +168,13 @@ Aucune image ne devient « publiée » toute seule : c'est une décision éditor
 ---
 
 ## 6. Logo en relief 3D
+
+> **Fait le 3 octobre 2026.** Le logo officiel a été déposé dans
+> `public/images/institution/logo-sjcd.png` (1 774 × 887, 87,8 % transparent) et cinq reliefs
+> ont été produits : `logo-sjcd-3d.png` (proposition principale), `-tons-clairs`, `-fin`,
+> `-oblique`, `-sans-lisere`. Chacun existe en `.png` (transparent), `.webp` (web) et `-512.png`.
+> La planche de comparaison est dans `demo/propositions-logo-3d.png`.
+
 
 Le script `scripts/logo-3d.mjs` construit un relief à partir du PNG transparent : il empile la
 silhouette exacte du logo pour créer l'épaisseur, pose une ombre portée, puis repose le logo
