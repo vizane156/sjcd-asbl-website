@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, type FormEvent } from 'react';
+import { org, telHref } from '@/lib/content';
 
 export function ContactDraft() {
   const [ready, setReady] = useState(false);
@@ -32,9 +33,15 @@ export function ContactDraft() {
     setStatus('Brouillon téléchargé sur votre appareil. Aucun envoi effectué.');
   };
   return <div className="contact-grid">
-    <aside className="contact-note"><span className="placeholder-tag">Contact non activé</span>
-      <h2>Un premier échange.</h2><p>L’adresse officielle de SJCD reste à fournir. Cet outil prépare un message que vous pourrez conserver ; il ne l’envoie pas.</p>
-      <p>Aucun champ n’est enregistré par cette application. N’incluez pas de données sensibles ou d’informations personnelles sur des bénéficiaires.</p>
+    <aside className="contact-note"><span className="placeholder-tag">Envoi direct non activé</span>
+      <h2>Un premier échange.</h2>
+      <p>Les coordonnées officielles de SJCD sont publiées ci-dessous. Cet outil prépare un message que vous pourrez copier ou télécharger ; il ne l’envoie pas et rien n’est enregistré.</p>
+      <dl className="contact-direct">
+        <div><dt>E-mail</dt><dd><a className="link" href={`mailto:${org.email}`}>{org.email}</a></dd></div>
+        <div><dt>Téléphone</dt><dd><a className="link" href={telHref}>{org.phone}</a></dd></div>
+        <div><dt>Adresse</dt><dd>{org.address}</dd></div>
+      </dl>
+      <p>N’incluez pas de données sensibles ni d’informations personnelles sur des bénéficiaires.</p>
       <a className="link" href="/confidentialite">Comprendre la gestion des données</a>
     </aside>
     <div>

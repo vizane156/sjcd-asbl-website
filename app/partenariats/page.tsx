@@ -78,9 +78,9 @@ export default function Partenariats() {
         <LegalNotice title="Aucune donnée n’est transmise par ce formulaire">
           <p>{partnershipContact.transmission}</p>
           <dl className="organ-facts">
-            <div><dt>Adresse e-mail institutionnelle</dt><dd><Undocumented label="Non documentée" /></dd></div>
-            <div><dt>Téléphone</dt><dd><Undocumented label="Non documenté" /></dd></div>
-            <div><dt>Adresse postale</dt><dd><Undocumented label="Non documentée" /></dd></div>
+            <div><dt>Adresse e-mail institutionnelle</dt><dd><a className="link" href={`mailto:${partnershipContact.email}`}>{partnershipContact.email}</a></dd></div>
+            <div><dt>Téléphone</dt><dd><a className="link" href={partnershipContact.phoneHref}>{partnershipContact.phone}</a></dd></div>
+            <div><dt>Adresse postale</dt><dd>{partnershipContact.address}</dd></div>
             <div><dt>Réseaux sociaux</dt><dd><Undocumented label="Aucun compte officiel identifié" /></dd></div>
           </dl>
           <SourceRefs sources={['RI art. 58', 'RI art. 59']} label="Références" />

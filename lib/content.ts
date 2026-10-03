@@ -12,13 +12,17 @@ export const org = {
   country: 'République démocratique du Congo',
   // Documenté : S art. 3 — siège social dans la ville d'Uvira, Province du Sud-Kivu.
   registeredOffice: 'Ville d’Uvira, Province du Sud-Kivu, République démocratique du Congo',
-  // TODO(SJCD): adresse précise du siège, numéro d'enregistrement, contacts officiels.
-  // Aucun de ces éléments ne figure dans les statuts ni le règlement intérieur.
+  // Coordonnées fournies par SJCD le 1er octobre 2026 et publiées comme telles.
+  // Le numéro d'enregistrement reste null : la formalisation est en cours.
   registration: null as string | null,
-  address: null as string | null,
-  email: null as string | null,
-  phone: null as string | null,
+  address:
+    'Avenue Rubenga n° 43, quartier Kavimvira, Uvira, Province du Sud-Kivu, République démocratique du Congo',
+  email: 'Info.sjcd@proton.me',
+  phone: '+243 982 745 085',
 };
+
+/** Coordonnées exploitables dans un lien, sans espaces ni mise en forme. */
+export const telHref = `tel:${org.phone.replace(/[^+\d]/g, '')}`;
 
 /** Navigation principale : huit entrées, dont sept routes et l'accueil. */
 export const nav = [
@@ -40,14 +44,8 @@ export const domains = Array.from({ length: 5 }, (_, i) => ({
   placeholder: true,
 }));
 
-export const projects = Array.from({ length: 3 }, (_, i) => ({
-  id: `projet-${i + 1}`,
-  title: `Projet ${String(i + 1).padStart(2, '0')} — intitulé à confirmer`,
-  place: 'Lieu à confirmer',
-  status: 'Statut à confirmer',
-  text: 'Résumé du projet à fournir : problème, action menée, résultats vérifiables.',
-  placeholder: true,
-}));
+// Les projets ne sont plus des emplacements : la fiche publiée vit dans
+// lib/data/projects.ts, adossée à sa provenance.
 
 // Règle de vérité : aucun chiffre sans valeur, période et source validées.
 export const metrics = [

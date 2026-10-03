@@ -2,7 +2,21 @@
 
 **Sanctuaire de Jeunes Chandelier pour le Développement** · République démocratique du Congo.
 
-## Dernière itération — 29/09/2026
+## Dernière itération — 01/10/2026
+
+- **Un premier projet est publié** : *Chandelier 360° : Jeunesse, Compétences, Emploi et
+  Entrepreneuriat*, statut **en préparation**, avec sa provenance, ses cibles et ses
+  résultats attendus — et aucune réalisation déclarée.
+- **Dossier de dépôt des images** `public/images/` : registre `specs/images.json`,
+  garde-fous `npm run images:sync` et `npm run images:check`. Une image n'est publiée que
+  si le fichier, la légende et les droits sont réunis.
+- **Coordonnées institutionnelles publiées** (e-mail, téléphone, adresse à Kavimvira) et
+  divorce de dates signalé : SJCD retient le 23 février 2022 ; la divergence avec l'acte
+  d'adoption du 15 juin 2023 reste affichée comme non tranchée.
+- La formalisation est confirmée « en cours » par SJCD : aucun statut juridique acquis
+  n'est affirmé.
+
+## Itération précédente — 29/09/2026
 
 Fondations institutionnelles et homepage améliorées **dans l’architecture existante** :
 identité Sanctuaire, ancrage Uvira / Sud-Kivu, Nunito Sans, CTA impact/soutien, impact en début
@@ -32,8 +46,12 @@ Le nouveau brief utilisateur remplace les hypothèses du cadrage initial.
 - Préproduction non indexable (`noindex` + `robots.txt`). Ce n’est pas un contrôle d’accès.
 
 Les pages intérieures sont des gabarits de contenu en attente d’informations, pas des
-pages institutionnelles définitives. La flamme est une **proposition graphique**, non un
-logo officiel. Aucun partenaire, projet, témoignage, chiffre ou photo de terrain n’est inventé.
+pages institutionnelles définitives. Le **logo officiel** (flamme, silhouettes et
+dénomination) est fourni par SJCD et publié avec son accord ; une version en relief en est
+dérivée par extrusion de sa forme réelle. Une seule fiche projet est publiée, celle transmise par SJCD le 1er octobre
+2026 ; elle porte le statut « en préparation ». Aucun partenaire, témoignage, chiffre
+d’impact ou photo de terrain n’est inventé : les emplacements photo restent vides tant que
+les fichiers et les droits ne sont pas réunis.
 
 ## Démarrer
 
@@ -49,9 +67,13 @@ prévisionnel ; ses intégrations ne sont pas actives.
 
 ```bash
 npm run tokens:check        # JSON ↔ CSS synchronisés
+npm run images:optimize     # redimensionne les images déposées (1600 px, JPEG)
+npm run images:sync         # images déposées dans public/images/ → registre à jour
+npm run images:check        # aucune image publiée sans fichier, légende ni droits
+npm run logo:3d             # relief 3D du logo officiel déposé (PNG transparent)
 npm run lint
 npm run typecheck           # après dev ou build pour les types générés Next
-npm test                    # 5 contrôles de contrats, contrastes, confidentialité
+npm test                    # contrats, contrastes, confidentialité, catalogue, images
 npm run build
 npm run start               # build de production
 npx playwright install --with-deps chromium
@@ -66,7 +88,13 @@ Ce chemin n’intervient jamais dans l’application livrée.
 ```text
 app/                 Homepage, pages statiques, contact, 404, robots
 components/          Navbar, Footer, PageShell, ContactDraft, FlameMark, motion
-lib/content.ts       Identité et emplacements de contenu
+lib/content.ts       Identité, coordonnées publiées et emplacements de contenu
+lib/data/media.ts    Registre des images (specs/images.json) et adresses publiques
+public/images/       Dépôt des photos et du logo — voir public/images/README.md
+specs/images.json    Emplacements photo attendus, légendes, droits, statut
+scripts/images.mjs   Détection des fichiers déposés et contrôle des droits
+scripts/optimize-images.mjs  Redimensionnement et conversion JPEG des images déposées
+scripts/logo-3d.mjs   Relief 3D du logo officiel, par extrusion de sa forme réelle
 lib/statuts.ts       Vérités institutionnelles extraites des statuts et du RI, sourcées par article
 lib/data/            Gouvernance, programmes, documents, projets, indicateurs, partenariats
 lib/pages.ts         Textes des pages intérieures simples, explicitement provisoires
@@ -106,6 +134,29 @@ notarisation et leur dépôt ne sont pas attestés. Ils ne sont pas servis par l
 ce dossier est du docs-as-code, distinct de `app/` et de tout contenu publié — et aucun
 téléchargement n’est exposé sur `/transparence`.
 
+## Déposer des images
+
+Les photos et le logo se déposent dans **`public/images/`** : le fichier
+[public/images/README.md](public/images/README.md) indique le dossier et le nom attendus
+pour chaque visuel, notamment les sept emplacements du projet Chandelier 360°. Après le
+dépôt :
+
+```bash
+npm run images:sync     # détecte les fichiers et met le registre à jour
+npm run images:check    # vérifie fichiers, légendes et droits (utilisé par la CI)
+```
+
+Une image est affichée **uniquement** si son statut est `publiee` : fichier présent, texte
+alternatif rédigé, crédit renseigné et — selon la nature — licence (illustration) ou autorisation
+écrite des personnes identifiables (photographie documentaire). Sinon le site affiche un cadre
+« Photo SJCD à venir ».
+
+Sept illustrations générées par IA sont publiées pour Chandelier 360° : couverture, formation
+numérique, atelier d'entrepreneuriat, mentorat, présentation de projets, activité entrepreneuriale
+et groupe de participants. Elles portent l'étiquette « Illustration » et la mention « ne représente
+pas une activité réalisée par SJCD », avec leur source et leur licence. Aucun emplacement ne reste
+en attente ; seul le visuel du siège (`institution/siege-uvira`) est encore attendu.
+
 ## Design et documentation
 
 - [Direction artistique, palette, composants et mouvement](docs/08_Direction_Lumiere.md)
@@ -123,9 +174,12 @@ applicables.
 
 ## Avant publication
 
-1. Recevoir logo officiel, mission validée, siège, registre et coordonnées.
-2. Renseigner domaines, projets, rapports, chiffres **avec période et source**.
-3. Obtenir droits à l’image et autorisations de logos ; remplacer les emplacements.
+1. Recevoir le logo officiel, la mission validée et le numéro d’enregistrement. *(Coordonnées
+   et adresse reçues le 1er octobre 2026 et publiées.)*
+2. Renseigner les domaines, rapports et chiffres d’impact **avec période et source**. *(Une
+   fiche projet est publiée ; ses résultats attendus ne sont pas des résultats obtenus.)*
+3. Déposer les photos dans `public/images/` puis documenter les droits à l’image et les
+   autorisations de logos ; les emplacements restent visibles comme vides jusque-là.
 4. Choisir CMS, prestataire e-mail, hébergement et domaine.
 5. Implémenter les envois, sécurité et politiques correspondant aux traitements réels.
 6. Audit manuel lecteur d’écran, Safari/Firefox, mobile réel, performance réseau limité.
