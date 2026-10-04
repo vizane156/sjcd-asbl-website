@@ -16,6 +16,20 @@ test('palette : contrastes texte AA sur les paires utilisées', () => {
     assert.ok(contrast(spec.tokens[fg],spec.tokens[bg]) >= 4.5, `${fg} / ${bg}`);
   }
 });
+test('badge « illustration » : contraste AA sur fond clair comme sur fond sombre', () => {
+  const css = read('app/globals.css');
+  // Le badge apparaît sur la carte blanche de l'accueil ET dans la fiche à fond sombre.
+  // Fond effectif du badge : rgba(244,165,58,.14) posé sur la surface d'accueil.
+  const onLight = contrast('#824600', '#fdf2e3');   // ambre foncé sur la carte blanche
+  const onDark = contrast('#f4a53a', '#201712');    // ambre clair sur la fiche sombre
+  assert.ok(onLight >= 4.5, `badge sur fond clair : ${onLight.toFixed(2)}:1, seuil 4,5:1`);
+  assert.ok(onDark >= 4.5, `badge sur fond sombre : ${onDark.toFixed(2)}:1, seuil 4,5:1`);
+  // Le texte du badge sur fond clair doit employer la teinte foncée, jamais l'ambre clair.
+  assert.match(css, /\.project \.chip--warning, \.section--light \.chip--warning \{ color: #824600; \}/);
+  // Le badge est aussi déclaré dans le registre des images : la règle d'étiquetage est décrite.
+  assert.match(read('lib/data/media.ts'), /Illustration : image d’illustration/);
+});
+
 test('contenu provisoire : pas de chiffres affichés ni publication désactivée cliquable', () => {
   const home = read('app/page.tsx');
   assert.match(read('components/ImpactValue.tsx'), /value && period && source/);

@@ -608,6 +608,9 @@ button, input, select, textarea { font: inherit; }
 .category-card h3 { margin: 0 0 .4rem; font-size: 1.2rem; color: var(--mist-100); }
 .category-card__empty { font-size: .9rem; font-style: italic; }
 .chip--warning { background: rgba(244, 165, 58, .14); color: var(--flame-500); }
+/* Sur une surface claire, l'ambre clair ne donne que 1,8:1 : on assombrit le texte
+   pour franchir le seuil AA (4,5:1). #824600 est déjà la teinte des libellés sur fond clair. */
+.project .chip--warning, .section--light .chip--warning { color: #824600; }
 .document-row { border-top: 1px solid var(--line-dark); padding-top: 1.25rem; margin-top: 1.25rem;
   display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: start; }
 .document-row h4 { color: var(--mist-100); text-transform: none; letter-spacing: 0; font-size: 1.05rem; margin: 0 0 .6rem; }
