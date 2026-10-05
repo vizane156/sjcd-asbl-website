@@ -23,9 +23,10 @@
 
 ### Audit des dépendances : ce qui bloque, ce qui informe
 
-Le site livré est un export statique : seules les dépendances de **production**
-arrivent chez le visiteur. L'étape bloquante de la CI audite donc ces seules
-dépendances (`npm audit --omit=dev`). Les outils de développement (ESLint et sa
+Le site est servi par le serveur Next : les dépendances de **production** sont du
+code exécuté côté visiteur et côté serveur (rendu des pages, Server Components,
+optimisation des images). Ce sont elles qui peuvent exposer un défaut, et ce sont
+donc elles que la CI bloque (`npm audit --omit=dev`). Les outils de développement (ESLint et sa
 chaîne) font l'objet d'une veille informative, sans blocage : un avis sans
 correctif publié ne doit pas empêcher une mise en ligne.
 

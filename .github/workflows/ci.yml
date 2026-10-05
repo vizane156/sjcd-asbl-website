@@ -161,8 +161,9 @@ jobs:
           node scripts/diagnose-e2e.mjs http://localhost:3000 || true
           kill $serveur 2>/dev/null || true
 
-      # Le site publié est un export statique : seules les dépendances de
-      # production partent en ligne. C'est donc elles que l'on bloque.
+      # Seules les dépendances de production peuvent poser un risque côté
+      # visiteur (des Server Components aux outils d'optimisation d'images).
+      # C'est donc elles que l'on bloque, sans exception.
       - name: Audit des dépendances livrées
         if: steps.detect.outputs.present == 'true'
         run: npm audit --omit=dev --audit-level=high

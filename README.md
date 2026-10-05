@@ -53,6 +53,21 @@ dérivée par extrusion de sa forme réelle. Une seule fiche projet est publiée
 d’impact ou photo de terrain n’est inventé : les emplacements photo restent vides tant que
 les fichiers et les droits ne sont pas réunis.
 
+## Mise en ligne : encore à décider
+
+Le dépôt est **public** et le site n'est **pas** un export statique : il est servi par
+le serveur Next (aucun `output: 'export'` dans `next.config`). Deux options
+compatibles avec le code tel quel :
+
+1. **Vercel** — l'adresse permanente la plus simple ; aucune modification du code
+   n'est nécessaire. À autoriser par le propriétaire du dépôt.
+2. **GitHub Pages** — possible, mais demande de transformer le site en export
+   statique (`output: 'export'`, images `unoptimized`, `basePath` du sous-dossier),
+   donc de retirer le rendu serveur et l'optimisation d'images. À arbitrer.
+
+Tant qu'aucun hébergeur n'est branché, le site n'existe que dans la prévisualisation
+de la session et n'est joignable à aucune adresse publique.
+
 ## Démarrer
 
 Prérequis : Node.js 22 et npm. Le lockfile est versionné.
