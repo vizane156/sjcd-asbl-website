@@ -4,13 +4,17 @@ import { StoryRail } from '@/components/StoryRail';
 import { GeographicSection, AccountabilitySections } from '@/components/FoundationSections';
 import { foundationCopy } from '@/lib/i18n/foundation';
 import { Navbar } from '@/components/Navbar';
-import { HeroFlame } from '@/components/FlameMark';
+import { HeroBrand } from '@/components/HeroBrand';
 import { SmoothScrollProvider, TiltCard } from '@/components/motion';
 import { Footer } from '@/components/Footer';
-import { org, domains, projects, metrics, stories, news } from '@/lib/content';
+import { org, domains, metrics, stories, news } from '@/lib/content';
+import { projectStatuses, projects as projectSheets } from '@/lib/data/projects';
+import { mediaUrl, projectCover } from '@/lib/data/media';
 
 const copy = foundationCopy.fr;
 const INTRO = 'Allumer chez chaque jeune la lumière qui éclaire sa communauté, et la faire grandir en développement durable.';
+
+const STATUS_LABEL = Object.fromEntries(projectStatuses.map(status => [status.id, status.label]));
 
 function Tag({ children = 'Contenu à fournir' }: { children?: React.ReactNode }) {
   return <span className="placeholder-tag">◌ {children}</span>;
@@ -34,7 +38,7 @@ export default function Home() {
         <section className="hero snap-start" id="top" aria-labelledby="hero-title">
           <div className="hero__bg" aria-hidden />
           <div className="hero__grid" aria-hidden />
-          <div className="hero__flame" data-hero-flame><HeroFlame /></div>
+          <div className="hero__flame" data-hero-flame><HeroBrand /></div>
           <div className="container hero__content">
             <p className="eyebrow" data-hero-fade>{copy.hero.eyebrow}</p>
             <h1 id="hero-title" style={{ marginTop: '1.25rem' }}>
@@ -92,7 +96,7 @@ export default function Home() {
                 <div><dt>Forme juridique</dt><dd>ASBL de droit congolais</dd></div>
                 <div><dt>Caractère</dt><dd>Apolitique, non confessionnelle</dd></div>
                 <div><dt>Siège social</dt><dd>Uvira, Sud-Kivu</dd></div>
-                <div><dt>Enregistrement</dt><dd><Tag>Non attesté</Tag></dd></div>
+                <div><dt>Enregistrement</dt><dd><Tag>En cours de formalisation — non attesté</Tag></dd></div>
               </dl>
             </div>
           </div>
@@ -131,17 +135,31 @@ export default function Home() {
               <p>Chaque projet sera présenté avec son problème, son action et ses résultats vérifiables.</p>
             </div>
             <div className="projects">
-              {projects.map((p, i) => (
-                <article key={p.id} className="project" data-reveal>
-                  <AnimatedImage className="project__media" alt={p.title} tone={['', 'ph--warm', 'ph--sky'][i]} />
-                  <div className="project__body">
-                    <div className="project__meta"><span className="chip">{p.place}</span><span className="chip">{p.status}</span></div>
-                    <h3>{p.title}</h3>
-                    <p>{p.text}</p>
-                    <div><Tag /></div>
-                  </div>
-                </article>
-              ))}
+              {projectSheets.map((project, i) => {
+                const cover = projectCover(project.slug);
+                const coverSrc = cover ? mediaUrl(cover) : null;
+                const coverIsIllustration = cover?.nature === 'illustration';
+                return (
+                  <article key={project.slug} className="project" data-reveal>
+                    <AnimatedImage className="project__media" src={coverSrc ?? undefined}
+                      alt={cover?.alt ?? cover?.brief ?? project.title} tone={['', 'ph--warm', 'ph--sky'][i]} />
+                    <div className="project__body">
+                      <div className="project__meta">
+                        <span className="chip">{STATUS_LABEL[project.status] ?? project.status}</span>
+                        <span className="chip">12 mois</span>
+                        {coverIsIllustration && <span className="chip chip--warning">Visuels : illustration</span>}
+                      </div>
+                      <h3>{project.title}</h3>
+                      <p>{project.homeSummary}</p>
+                      <div>
+                        <a href={`/projets#${project.slug}`} className="link">
+                          Lire la fiche projet <span aria-hidden>→</span>
+                        </a>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </div>
         </section>

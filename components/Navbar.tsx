@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { lockScroll, navigateAnchor } from '@/lib/motion/scroll';
 import { nav } from '@/lib/content';
-import { FlameMark } from './FlameMark';
+import { BrandMark } from './BrandMark';
 
 export function Navbar() {
   const pathname = usePathname();
@@ -58,7 +58,7 @@ export function Navbar() {
   return <>
     <header className={`nav ${scrolled ? 'is-scrolled' : ''}`}>
       <nav className="nav__bar" aria-label="Navigation principale">
-        <a href="/#top" className="brand" aria-label="SJCD — accueil"><FlameMark className="brand__mark" /> SJCD <span className="brand__suffix">ASBL</span></a>
+        <a href="/#top" className="brand" aria-label="SJCD — accueil"><BrandMark priority /> SJCD <span className="brand__suffix">ASBL</span></a>
         <ul className="nav__links">{nav.map(link => <li key={link.href}><a href={link.href} aria-current={pathname === link.href ? 'page' : undefined}>{link.label}</a></li>)}</ul>
         <a href="/contact?objet=soutien" className="btn nav__cta">Soutenir SJCD <span className="arrow" aria-hidden>↗</span></a>
         <button ref={toggle} className="nav__toggle" aria-expanded={open} aria-controls="menu-mobile" aria-label="Ouvrir le menu"

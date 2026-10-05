@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { PageShell } from '@/components/PageShell';
 import { SourceRefs, Undocumented, LegalNotice } from '@/components/Source';
 import { operatingPrinciples, values } from '@/lib/data/values';
@@ -27,8 +28,70 @@ export default function QuiSommesNous() {
     >
       <LegalNotice title="Statut des documents de référence" level={2}>
         <p>{legalStatus.statement}</p>
+        <p>{legalStatus.formalizationNote}</p>
         <SourceRefs sources={legalStatus.sources} label="Références" />
       </LegalNotice>
+
+      {/* Logo officiel */}
+      <section className="doc-section" aria-labelledby="logo">
+        <h2 id="logo">Notre logo</h2>
+        <figure className="logo-figure">
+          <Image
+            src="/images/institution/logo-sjcd-complet-3d-tons-clairs.png"
+            alt="Logo officiel de SJCD : la flamme orange au-dessus des silhouettes bleues, suivie du sigle SJCD et du nom « Sanctuaire de Jeunes Chandelier pour le Développement »."
+            width={1200}
+            height={548}
+            sizes="(min-width: 960px) 780px, 100vw"
+            priority
+          />
+          <figcaption>
+            Logo officiel de SJCD ASBL, fourni par l&apos;association et publié avec son accord. La
+            version affichée reprend le fichier d&apos;origine, dans sa déclinaison pour fond sombre :
+            seul un léger relief a été ajouté, sans modifier ni la flamme, ni les silhouettes, ni la
+            typographie du nom.
+          </figcaption>
+        </figure>
+        <p className="muted">
+          L&apos;emblème seul — flamme et silhouettes — sert de marque dans l&apos;en-tête, le pied
+          de page et l&apos;icône du site. Toutes les versions sont conservées dans
+          <code> public/images/institution/</code>.
+        </p>
+
+        <h3>Deux versions selon le fond</h3>
+        <p>
+          Un emblème bleu nuit se confond avec un fond sombre : deux déclinaisons ont donc été
+          préparées, choisies par SJCD le 3 octobre 2026. La forme est identique — seule la teinte
+          du relief change.
+        </p>
+        <div className="logo-variants">
+          <figure className="logo-variant logo-variant--light">
+            <Image
+              src="/images/institution/logo-sjcd-emblem-3d.png"
+              alt="Emblème SJCD en relief, version foncée, présenté sur fond clair."
+              width={764}
+              height={953}
+              sizes="(min-width: 960px) 300px, 60vw"
+            />
+            <figcaption>
+              <strong>Version B — fonds clairs.</strong> Papier, documents imprimés, courriers,
+              présentations. C&apos;est aussi la version de l&apos;icône du site.
+            </figcaption>
+          </figure>
+          <figure className="logo-variant logo-variant--dark">
+            <Image
+              src="/images/institution/logo-sjcd-emblem-3d-clair.png"
+              alt="Emblème SJCD en relief, version en tons clairs, présenté sur fond sombre."
+              width={764}
+              height={953}
+              sizes="(min-width: 960px) 300px, 60vw"
+            />
+            <figcaption>
+              <strong>Version E — fonds sombres.</strong> En-tête du site, pied de page et en-têtes
+              de pages, où le fond est bleu nuit.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
 
       {/* A. Présentation */}
       <section className="doc-section" aria-labelledby="presentation">
@@ -115,10 +178,14 @@ export default function QuiSommesNous() {
             <SourceRefs sources={['S, note liminaire', 'RI page de garde']} />
           </li>
         </ol>
-        <LegalNotice title="Divergence de dates non résolue">
+        <LegalNotice title="Divergence de dates à trancher par écrit">
+          <p>{identity.creationDateDiscrepancy}</p>
           <p>
-            {identity.creationDateDiscrepancy} Aucune des deux dates n&apos;est présentée comme date de
-            création officielle tant que la divergence n&apos;est pas tranchée par SJCD.
+            Interrogé le 1er octobre 2026, SJCD retient la date du{' '}
+            <strong>{identity.creationDateRetainedBySJCD}</strong> déclarée au préambule des statuts.
+            Cette réponse ne lève pas la divergence : l&apos;acte d&apos;adoption porte toujours une
+            Assemblée générale constitutive au 15 juin 2023. Aucune des deux dates n&apos;est donc
+            publiée comme date de création officielle enregistrée.
           </p>
           <SourceRefs sources={['S préambule', 'S, acte d’adoption']} label="Références" />
         </LegalNotice>

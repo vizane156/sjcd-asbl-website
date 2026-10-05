@@ -1,17 +1,17 @@
-import { FlameMark } from './FlameMark';
-import { org } from '@/lib/content';
+import { BrandMark } from './BrandMark';
+import { org, telHref } from '@/lib/content';
 import { partnershipContact } from '@/lib/data/partnership';
 
 export function Footer() {
   return <footer className="footer"><div className="container">
     <div className="footer__grid">
       <div>
-        <a href="/" className="brand"><FlameMark className="brand__mark" /> SJCD ASBL</a>
+        <a href="/" className="brand"><BrandMark /> SJCD ASBL</a>
         <p className="footer__description">{org.name}.<br />{org.legalFormLong}.</p>
         <p className="footer__description">
-          <strong>Siège social :</strong><br />{org.registeredOffice}
+          <strong>Adresse :</strong><br />{org.address}<br />{org.registeredOffice}
         </p>
-        <p className="footer__provisional">Symbole graphique provisoire · à valider</p>
+        <p className="footer__provisional">Logo officiel de SJCD</p>
       </div>
 
       <div><h2>Navigation institutionnelle</h2><ul>
@@ -35,8 +35,8 @@ export function Footer() {
         <li><a href="/contact">Préparer un message</a></li>
         <li><a href="/partenariats#contact-partenariat">Demande de collaboration</a></li>
         <li><a href="/contact?objet=soutien">Soutenir SJCD</a></li>
-        <li>{org.email ?? 'Adresse e-mail à fournir'}</li>
-        <li>{partnershipContact.phone ?? 'Téléphone à fournir'}</li>
+        <li><a href={`mailto:${org.email}`}>{org.email}</a></li>
+        <li><a href={telHref}>{org.phone}</a></li>
       </ul></div>
 
       <div><h2>Informations</h2><ul>

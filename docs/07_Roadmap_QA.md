@@ -21,6 +21,22 @@
   Lenis/GSAP et retour au mouvement réduit. Audit axe-core des règles WCAG sélectionnées.
 - Captures locales desktop/mobile inspectées ; corrections de débordement et contraste.
 
+### Audit des dépendances : ce qui bloque, ce qui informe
+
+Le site livré est un export statique : seules les dépendances de **production**
+arrivent chez le visiteur. L'étape bloquante de la CI audite donc ces seules
+dépendances (`npm audit --omit=dev`). Les outils de développement (ESLint et sa
+chaîne) font l'objet d'une veille informative, sans blocage : un avis sans
+correctif publié ne doit pas empêcher une mise en ligne.
+
+Exception connue et datée — **04/10/2026** : `braces <= 3.0.3` (avis
+GHSA-vfj7-8cjw-p6xm, déni de service par motif très imbriqué), atteint via
+`micromatch` → `fast-glob` → `@next/eslint-plugin-next` → `eslint-config-next`.
+Aucune version corrigée n'est publiée ; la seule « correction » proposée par npm
+est un rétrogradage majeur d'ESLint. La dépendance n'est pas livrée au public.
+À revoir dès la publication d'un `braces` corrigé : retirer la présente
+exception et relancer l'audit bloquant sur l'ensemble de l'arbre.
+
 Les résultats Chromium ne constituent pas une certification WCAG. Safari, Firefox,
 lecteurs d’écran, mobile réel, 200–400 % zoom manuel et performance en réseau limité
 restent à vérifier avant une mise en ligne institutionnelle.

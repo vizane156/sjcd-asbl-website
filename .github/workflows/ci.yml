@@ -161,9 +161,19 @@ jobs:
           node scripts/diagnose-e2e.mjs http://localhost:3000 || true
           kill $serveur 2>/dev/null || true
 
-      - name: Audit des dépendances
+      # Le site publié est un export statique : seules les dépendances de
+      # production partent en ligne. C'est donc elles que l'on bloque.
+      - name: Audit des dépendances livrées
         if: steps.detect.outputs.present == 'true'
-        run: npm audit --audit-level=high
+        run: npm audit --omit=dev --audit-level=high
+
+      # Veille informative : les outils de développement (ESLint, etc.) ne sont
+      # jamais expédiés au visiteur. Un avis sans correctif publié ne doit pas
+      # bloquer la mise en ligne, mais il doit rester visible dans le journal
+      # (ex. 04/10/2026 : braces <= 3.0.3, chaîne eslint-config-next).
+      - name: Veille dépendances de développement (informative)
+        if: steps.detect.outputs.present == 'true'
+        run: npm audit --audit-level=high || true
 
   # ---------------------------------------------------------------------------
   # 3. Garde-fou : aucun secret ni donnée personnelle dans le dépôt
